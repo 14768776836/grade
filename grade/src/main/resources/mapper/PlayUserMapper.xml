@@ -1,0 +1,1158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grade.project.grade.mapper.PlayUserMapper" >
+  <resultMap id="BaseResultMap" type="com.grade.project.grade.model.PlayUser" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="LANGUAGE" property="language" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="SECURECONF" property="secureconf" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="FIRSTNAME" property="firstname" jdbcType="VARCHAR" />
+    <result column="MIDNAME" property="midname" jdbcType="VARCHAR" />
+    <result column="LASTNAME" property="lastname" jdbcType="VARCHAR" />
+    <result column="JOBTITLE" property="jobtitle" jdbcType="VARCHAR" />
+    <result column="DEPARTMENT" property="department" jdbcType="VARCHAR" />
+    <result column="GENDER" property="gender" jdbcType="VARCHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+    <result column="NICKNAME" property="nickname" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+    <result column="RULENAME" property="rulename" jdbcType="VARCHAR" />
+    <result column="SEARCHPROJECTID" property="searchprojectid" jdbcType="VARCHAR" />
+    <result column="ORGI" property="orgi" jdbcType="VARCHAR" />
+    <result column="CREATER" property="creater" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="MEMO" property="memo" jdbcType="VARCHAR" />
+    <result column="UPDATETIME" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="passupdatetime" property="passupdatetime" jdbcType="TIMESTAMP" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="del" property="del" jdbcType="TINYINT" />
+    <result column="login" property="login" jdbcType="TINYINT" />
+    <result column="online" property="online" jdbcType="TINYINT" />
+    <result column="headimg" property="headimg" jdbcType="TINYINT" />
+    <result column="secquestion" property="secquestion" jdbcType="TINYINT" />
+    <result column="playerlevel" property="playerlevel" jdbcType="VARCHAR" />
+    <result column="experience" property="experience" jdbcType="INTEGER" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="musteditpassword" property="musteditpassword" jdbcType="TINYINT" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="fans" property="fans" jdbcType="INTEGER" />
+    <result column="follows" property="follows" jdbcType="INTEGER" />
+    <result column="integral" property="integral" jdbcType="INTEGER" />
+    <result column="lastlogintime" property="lastlogintime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="deactivetime" property="deactivetime" jdbcType="TIMESTAMP" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="DATASTATUS" property="datastatus" jdbcType="TINYINT" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="cards" property="cards" jdbcType="INTEGER" />
+    <result column="goldcoins" property="goldcoins" jdbcType="INTEGER" />
+    <result column="diamonds" property="diamonds" jdbcType="INTEGER" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="payopenid" property="payopenid" jdbcType="VARCHAR" />
+    <result column="unionid" property="unionid" jdbcType="VARCHAR" />
+    <result column="qqid" property="qqid" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="region" property="region" jdbcType="VARCHAR" />
+    <result column="isp" property="isp" jdbcType="VARCHAR" />
+    <result column="ostype" property="ostype" jdbcType="VARCHAR" />
+    <result column="disabled" property="disabled" jdbcType="TINYINT" />
+    <result column="useragent" property="useragent" jdbcType="VARCHAR" />
+    <result column="browser" property="browser" jdbcType="VARCHAR" />
+    <result column="playertype" property="playertype" jdbcType="VARCHAR" />
+    <result column="headimgurl" property="headimgurl" jdbcType="VARCHAR" />
+    <result column="invitationcode" property="invitationcode" jdbcType="VARCHAR" />
+    <result column="pinvitationcode" property="pinvitationcode" jdbcType="VARCHAR" />
+    <result column="TRT_PROFIT" property="trtProfit" jdbcType="DECIMAL" />
+    <result column="PP_AMOUNT" property="ppAmount" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, LANGUAGE, USERNAME, PASSWORD, SECURECONF, EMAIL, FIRSTNAME, MIDNAME, LASTNAME, 
+    JOBTITLE, DEPARTMENT, GENDER, BIRTHDAY, NICKNAME, user_type, RULENAME, SEARCHPROJECTID, 
+    ORGI, CREATER, CREATETIME, MEMO, UPDATETIME, MOBILE, passupdatetime, sign, del, login, 
+    online, headimg, secquestion, playerlevel, experience, uname, musteditpassword, province, 
+    city, fans, follows, integral, lastlogintime, status, deactivetime, title, DATASTATUS, 
+    token, cards, goldcoins, diamonds, openid, payopenid, unionid, qqid, country, region, 
+    isp, ostype, disabled, useragent, browser, playertype, headimgurl, invitationcode, 
+    pinvitationcode, TRT_PROFIT, PP_AMOUNT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grade.project.grade.model.PlayUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bm_playuser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bm_playuser
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from bm_playuser
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.grade.project.grade.model.PlayUserExample" >
+    delete from bm_playuser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.grade.project.grade.model.PlayUser" >
+    insert into bm_playuser (ID, LANGUAGE, USERNAME, 
+      PASSWORD, SECURECONF, EMAIL, 
+      FIRSTNAME, MIDNAME, LASTNAME, 
+      JOBTITLE, DEPARTMENT, GENDER, 
+      BIRTHDAY, NICKNAME, user_type, 
+      RULENAME, SEARCHPROJECTID, ORGI, 
+      CREATER, CREATETIME, MEMO, 
+      UPDATETIME, MOBILE, passupdatetime, 
+      sign, del, login, online, 
+      headimg, secquestion, playerlevel, 
+      experience, uname, musteditpassword, 
+      province, city, fans, 
+      follows, integral, lastlogintime, 
+      status, deactivetime, title, 
+      DATASTATUS, token, cards, 
+      goldcoins, diamonds, openid, 
+      payopenid, unionid, qqid, 
+      country, region, isp, 
+      ostype, disabled, useragent, 
+      browser, playertype, headimgurl, 
+      invitationcode, pinvitationcode, TRT_PROFIT, 
+      PP_AMOUNT)
+    values (#{id,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{secureconf,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{firstname,jdbcType=VARCHAR}, #{midname,jdbcType=VARCHAR}, #{lastname,jdbcType=VARCHAR}, 
+      #{jobtitle,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{rulename,jdbcType=VARCHAR}, #{searchprojectid,jdbcType=VARCHAR}, #{orgi,jdbcType=VARCHAR}, 
+      #{creater,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{mobile,jdbcType=VARCHAR}, #{passupdatetime,jdbcType=TIMESTAMP}, 
+      #{sign,jdbcType=VARCHAR}, #{del,jdbcType=TINYINT}, #{login,jdbcType=TINYINT}, #{online,jdbcType=TINYINT}, 
+      #{headimg,jdbcType=TINYINT}, #{secquestion,jdbcType=TINYINT}, #{playerlevel,jdbcType=VARCHAR}, 
+      #{experience,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR}, #{musteditpassword,jdbcType=TINYINT}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{fans,jdbcType=INTEGER}, 
+      #{follows,jdbcType=INTEGER}, #{integral,jdbcType=INTEGER}, #{lastlogintime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{deactivetime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
+      #{datastatus,jdbcType=TINYINT}, #{token,jdbcType=VARCHAR}, #{cards,jdbcType=INTEGER}, 
+      #{goldcoins,jdbcType=INTEGER}, #{diamonds,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, 
+      #{payopenid,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR}, #{qqid,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{isp,jdbcType=VARCHAR}, 
+      #{ostype,jdbcType=VARCHAR}, #{disabled,jdbcType=TINYINT}, #{useragent,jdbcType=VARCHAR}, 
+      #{browser,jdbcType=VARCHAR}, #{playertype,jdbcType=VARCHAR}, #{headimgurl,jdbcType=VARCHAR}, 
+      #{invitationcode,jdbcType=VARCHAR}, #{pinvitationcode,jdbcType=VARCHAR}, #{trtProfit,jdbcType=DECIMAL}, 
+      #{ppAmount,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.grade.project.grade.model.PlayUser" >
+    insert into bm_playuser
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="language != null" >
+        LANGUAGE,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="secureconf != null" >
+        SECURECONF,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="firstname != null" >
+        FIRSTNAME,
+      </if>
+      <if test="midname != null" >
+        MIDNAME,
+      </if>
+      <if test="lastname != null" >
+        LASTNAME,
+      </if>
+      <if test="jobtitle != null" >
+        JOBTITLE,
+      </if>
+      <if test="department != null" >
+        DEPARTMENT,
+      </if>
+      <if test="gender != null" >
+        GENDER,
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY,
+      </if>
+      <if test="nickname != null" >
+        NICKNAME,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="rulename != null" >
+        RULENAME,
+      </if>
+      <if test="searchprojectid != null" >
+        SEARCHPROJECTID,
+      </if>
+      <if test="orgi != null" >
+        ORGI,
+      </if>
+      <if test="creater != null" >
+        CREATER,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="memo != null" >
+        MEMO,
+      </if>
+      <if test="updatetime != null" >
+        UPDATETIME,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="passupdatetime != null" >
+        passupdatetime,
+      </if>
+      <if test="sign != null" >
+        sign,
+      </if>
+      <if test="del != null" >
+        del,
+      </if>
+      <if test="login != null" >
+        login,
+      </if>
+      <if test="online != null" >
+        online,
+      </if>
+      <if test="headimg != null" >
+        headimg,
+      </if>
+      <if test="secquestion != null" >
+        secquestion,
+      </if>
+      <if test="playerlevel != null" >
+        playerlevel,
+      </if>
+      <if test="experience != null" >
+        experience,
+      </if>
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="musteditpassword != null" >
+        musteditpassword,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="fans != null" >
+        fans,
+      </if>
+      <if test="follows != null" >
+        follows,
+      </if>
+      <if test="integral != null" >
+        integral,
+      </if>
+      <if test="lastlogintime != null" >
+        lastlogintime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="deactivetime != null" >
+        deactivetime,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="datastatus != null" >
+        DATASTATUS,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="cards != null" >
+        cards,
+      </if>
+      <if test="goldcoins != null" >
+        goldcoins,
+      </if>
+      <if test="diamonds != null" >
+        diamonds,
+      </if>
+      <if test="openid != null" >
+        openid,
+      </if>
+      <if test="payopenid != null" >
+        payopenid,
+      </if>
+      <if test="unionid != null" >
+        unionid,
+      </if>
+      <if test="qqid != null" >
+        qqid,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="region != null" >
+        region,
+      </if>
+      <if test="isp != null" >
+        isp,
+      </if>
+      <if test="ostype != null" >
+        ostype,
+      </if>
+      <if test="disabled != null" >
+        disabled,
+      </if>
+      <if test="useragent != null" >
+        useragent,
+      </if>
+      <if test="browser != null" >
+        browser,
+      </if>
+      <if test="playertype != null" >
+        playertype,
+      </if>
+      <if test="headimgurl != null" >
+        headimgurl,
+      </if>
+      <if test="invitationcode != null" >
+        invitationcode,
+      </if>
+      <if test="pinvitationcode != null" >
+        pinvitationcode,
+      </if>
+      <if test="trtProfit != null" >
+        TRT_PROFIT,
+      </if>
+      <if test="ppAmount != null" >
+        PP_AMOUNT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="secureconf != null" >
+        #{secureconf,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="firstname != null" >
+        #{firstname,jdbcType=VARCHAR},
+      </if>
+      <if test="midname != null" >
+        #{midname,jdbcType=VARCHAR},
+      </if>
+      <if test="lastname != null" >
+        #{lastname,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtitle != null" >
+        #{jobtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="rulename != null" >
+        #{rulename,jdbcType=VARCHAR},
+      </if>
+      <if test="searchprojectid != null" >
+        #{searchprojectid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgi != null" >
+        #{orgi,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="passupdatetime != null" >
+        #{passupdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null" >
+        #{del,jdbcType=TINYINT},
+      </if>
+      <if test="login != null" >
+        #{login,jdbcType=TINYINT},
+      </if>
+      <if test="online != null" >
+        #{online,jdbcType=TINYINT},
+      </if>
+      <if test="headimg != null" >
+        #{headimg,jdbcType=TINYINT},
+      </if>
+      <if test="secquestion != null" >
+        #{secquestion,jdbcType=TINYINT},
+      </if>
+      <if test="playerlevel != null" >
+        #{playerlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="experience != null" >
+        #{experience,jdbcType=INTEGER},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="musteditpassword != null" >
+        #{musteditpassword,jdbcType=TINYINT},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="fans != null" >
+        #{fans,jdbcType=INTEGER},
+      </if>
+      <if test="follows != null" >
+        #{follows,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="lastlogintime != null" >
+        #{lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="deactivetime != null" >
+        #{deactivetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="datastatus != null" >
+        #{datastatus,jdbcType=TINYINT},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="cards != null" >
+        #{cards,jdbcType=INTEGER},
+      </if>
+      <if test="goldcoins != null" >
+        #{goldcoins,jdbcType=INTEGER},
+      </if>
+      <if test="diamonds != null" >
+        #{diamonds,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="payopenid != null" >
+        #{payopenid,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null" >
+        #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="qqid != null" >
+        #{qqid,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="isp != null" >
+        #{isp,jdbcType=VARCHAR},
+      </if>
+      <if test="ostype != null" >
+        #{ostype,jdbcType=VARCHAR},
+      </if>
+      <if test="disabled != null" >
+        #{disabled,jdbcType=TINYINT},
+      </if>
+      <if test="useragent != null" >
+        #{useragent,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null" >
+        #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="playertype != null" >
+        #{playertype,jdbcType=VARCHAR},
+      </if>
+      <if test="headimgurl != null" >
+        #{headimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationcode != null" >
+        #{invitationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="pinvitationcode != null" >
+        #{pinvitationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="trtProfit != null" >
+        #{trtProfit,jdbcType=DECIMAL},
+      </if>
+      <if test="ppAmount != null" >
+        #{ppAmount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.grade.project.grade.model.PlayUserExample" resultType="java.lang.Integer" >
+    select count(*) from bm_playuser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bm_playuser
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.language != null" >
+        LANGUAGE = #{record.language,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        PASSWORD = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secureconf != null" >
+        SECURECONF = #{record.secureconf,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstname != null" >
+        FIRSTNAME = #{record.firstname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.midname != null" >
+        MIDNAME = #{record.midname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastname != null" >
+        LASTNAME = #{record.lastname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobtitle != null" >
+        JOBTITLE = #{record.jobtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        DEPARTMENT = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        GENDER = #{record.gender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        BIRTHDAY = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null" >
+        NICKNAME = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null" >
+        user_type = #{record.userType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rulename != null" >
+        RULENAME = #{record.rulename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.searchprojectid != null" >
+        SEARCHPROJECTID = #{record.searchprojectid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgi != null" >
+        ORGI = #{record.orgi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creater != null" >
+        CREATER = #{record.creater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.memo != null" >
+        MEMO = #{record.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null" >
+        UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mobile != null" >
+        MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passupdatetime != null" >
+        passupdatetime = #{record.passupdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sign != null" >
+        sign = #{record.sign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.del != null" >
+        del = #{record.del,jdbcType=TINYINT},
+      </if>
+      <if test="record.login != null" >
+        login = #{record.login,jdbcType=TINYINT},
+      </if>
+      <if test="record.online != null" >
+        online = #{record.online,jdbcType=TINYINT},
+      </if>
+      <if test="record.headimg != null" >
+        headimg = #{record.headimg,jdbcType=TINYINT},
+      </if>
+      <if test="record.secquestion != null" >
+        secquestion = #{record.secquestion,jdbcType=TINYINT},
+      </if>
+      <if test="record.playerlevel != null" >
+        playerlevel = #{record.playerlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.experience != null" >
+        experience = #{record.experience,jdbcType=INTEGER},
+      </if>
+      <if test="record.uname != null" >
+        uname = #{record.uname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.musteditpassword != null" >
+        musteditpassword = #{record.musteditpassword,jdbcType=TINYINT},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fans != null" >
+        fans = #{record.fans,jdbcType=INTEGER},
+      </if>
+      <if test="record.follows != null" >
+        follows = #{record.follows,jdbcType=INTEGER},
+      </if>
+      <if test="record.integral != null" >
+        integral = #{record.integral,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastlogintime != null" >
+        lastlogintime = #{record.lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deactivetime != null" >
+        deactivetime = #{record.deactivetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datastatus != null" >
+        DATASTATUS = #{record.datastatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.token != null" >
+        token = #{record.token,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cards != null" >
+        cards = #{record.cards,jdbcType=INTEGER},
+      </if>
+      <if test="record.goldcoins != null" >
+        goldcoins = #{record.goldcoins,jdbcType=INTEGER},
+      </if>
+      <if test="record.diamonds != null" >
+        diamonds = #{record.diamonds,jdbcType=INTEGER},
+      </if>
+      <if test="record.openid != null" >
+        openid = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payopenid != null" >
+        payopenid = #{record.payopenid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unionid != null" >
+        unionid = #{record.unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqid != null" >
+        qqid = #{record.qqid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.region != null" >
+        region = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isp != null" >
+        isp = #{record.isp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ostype != null" >
+        ostype = #{record.ostype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disabled != null" >
+        disabled = #{record.disabled,jdbcType=TINYINT},
+      </if>
+      <if test="record.useragent != null" >
+        useragent = #{record.useragent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.browser != null" >
+        browser = #{record.browser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.playertype != null" >
+        playertype = #{record.playertype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headimgurl != null" >
+        headimgurl = #{record.headimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invitationcode != null" >
+        invitationcode = #{record.invitationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pinvitationcode != null" >
+        pinvitationcode = #{record.pinvitationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trtProfit != null" >
+        TRT_PROFIT = #{record.trtProfit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ppAmount != null" >
+        PP_AMOUNT = #{record.ppAmount,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bm_playuser
+    set ID = #{record.id,jdbcType=VARCHAR},
+      LANGUAGE = #{record.language,jdbcType=VARCHAR},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      PASSWORD = #{record.password,jdbcType=VARCHAR},
+      SECURECONF = #{record.secureconf,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      FIRSTNAME = #{record.firstname,jdbcType=VARCHAR},
+      MIDNAME = #{record.midname,jdbcType=VARCHAR},
+      LASTNAME = #{record.lastname,jdbcType=VARCHAR},
+      JOBTITLE = #{record.jobtitle,jdbcType=VARCHAR},
+      DEPARTMENT = #{record.department,jdbcType=VARCHAR},
+      GENDER = #{record.gender,jdbcType=VARCHAR},
+      BIRTHDAY = #{record.birthday,jdbcType=VARCHAR},
+      NICKNAME = #{record.nickname,jdbcType=VARCHAR},
+      user_type = #{record.userType,jdbcType=VARCHAR},
+      RULENAME = #{record.rulename,jdbcType=VARCHAR},
+      SEARCHPROJECTID = #{record.searchprojectid,jdbcType=VARCHAR},
+      ORGI = #{record.orgi,jdbcType=VARCHAR},
+      CREATER = #{record.creater,jdbcType=VARCHAR},
+      CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      MEMO = #{record.memo,jdbcType=VARCHAR},
+      UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      passupdatetime = #{record.passupdatetime,jdbcType=TIMESTAMP},
+      sign = #{record.sign,jdbcType=VARCHAR},
+      del = #{record.del,jdbcType=TINYINT},
+      login = #{record.login,jdbcType=TINYINT},
+      online = #{record.online,jdbcType=TINYINT},
+      headimg = #{record.headimg,jdbcType=TINYINT},
+      secquestion = #{record.secquestion,jdbcType=TINYINT},
+      playerlevel = #{record.playerlevel,jdbcType=VARCHAR},
+      experience = #{record.experience,jdbcType=INTEGER},
+      uname = #{record.uname,jdbcType=VARCHAR},
+      musteditpassword = #{record.musteditpassword,jdbcType=TINYINT},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      fans = #{record.fans,jdbcType=INTEGER},
+      follows = #{record.follows,jdbcType=INTEGER},
+      integral = #{record.integral,jdbcType=INTEGER},
+      lastlogintime = #{record.lastlogintime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=VARCHAR},
+      deactivetime = #{record.deactivetime,jdbcType=TIMESTAMP},
+      title = #{record.title,jdbcType=VARCHAR},
+      DATASTATUS = #{record.datastatus,jdbcType=TINYINT},
+      token = #{record.token,jdbcType=VARCHAR},
+      cards = #{record.cards,jdbcType=INTEGER},
+      goldcoins = #{record.goldcoins,jdbcType=INTEGER},
+      diamonds = #{record.diamonds,jdbcType=INTEGER},
+      openid = #{record.openid,jdbcType=VARCHAR},
+      payopenid = #{record.payopenid,jdbcType=VARCHAR},
+      unionid = #{record.unionid,jdbcType=VARCHAR},
+      qqid = #{record.qqid,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      region = #{record.region,jdbcType=VARCHAR},
+      isp = #{record.isp,jdbcType=VARCHAR},
+      ostype = #{record.ostype,jdbcType=VARCHAR},
+      disabled = #{record.disabled,jdbcType=TINYINT},
+      useragent = #{record.useragent,jdbcType=VARCHAR},
+      browser = #{record.browser,jdbcType=VARCHAR},
+      playertype = #{record.playertype,jdbcType=VARCHAR},
+      headimgurl = #{record.headimgurl,jdbcType=VARCHAR},
+      invitationcode = #{record.invitationcode,jdbcType=VARCHAR},
+      pinvitationcode = #{record.pinvitationcode,jdbcType=VARCHAR},
+      TRT_PROFIT = #{record.trtProfit,jdbcType=DECIMAL},
+      PP_AMOUNT = #{record.ppAmount,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grade.project.grade.model.PlayUser" >
+    update bm_playuser
+    <set >
+      <if test="language != null" >
+        LANGUAGE = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="secureconf != null" >
+        SECURECONF = #{secureconf,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="firstname != null" >
+        FIRSTNAME = #{firstname,jdbcType=VARCHAR},
+      </if>
+      <if test="midname != null" >
+        MIDNAME = #{midname,jdbcType=VARCHAR},
+      </if>
+      <if test="lastname != null" >
+        LASTNAME = #{lastname,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtitle != null" >
+        JOBTITLE = #{jobtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        DEPARTMENT = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        NICKNAME = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="rulename != null" >
+        RULENAME = #{rulename,jdbcType=VARCHAR},
+      </if>
+      <if test="searchprojectid != null" >
+        SEARCHPROJECTID = #{searchprojectid,jdbcType=VARCHAR},
+      </if>
+      <if test="orgi != null" >
+        ORGI = #{orgi,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        CREATER = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="passupdatetime != null" >
+        passupdatetime = #{passupdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="del != null" >
+        del = #{del,jdbcType=TINYINT},
+      </if>
+      <if test="login != null" >
+        login = #{login,jdbcType=TINYINT},
+      </if>
+      <if test="online != null" >
+        online = #{online,jdbcType=TINYINT},
+      </if>
+      <if test="headimg != null" >
+        headimg = #{headimg,jdbcType=TINYINT},
+      </if>
+      <if test="secquestion != null" >
+        secquestion = #{secquestion,jdbcType=TINYINT},
+      </if>
+      <if test="playerlevel != null" >
+        playerlevel = #{playerlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="experience != null" >
+        experience = #{experience,jdbcType=INTEGER},
+      </if>
+      <if test="uname != null" >
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="musteditpassword != null" >
+        musteditpassword = #{musteditpassword,jdbcType=TINYINT},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="fans != null" >
+        fans = #{fans,jdbcType=INTEGER},
+      </if>
+      <if test="follows != null" >
+        follows = #{follows,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="lastlogintime != null" >
+        lastlogintime = #{lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="deactivetime != null" >
+        deactivetime = #{deactivetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="datastatus != null" >
+        DATASTATUS = #{datastatus,jdbcType=TINYINT},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="cards != null" >
+        cards = #{cards,jdbcType=INTEGER},
+      </if>
+      <if test="goldcoins != null" >
+        goldcoins = #{goldcoins,jdbcType=INTEGER},
+      </if>
+      <if test="diamonds != null" >
+        diamonds = #{diamonds,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null" >
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="payopenid != null" >
+        payopenid = #{payopenid,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null" >
+        unionid = #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="qqid != null" >
+        qqid = #{qqid,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="isp != null" >
+        isp = #{isp,jdbcType=VARCHAR},
+      </if>
+      <if test="ostype != null" >
+        ostype = #{ostype,jdbcType=VARCHAR},
+      </if>
+      <if test="disabled != null" >
+        disabled = #{disabled,jdbcType=TINYINT},
+      </if>
+      <if test="useragent != null" >
+        useragent = #{useragent,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null" >
+        browser = #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="playertype != null" >
+        playertype = #{playertype,jdbcType=VARCHAR},
+      </if>
+      <if test="headimgurl != null" >
+        headimgurl = #{headimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="invitationcode != null" >
+        invitationcode = #{invitationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="pinvitationcode != null" >
+        pinvitationcode = #{pinvitationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="trtProfit != null" >
+        TRT_PROFIT = #{trtProfit,jdbcType=DECIMAL},
+      </if>
+      <if test="ppAmount != null" >
+        PP_AMOUNT = #{ppAmount,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.grade.project.grade.model.PlayUser" >
+    update bm_playuser
+    set LANGUAGE = #{language,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      SECURECONF = #{secureconf,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      FIRSTNAME = #{firstname,jdbcType=VARCHAR},
+      MIDNAME = #{midname,jdbcType=VARCHAR},
+      LASTNAME = #{lastname,jdbcType=VARCHAR},
+      JOBTITLE = #{jobtitle,jdbcType=VARCHAR},
+      DEPARTMENT = #{department,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=VARCHAR},
+      BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      NICKNAME = #{nickname,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=VARCHAR},
+      RULENAME = #{rulename,jdbcType=VARCHAR},
+      SEARCHPROJECTID = #{searchprojectid,jdbcType=VARCHAR},
+      ORGI = #{orgi,jdbcType=VARCHAR},
+      CREATER = #{creater,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      passupdatetime = #{passupdatetime,jdbcType=TIMESTAMP},
+      sign = #{sign,jdbcType=VARCHAR},
+      del = #{del,jdbcType=TINYINT},
+      login = #{login,jdbcType=TINYINT},
+      online = #{online,jdbcType=TINYINT},
+      headimg = #{headimg,jdbcType=TINYINT},
+      secquestion = #{secquestion,jdbcType=TINYINT},
+      playerlevel = #{playerlevel,jdbcType=VARCHAR},
+      experience = #{experience,jdbcType=INTEGER},
+      uname = #{uname,jdbcType=VARCHAR},
+      musteditpassword = #{musteditpassword,jdbcType=TINYINT},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      fans = #{fans,jdbcType=INTEGER},
+      follows = #{follows,jdbcType=INTEGER},
+      integral = #{integral,jdbcType=INTEGER},
+      lastlogintime = #{lastlogintime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      deactivetime = #{deactivetime,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      DATASTATUS = #{datastatus,jdbcType=TINYINT},
+      token = #{token,jdbcType=VARCHAR},
+      cards = #{cards,jdbcType=INTEGER},
+      goldcoins = #{goldcoins,jdbcType=INTEGER},
+      diamonds = #{diamonds,jdbcType=INTEGER},
+      openid = #{openid,jdbcType=VARCHAR},
+      payopenid = #{payopenid,jdbcType=VARCHAR},
+      unionid = #{unionid,jdbcType=VARCHAR},
+      qqid = #{qqid,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      isp = #{isp,jdbcType=VARCHAR},
+      ostype = #{ostype,jdbcType=VARCHAR},
+      disabled = #{disabled,jdbcType=TINYINT},
+      useragent = #{useragent,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
+      playertype = #{playertype,jdbcType=VARCHAR},
+      headimgurl = #{headimgurl,jdbcType=VARCHAR},
+      invitationcode = #{invitationcode,jdbcType=VARCHAR},
+      pinvitationcode = #{pinvitationcode,jdbcType=VARCHAR},
+      TRT_PROFIT = #{trtProfit,jdbcType=DECIMAL},
+      PP_AMOUNT = #{ppAmount,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
