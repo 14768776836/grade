@@ -17,16 +17,22 @@ public class UserController {
     @Autowired
     private UserService userDAO;
 
-    @RequestMapping(value = "/user")
+    /**
+     * 登录接口
+     * @param username  用户名
+     * @param pswd      密码
+     * @return
+     */
+    @RequestMapping(value = "/userLogin")
     @ResponseBody
-    public Map<String,Object> getUsers(String username) {
+    public Map<String,Object> getUsers(String username,String pswd) {
         Map<String,Object> dataMap = new HashMap<>();
         try{
-            if(StringUtils.isBlank(username)){
-                dataMap.put("msg","用户名不能为空！");
+            if(StringUtils.isBlank(username) || StringUtils.isBlank(pswd)){
+                dataMap.put("msg","用户名或密码不能为空！");
                 dataMap.put("success","false");
             }else{
-                dataMap.put("userList",userDAO.selectUsers(username));
+                dataMap.put("userList",userDAO.selectUsers(username,pswd));
                 dataMap.put("success","true");
             }
         }catch(Exception e){

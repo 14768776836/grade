@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grade.project.grade.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.grade.project.grade.model.User" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="TELNO" property="telno" jdbcType="INTEGER" />
+    <result column="EXTENSION_CODE" property="extensionCode" jdbcType="VARCHAR" />
+    <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+    <result column="FACTION" property="faction" jdbcType="VARCHAR" />
+    <result column="TRUENAME" property="truename" jdbcType="VARCHAR" />
+    <result column="LOGIN_PSWD" property="loginPswd" jdbcType="VARCHAR" />
+    <result column="PAY_PSWD" property="payPswd" jdbcType="VARCHAR" />
+    <result column="NO_PRICE" property="noPrice" jdbcType="DECIMAL" />
+    <result column="IS_PRICE" property="isPrice" jdbcType="DECIMAL" />
+    <result column="GMT_CREATE" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="USER_TYPE" property="userType" jdbcType="INTEGER" />
+    <result column="TOKEN" property="token" jdbcType="VARCHAR" />
+    <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.grade.project.grade.model.UserWithBLOBs" extends="BaseResultMap" >
+    <result column="USERIMG" property="userimg" jdbcType="LONGVARCHAR" />
+    <result column="SECURITY_QUESTION" property="securityQuestion" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, USERNAME, TELNO, EXTENSION_CODE, PARENT_CODE, FACTION, TRUENAME, LOGIN_PSWD, 
+    PAY_PSWD, NO_PRICE, IS_PRICE, GMT_CREATE, GMT_MODIFIED, USER_TYPE, TOKEN, IS_DEL
+  </sql>
+  <sql id="Blob_Column_List" >
+    USERIMG, SECURITY_QUESTION
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.grade.project.grade.model.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mv_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grade.project.grade.model.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mv_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mv_user
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mv_user
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.grade.project.grade.model.UserExample" >
+    delete from mv_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.grade.project.grade.model.UserWithBLOBs" >
+    insert into mv_user (ID, USERNAME, TELNO, 
+      EXTENSION_CODE, PARENT_CODE, FACTION, 
+      TRUENAME, LOGIN_PSWD, PAY_PSWD, 
+      NO_PRICE, IS_PRICE, GMT_CREATE, 
+      GMT_MODIFIED, USER_TYPE, TOKEN, 
+      IS_DEL, USERIMG, SECURITY_QUESTION
+      )
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{telno,jdbcType=INTEGER}, 
+      #{extensionCode,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{faction,jdbcType=VARCHAR}, 
+      #{truename,jdbcType=VARCHAR}, #{loginPswd,jdbcType=VARCHAR}, #{payPswd,jdbcType=VARCHAR}, 
+      #{noPrice,jdbcType=DECIMAL}, #{isPrice,jdbcType=DECIMAL}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{userType,jdbcType=INTEGER}, #{token,jdbcType=VARCHAR}, 
+      #{isDel,jdbcType=INTEGER}, #{userimg,jdbcType=LONGVARCHAR}, #{securityQuestion,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.grade.project.grade.model.UserWithBLOBs" >
+    insert into mv_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="telno != null" >
+        TELNO,
+      </if>
+      <if test="extensionCode != null" >
+        EXTENSION_CODE,
+      </if>
+      <if test="parentCode != null" >
+        PARENT_CODE,
+      </if>
+      <if test="faction != null" >
+        FACTION,
+      </if>
+      <if test="truename != null" >
+        TRUENAME,
+      </if>
+      <if test="loginPswd != null" >
+        LOGIN_PSWD,
+      </if>
+      <if test="payPswd != null" >
+        PAY_PSWD,
+      </if>
+      <if test="noPrice != null" >
+        NO_PRICE,
+      </if>
+      <if test="isPrice != null" >
+        IS_PRICE,
+      </if>
+      <if test="gmtCreate != null" >
+        GMT_CREATE,
+      </if>
+      <if test="gmtModified != null" >
+        GMT_MODIFIED,
+      </if>
+      <if test="userType != null" >
+        USER_TYPE,
+      </if>
+      <if test="token != null" >
+        TOKEN,
+      </if>
+      <if test="isDel != null" >
+        IS_DEL,
+      </if>
+      <if test="userimg != null" >
+        USERIMG,
+      </if>
+      <if test="securityQuestion != null" >
+        SECURITY_QUESTION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="telno != null" >
+        #{telno,jdbcType=INTEGER},
+      </if>
+      <if test="extensionCode != null" >
+        #{extensionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="faction != null" >
+        #{faction,jdbcType=VARCHAR},
+      </if>
+      <if test="truename != null" >
+        #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPswd != null" >
+        #{loginPswd,jdbcType=VARCHAR},
+      </if>
+      <if test="payPswd != null" >
+        #{payPswd,jdbcType=VARCHAR},
+      </if>
+      <if test="noPrice != null" >
+        #{noPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isPrice != null" >
+        #{isPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="userimg != null" >
+        #{userimg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="securityQuestion != null" >
+        #{securityQuestion,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.grade.project.grade.model.UserExample" resultType="java.lang.Integer" >
+    select count(*) from mv_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mv_user
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telno != null" >
+        TELNO = #{record.telno,jdbcType=INTEGER},
+      </if>
+      <if test="record.extensionCode != null" >
+        EXTENSION_CODE = #{record.extensionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentCode != null" >
+        PARENT_CODE = #{record.parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.faction != null" >
+        FACTION = #{record.faction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.truename != null" >
+        TRUENAME = #{record.truename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPswd != null" >
+        LOGIN_PSWD = #{record.loginPswd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payPswd != null" >
+        PAY_PSWD = #{record.payPswd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noPrice != null" >
+        NO_PRICE = #{record.noPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isPrice != null" >
+        IS_PRICE = #{record.isPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gmtCreate != null" >
+        GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null" >
+        GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userType != null" >
+        USER_TYPE = #{record.userType,jdbcType=INTEGER},
+      </if>
+      <if test="record.token != null" >
+        TOKEN = #{record.token,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDel != null" >
+        IS_DEL = #{record.isDel,jdbcType=INTEGER},
+      </if>
+      <if test="record.userimg != null" >
+        USERIMG = #{record.userimg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.securityQuestion != null" >
+        SECURITY_QUESTION = #{record.securityQuestion,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update mv_user
+    set ID = #{record.id,jdbcType=INTEGER},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      TELNO = #{record.telno,jdbcType=INTEGER},
+      EXTENSION_CODE = #{record.extensionCode,jdbcType=VARCHAR},
+      PARENT_CODE = #{record.parentCode,jdbcType=VARCHAR},
+      FACTION = #{record.faction,jdbcType=VARCHAR},
+      TRUENAME = #{record.truename,jdbcType=VARCHAR},
+      LOGIN_PSWD = #{record.loginPswd,jdbcType=VARCHAR},
+      PAY_PSWD = #{record.payPswd,jdbcType=VARCHAR},
+      NO_PRICE = #{record.noPrice,jdbcType=DECIMAL},
+      IS_PRICE = #{record.isPrice,jdbcType=DECIMAL},
+      GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
+      USER_TYPE = #{record.userType,jdbcType=INTEGER},
+      TOKEN = #{record.token,jdbcType=VARCHAR},
+      IS_DEL = #{record.isDel,jdbcType=INTEGER},
+      USERIMG = #{record.userimg,jdbcType=LONGVARCHAR},
+      SECURITY_QUESTION = #{record.securityQuestion,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mv_user
+    set ID = #{record.id,jdbcType=INTEGER},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      TELNO = #{record.telno,jdbcType=INTEGER},
+      EXTENSION_CODE = #{record.extensionCode,jdbcType=VARCHAR},
+      PARENT_CODE = #{record.parentCode,jdbcType=VARCHAR},
+      FACTION = #{record.faction,jdbcType=VARCHAR},
+      TRUENAME = #{record.truename,jdbcType=VARCHAR},
+      LOGIN_PSWD = #{record.loginPswd,jdbcType=VARCHAR},
+      PAY_PSWD = #{record.payPswd,jdbcType=VARCHAR},
+      NO_PRICE = #{record.noPrice,jdbcType=DECIMAL},
+      IS_PRICE = #{record.isPrice,jdbcType=DECIMAL},
+      GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
+      USER_TYPE = #{record.userType,jdbcType=INTEGER},
+      TOKEN = #{record.token,jdbcType=VARCHAR},
+      IS_DEL = #{record.isDel,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grade.project.grade.model.UserWithBLOBs" >
+    update mv_user
+    <set >
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="telno != null" >
+        TELNO = #{telno,jdbcType=INTEGER},
+      </if>
+      <if test="extensionCode != null" >
+        EXTENSION_CODE = #{extensionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null" >
+        PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="faction != null" >
+        FACTION = #{faction,jdbcType=VARCHAR},
+      </if>
+      <if test="truename != null" >
+        TRUENAME = #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPswd != null" >
+        LOGIN_PSWD = #{loginPswd,jdbcType=VARCHAR},
+      </if>
+      <if test="payPswd != null" >
+        PAY_PSWD = #{payPswd,jdbcType=VARCHAR},
+      </if>
+      <if test="noPrice != null" >
+        NO_PRICE = #{noPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isPrice != null" >
+        IS_PRICE = #{isPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="gmtCreate != null" >
+        GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null" >
+        USER_TYPE = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="token != null" >
+        TOKEN = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        IS_DEL = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="userimg != null" >
+        USERIMG = #{userimg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="securityQuestion != null" >
+        SECURITY_QUESTION = #{securityQuestion,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.grade.project.grade.model.UserWithBLOBs" >
+    update mv_user
+    set USERNAME = #{username,jdbcType=VARCHAR},
+      TELNO = #{telno,jdbcType=INTEGER},
+      EXTENSION_CODE = #{extensionCode,jdbcType=VARCHAR},
+      PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      FACTION = #{faction,jdbcType=VARCHAR},
+      TRUENAME = #{truename,jdbcType=VARCHAR},
+      LOGIN_PSWD = #{loginPswd,jdbcType=VARCHAR},
+      PAY_PSWD = #{payPswd,jdbcType=VARCHAR},
+      NO_PRICE = #{noPrice,jdbcType=DECIMAL},
+      IS_PRICE = #{isPrice,jdbcType=DECIMAL},
+      GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
+      USER_TYPE = #{userType,jdbcType=INTEGER},
+      TOKEN = #{token,jdbcType=VARCHAR},
+      IS_DEL = #{isDel,jdbcType=INTEGER},
+      USERIMG = #{userimg,jdbcType=LONGVARCHAR},
+      SECURITY_QUESTION = #{securityQuestion,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.grade.project.grade.model.User" >
+    update mv_user
+    set USERNAME = #{username,jdbcType=VARCHAR},
+      TELNO = #{telno,jdbcType=INTEGER},
+      EXTENSION_CODE = #{extensionCode,jdbcType=VARCHAR},
+      PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      FACTION = #{faction,jdbcType=VARCHAR},
+      TRUENAME = #{truename,jdbcType=VARCHAR},
+      LOGIN_PSWD = #{loginPswd,jdbcType=VARCHAR},
+      PAY_PSWD = #{payPswd,jdbcType=VARCHAR},
+      NO_PRICE = #{noPrice,jdbcType=DECIMAL},
+      IS_PRICE = #{isPrice,jdbcType=DECIMAL},
+      GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
+      USER_TYPE = #{userType,jdbcType=INTEGER},
+      TOKEN = #{token,jdbcType=VARCHAR},
+      IS_DEL = #{isDel,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

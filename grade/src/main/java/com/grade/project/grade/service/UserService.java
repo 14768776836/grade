@@ -1,9 +1,9 @@
 package com.grade.project.grade.service;
 
-import com.grade.project.grade.model.PlayUser;
+import com.grade.project.grade.model.User;
 
 import java.util.List;
 
 public interface UserService {
-    List<PlayUser> selectUsers(String username);
+    List<User> selectUsers(String username,String pswd);
 }
