@@ -20,7 +20,9 @@ public class AppConfigurer extends WebMvcConfigurerAdapter {
         //addPathPatterns("/**")对所有请求都拦截，但是排除(excludePathPatterns)了/user请求的拦截
         registry.addInterceptor(new Interceptor()).addPathPatterns("/**")
                 .excludePathPatterns(
-                        "/user/**"
+                        "/user/**",
+                        "/wxMch/**",
+                        "/wxPpublicNum/**"
                 );
         super.addInterceptors(registry);
     }
