@@ -23,4 +23,26 @@ public class UserServiceImpl implements UserService {
         List<User> user = userMapper.selectByExample(userExample);
         return user;
     }
+
+    @Override
+    public User findUserByIdData(Integer userId) {
+        User user = userMapper.selectByPrimaryKey(userId);//查询当前用户信息，获取上级邀请码
+        UserExample userExample = new UserExample();
+        //根据当前用户的上级邀请码查询所属上级
+        userExample.createCriteria().andExtensionCodeEqualTo(user.getParentCode());
+        User userParent = userMapper.selectByExample(userExample).get(0);
+        //循环查询次数取到总代理的用户信息
+        for(int i = 0;i < 10; i++){
+            if(userParent.getUserStatus() != 1){
+                userExample = new UserExample();
+                userExample.createCriteria().andExtensionCodeEqualTo(userParent.getParentCode());
+                userParent = userMapper.selectByExample(userExample).get(0);
+            }else{
+                break;
+            }
+        }
+        //当前用户所属总代理信息
+//        userParent
+        return null;
+    }
 }
