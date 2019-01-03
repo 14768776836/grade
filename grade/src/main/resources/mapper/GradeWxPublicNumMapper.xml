@@ -4,6 +4,8 @@
   <resultMap id="BaseResultMap" type="com.grade.project.grade.model.GradeWxPublicNum" >
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="OPEN_ID" property="openId" jdbcType="VARCHAR" />
+    <result column="WX_USER_NAME" property="wxUserName" jdbcType="VARCHAR" />
     <result column="GA_ID" property="gaId" jdbcType="INTEGER" />
     <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
     <result column="GMT_CREATE" property="gmtCreate" jdbcType="TIMESTAMP" />
@@ -68,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ID, USER_ID, GA_ID, IS_DEL, GMT_CREATE, GMT_MODIFIED
+    ID, USER_ID, OPEN_ID, WX_USER_NAME, GA_ID, IS_DEL, GMT_CREATE, GMT_MODIFIED
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grade.project.grade.model.GradeWxPublicNumExample" >
     select
@@ -101,12 +103,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.grade.project.grade.model.GradeWxPublicNum" >
-    insert into grade_wx_public_num (ID, USER_ID, GA_ID, 
-      IS_DEL, GMT_CREATE, GMT_MODIFIED
-      )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{gaId,jdbcType=INTEGER}, 
-      #{isDel,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
-      )
+    insert into grade_wx_public_num (ID, USER_ID, OPEN_ID, 
+      WX_USER_NAME, GA_ID, IS_DEL, 
+      GMT_CREATE, GMT_MODIFIED)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, 
+      #{wxUserName,jdbcType=VARCHAR}, #{gaId,jdbcType=INTEGER}, #{isDel,jdbcType=INTEGER}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.grade.project.grade.model.GradeWxPublicNum" >
     insert into grade_wx_public_num
@@ -116,6 +118,12 @@
       </if>
       <if test="userId != null" >
         USER_ID,
+      </if>
+      <if test="openId != null" >
+        OPEN_ID,
+      </if>
+      <if test="wxUserName != null" >
+        WX_USER_NAME,
       </if>
       <if test="gaId != null" >
         GA_ID,
@@ -136,6 +144,12 @@
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxUserName != null" >
+        #{wxUserName,jdbcType=VARCHAR},
       </if>
       <if test="gaId != null" >
         #{gaId,jdbcType=INTEGER},
@@ -166,6 +180,12 @@
       <if test="record.userId != null" >
         USER_ID = #{record.userId,jdbcType=INTEGER},
       </if>
+      <if test="record.openId != null" >
+        OPEN_ID = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxUserName != null" >
+        WX_USER_NAME = #{record.wxUserName,jdbcType=VARCHAR},
+      </if>
       <if test="record.gaId != null" >
         GA_ID = #{record.gaId,jdbcType=INTEGER},
       </if>
@@ -187,6 +207,8 @@
     update grade_wx_public_num
     set ID = #{record.id,jdbcType=INTEGER},
       USER_ID = #{record.userId,jdbcType=INTEGER},
+      OPEN_ID = #{record.openId,jdbcType=VARCHAR},
+      WX_USER_NAME = #{record.wxUserName,jdbcType=VARCHAR},
       GA_ID = #{record.gaId,jdbcType=INTEGER},
       IS_DEL = #{record.isDel,jdbcType=INTEGER},
       GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
@@ -200,6 +222,12 @@
     <set >
       <if test="userId != null" >
         USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null" >
+        OPEN_ID = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxUserName != null" >
+        WX_USER_NAME = #{wxUserName,jdbcType=VARCHAR},
       </if>
       <if test="gaId != null" >
         GA_ID = #{gaId,jdbcType=INTEGER},
@@ -219,6 +247,8 @@
   <update id="updateByPrimaryKey" parameterType="com.grade.project.grade.model.GradeWxPublicNum" >
     update grade_wx_public_num
     set USER_ID = #{userId,jdbcType=INTEGER},
+      OPEN_ID = #{openId,jdbcType=VARCHAR},
+      WX_USER_NAME = #{wxUserName,jdbcType=VARCHAR},
       GA_ID = #{gaId,jdbcType=INTEGER},
       IS_DEL = #{isDel,jdbcType=INTEGER},
       GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},

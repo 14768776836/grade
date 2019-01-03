@@ -16,6 +16,16 @@ public class GradeWxPublicNum {
     private Integer userId;
 
     /**
+     * 授权后此用户对应公众号的唯一标识
+     */
+    private String openId;
+
+    /**
+     * 授权成功微信返回的昵称
+     */
+    private String wxUserName;
+
+    /**
      * 认证过的公众号主键id    grade_account表主键
      */
     private Integer gaId;
@@ -81,5 +91,21 @@ public class GradeWxPublicNum {
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public String getWxUserName() {
+        return wxUserName;
+    }
+
+    public void setWxUserName(String wxUserName) {
+        this.wxUserName = wxUserName;
     }
 }

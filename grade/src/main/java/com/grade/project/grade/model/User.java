@@ -1,13 +1,8 @@
 package com.grade.project.grade.model;
 
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Data
-@Slf4j
 public class User {
     private Integer id;
 
@@ -36,6 +31,8 @@ public class User {
     private Date gmtModified;
 
     private Integer userType;
+
+    private Integer userStatus;
 
     private String token;
 
@@ -151,6 +148,14 @@ public class User {
 
     public void setUserType(Integer userType) {
         this.userType = userType;
+    }
+
+    public Integer getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(Integer userStatus) {
+        this.userStatus = userStatus;
     }
 
     public String getToken() {

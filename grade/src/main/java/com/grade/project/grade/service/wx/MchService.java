@@ -13,5 +13,17 @@ public interface MchService {
      */
     List<GradeAccount> getMchList(Integer userId);
 
+    /**
+     * 保存商户信息
+     * @param gradeAccount
+     * @return
+     */
     int saveMchMessage(GradeAccount gradeAccount);
+
+    /**
+     * 删除商户信息
+     * @param id
+     * @return
+     */
+    int delMch(Integer id);
 }

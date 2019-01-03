@@ -225,6 +225,146 @@ public class GradeWxPublicNumExample {
             return (Criteria) this;
         }
 
+        public Criteria andOpenIdIsNull() {
+            addCriterion("OPEN_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdIsNotNull() {
+            addCriterion("OPEN_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdEqualTo(String value) {
+            addCriterion("OPEN_ID =", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdNotEqualTo(String value) {
+            addCriterion("OPEN_ID <>", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdGreaterThan(String value) {
+            addCriterion("OPEN_ID >", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdGreaterThanOrEqualTo(String value) {
+            addCriterion("OPEN_ID >=", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdLessThan(String value) {
+            addCriterion("OPEN_ID <", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdLessThanOrEqualTo(String value) {
+            addCriterion("OPEN_ID <=", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdLike(String value) {
+            addCriterion("OPEN_ID like", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdNotLike(String value) {
+            addCriterion("OPEN_ID not like", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdIn(List<String> values) {
+            addCriterion("OPEN_ID in", values, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdNotIn(List<String> values) {
+            addCriterion("OPEN_ID not in", values, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdBetween(String value1, String value2) {
+            addCriterion("OPEN_ID between", value1, value2, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdNotBetween(String value1, String value2) {
+            addCriterion("OPEN_ID not between", value1, value2, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameIsNull() {
+            addCriterion("WX_USER_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameIsNotNull() {
+            addCriterion("WX_USER_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameEqualTo(String value) {
+            addCriterion("WX_USER_NAME =", value, "wxUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameNotEqualTo(String value) {
+            addCriterion("WX_USER_NAME <>", value, "wxUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameGreaterThan(String value) {
+            addCriterion("WX_USER_NAME >", value, "wxUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameGreaterThanOrEqualTo(String value) {
+            addCriterion("WX_USER_NAME >=", value, "wxUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameLessThan(String value) {
+            addCriterion("WX_USER_NAME <", value, "wxUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameLessThanOrEqualTo(String value) {
+            addCriterion("WX_USER_NAME <=", value, "wxUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameLike(String value) {
+            addCriterion("WX_USER_NAME like", value, "wxUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameNotLike(String value) {
+            addCriterion("WX_USER_NAME not like", value, "wxUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameIn(List<String> values) {
+            addCriterion("WX_USER_NAME in", values, "wxUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameNotIn(List<String> values) {
+            addCriterion("WX_USER_NAME not in", values, "wxUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameBetween(String value1, String value2) {
+            addCriterion("WX_USER_NAME between", value1, value2, "wxUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxUserNameNotBetween(String value1, String value2) {
+            addCriterion("WX_USER_NAME not between", value1, value2, "wxUserName");
+            return (Criteria) this;
+        }
+
         public Criteria andGaIdIsNull() {
             addCriterion("GA_ID is null");
             return (Criteria) this;

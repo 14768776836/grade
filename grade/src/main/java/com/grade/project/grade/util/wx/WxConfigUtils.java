@@ -3,6 +3,16 @@ package com.grade.project.grade.util.wx;
 public class WxConfigUtils {
 
     /**
+     * 微信普通用户认证地址
+     */
+    public final static String WX_USER_AUTH = "";
+
+    /**
+     * 微信总代理用户认证地址
+     */
+    public final static String WX_BOSS_USER_AUTH = "";
+
+    /**
      * oauth2授权接口(GET)
      * 参数：APPID、REDIRECT_URL
      */

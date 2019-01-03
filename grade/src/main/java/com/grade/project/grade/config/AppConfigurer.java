@@ -22,7 +22,7 @@ public class AppConfigurer extends WebMvcConfigurerAdapter {
                 .excludePathPatterns(
                         "/user/**",
                         "/wxMch/**",
-                        "/wxPpublicNum/**"
+                        "/wxPublicNum/**"
                 );
         super.addInterceptors(registry);
     }

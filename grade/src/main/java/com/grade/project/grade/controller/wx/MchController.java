@@ -71,4 +71,31 @@ public class MchController {
         return (JSONObject) JSONObject.toJSON(dataMap);
     }
 
+    /**
+     * wxMch/delMch
+     * 删除商户/公众号等信息
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/delMch")
+    @ResponseBody
+    public JSONObject delMch(Integer id){
+        Map<Object, Object> dataMap = new HashMap<Object, Object>();
+        try {
+            int result = mchService.delMch(id);
+            if(result == 1){
+                dataMap.put("success",true);
+                dataMap.put("msg", "已删除！");
+            }else{
+                dataMap.put("success",true);
+                dataMap.put("msg", "删除失败！");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            dataMap.put("success",false);
+            dataMap.put("msg", "删除失败");
+        }
+        return (JSONObject) JSONObject.toJSON(dataMap);
+    }
+
 }

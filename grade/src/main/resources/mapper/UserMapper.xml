@@ -16,6 +16,7 @@
     <result column="GMT_CREATE" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
     <result column="USER_TYPE" property="userType" jdbcType="INTEGER" />
+    <result column="USER_STATUS" property="userStatus" jdbcType="INTEGER" />
     <result column="TOKEN" property="token" jdbcType="VARCHAR" />
     <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
   </resultMap>
@@ -83,7 +84,8 @@
   </sql>
   <sql id="Base_Column_List" >
     ID, USERNAME, TELNO, EXTENSION_CODE, PARENT_CODE, FACTION, TRUENAME, LOGIN_PSWD, 
-    PAY_PSWD, NO_PRICE, IS_PRICE, GMT_CREATE, GMT_MODIFIED, USER_TYPE, TOKEN, IS_DEL
+    PAY_PSWD, NO_PRICE, IS_PRICE, GMT_CREATE, GMT_MODIFIED, USER_TYPE, USER_STATUS, TOKEN, 
+    IS_DEL
   </sql>
   <sql id="Blob_Column_List" >
     USERIMG, SECURITY_QUESTION
@@ -141,16 +143,16 @@
       EXTENSION_CODE, PARENT_CODE, FACTION, 
       TRUENAME, LOGIN_PSWD, PAY_PSWD, 
       NO_PRICE, IS_PRICE, GMT_CREATE, 
-      GMT_MODIFIED, USER_TYPE, TOKEN, 
-      IS_DEL, USERIMG, SECURITY_QUESTION
-      )
+      GMT_MODIFIED, USER_TYPE, USER_STATUS, 
+      TOKEN, IS_DEL, USERIMG, 
+      SECURITY_QUESTION)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{telno,jdbcType=INTEGER}, 
       #{extensionCode,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{faction,jdbcType=VARCHAR}, 
       #{truename,jdbcType=VARCHAR}, #{loginPswd,jdbcType=VARCHAR}, #{payPswd,jdbcType=VARCHAR}, 
       #{noPrice,jdbcType=DECIMAL}, #{isPrice,jdbcType=DECIMAL}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtModified,jdbcType=TIMESTAMP}, #{userType,jdbcType=INTEGER}, #{token,jdbcType=VARCHAR}, 
-      #{isDel,jdbcType=INTEGER}, #{userimg,jdbcType=LONGVARCHAR}, #{securityQuestion,jdbcType=LONGVARCHAR}
-      )
+      #{gmtModified,jdbcType=TIMESTAMP}, #{userType,jdbcType=INTEGER}, #{userStatus,jdbcType=INTEGER}, 
+      #{token,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER}, #{userimg,jdbcType=LONGVARCHAR}, 
+      #{securityQuestion,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.grade.project.grade.model.UserWithBLOBs" >
     insert into mv_user
@@ -196,6 +198,9 @@
       </if>
       <if test="userType != null" >
         USER_TYPE,
+      </if>
+      <if test="userStatus != null" >
+        USER_STATUS,
       </if>
       <if test="token != null" >
         TOKEN,
@@ -252,6 +257,9 @@
       </if>
       <if test="userType != null" >
         #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=INTEGER},
       </if>
       <if test="token != null" >
         #{token,jdbcType=VARCHAR},
@@ -318,6 +326,9 @@
       <if test="record.userType != null" >
         USER_TYPE = #{record.userType,jdbcType=INTEGER},
       </if>
+      <if test="record.userStatus != null" >
+        USER_STATUS = #{record.userStatus,jdbcType=INTEGER},
+      </if>
       <if test="record.token != null" >
         TOKEN = #{record.token,jdbcType=VARCHAR},
       </if>
@@ -351,6 +362,7 @@
       GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
       GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
       USER_TYPE = #{record.userType,jdbcType=INTEGER},
+      USER_STATUS = #{record.userStatus,jdbcType=INTEGER},
       TOKEN = #{record.token,jdbcType=VARCHAR},
       IS_DEL = #{record.isDel,jdbcType=INTEGER},
       USERIMG = #{record.userimg,jdbcType=LONGVARCHAR},
@@ -375,6 +387,7 @@
       GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
       GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
       USER_TYPE = #{record.userType,jdbcType=INTEGER},
+      USER_STATUS = #{record.userStatus,jdbcType=INTEGER},
       TOKEN = #{record.token,jdbcType=VARCHAR},
       IS_DEL = #{record.isDel,jdbcType=INTEGER}
     <if test="_parameter != null" >
@@ -423,6 +436,9 @@
       <if test="userType != null" >
         USER_TYPE = #{userType,jdbcType=INTEGER},
       </if>
+      <if test="userStatus != null" >
+        USER_STATUS = #{userStatus,jdbcType=INTEGER},
+      </if>
       <if test="token != null" >
         TOKEN = #{token,jdbcType=VARCHAR},
       </if>
@@ -453,6 +469,7 @@
       GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
       GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
       USER_TYPE = #{userType,jdbcType=INTEGER},
+      USER_STATUS = #{userStatus,jdbcType=INTEGER},
       TOKEN = #{token,jdbcType=VARCHAR},
       IS_DEL = #{isDel,jdbcType=INTEGER},
       USERIMG = #{userimg,jdbcType=LONGVARCHAR},
@@ -474,6 +491,7 @@
       GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
       GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
       USER_TYPE = #{userType,jdbcType=INTEGER},
+      USER_STATUS = #{userStatus,jdbcType=INTEGER},
       TOKEN = #{token,jdbcType=VARCHAR},
       IS_DEL = #{isDel,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}

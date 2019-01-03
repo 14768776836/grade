@@ -25,4 +25,9 @@ public class MchServiceImpl implements MchService {
         gradeAccount.setGmtModified(new Date());
         return gradeAccountMapper.insertSelective(gradeAccount);
     }
+
+    @Override
+    public int delMch(Integer id) {
+        return gradeAccountMapper.deleteByPrimaryKey(id);
+    }
 }
