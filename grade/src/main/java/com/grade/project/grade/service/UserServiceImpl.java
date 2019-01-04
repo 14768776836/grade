@@ -1,5 +1,7 @@
 package com.grade.project.grade.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.grade.project.grade.mapper.UserMapper;
 import com.grade.project.grade.mapper.vo.PublicNumVoMapper;
 import com.grade.project.grade.model.User;
@@ -48,11 +50,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findChildrenList(Integer userId) {
+    public PageInfo<User> findChildrenList(Integer userId,Integer pageNum) {
         UserWithBLOBs user = userMapper.selectByPrimaryKey(userId);
         UserExample userExample = new UserExample();
         userExample.createCriteria().andParentCodeEqualTo(user.getExtensionCode()).andIsDelEqualTo(StatusUtils.IS_DEL_0);
-        return userMapper.selectByExample(userExample);
+        PageHelper.startPage(pageNum, StatusUtils.PAGE_SIZE);
+        List<User> userList = userMapper.selectByExample(userExample);
+        PageInfo<User> pageInfo = new PageInfo<>(userList);
+        return pageInfo;
     }
 
     @Override

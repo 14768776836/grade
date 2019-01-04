@@ -1,6 +1,7 @@
 package com.grade.project.grade.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 import com.grade.project.grade.model.User;
 import com.grade.project.grade.model.vo.PublicNumVo;
 import com.grade.project.grade.service.UserService;
@@ -67,10 +68,11 @@ public class UserController {
      */
     @RequestMapping(value = "/findChildrenList")
     @ResponseBody
-    public JSONObject findChildrenList(Integer userId){
+    public JSONObject findChildrenList(Integer userId,Integer pageNum){
         Map<Object, Object> dataMap = new HashMap<Object, Object>();
         try {
-            dataMap.put("childrenUserList",userDAO.findChildrenList(userId));
+            PageInfo<User> childrenUserList = userDAO.findChildrenList(userId,pageNum);
+            dataMap.put("childrenUserList",childrenUserList);
             dataMap.put("success",true);
         } catch (Exception e) {
             e.printStackTrace();

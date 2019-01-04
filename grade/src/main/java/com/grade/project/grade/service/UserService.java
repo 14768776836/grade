@@ -1,5 +1,6 @@
 package com.grade.project.grade.service;
 
+import com.github.pagehelper.PageInfo;
 import com.grade.project.grade.model.User;
 import com.grade.project.grade.model.vo.PublicNumVo;
 
@@ -22,11 +23,12 @@ public interface UserService {
     User findUserByIdParentData(Integer userId);
 
     /**
-     * 查询所有下级用户
-     * @param userId
+     * 分页查询所有下级用户
+     * @param userId  用户id
+     * @param pageNum 页数
      * @return
      */
-    List<User> findChildrenList(Integer userId);
+    PageInfo<User> findChildrenList(Integer userId,Integer pageNum);
 
     /**
      * 根据用户id查询当前用户是否存在未授权的公众号

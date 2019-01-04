@@ -5,6 +5,11 @@ package com.grade.project.grade.util;
  */
 public class StatusUtils {
 
+    /**
+     * 每页查询的数量
+     */
+    public final static Integer PAGE_SIZE = 10;
+
     //订单状态
     /**
      * 成功
