@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.grade.project.grade.mapper.vo.PublicNumVoMapper" >
   <resultMap id="BaseResultMap" type="com.grade.project.grade.model.vo.PublicNumVo" >
+    <result column="ID" property="id" jdbcType="INTEGER" />
     <result column="USER_ID" property="userId" jdbcType="INTEGER" />
     <result column="WX_USER_NAME" property="wxUserName" jdbcType="VARCHAR" />
     <result column="GZ_NAME" property="gzName" jdbcType="VARCHAR" />
@@ -13,5 +14,11 @@
     select pn.USER_ID,pn.WX_USER_NAME,pn.GMT_CREATE,ga.GZ_NAME,ga.IS_DEL,ga.STATUS from grade_wx_public_num pn
     LEFT JOIN grade_account ga ON pn.GA_ID = ga.ID
     where pn.USER_ID = #{userId}
+  </select>
+
+  <select id="getNoBindPublicNumList" resultMap="BaseResultMap">
+    select ga.ID,ga.GZ_NAME from grade_account ga
+    where ga.USER_ID = #{parentUserId}
+    and ga.ID NOT IN (SELECT gx.GA_ID from grade_wx_public_num gx where gx.USER_ID = #{userId});
   </select>
 </mapper>

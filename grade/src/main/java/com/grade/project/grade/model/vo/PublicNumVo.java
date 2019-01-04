@@ -6,6 +6,7 @@ import java.util.Date;
  * 公众号列表详细数据
  */
 public class PublicNumVo {
+    private Integer id;
     /**
      * 用户id
      */
@@ -80,5 +81,13 @@ public class PublicNumVo {
 
     public void setParentUserId(Integer parentUserId) {
         this.parentUserId = parentUserId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
