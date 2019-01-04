@@ -36,8 +36,9 @@ public interface MchService {
      * @param gradeAccount   打款信息
      * @param userId   用户id
      * @param amount   打款金额（元）
+     * @param desc   订单名称（微信消息显示title）
      * @return
      */
-    Map<Object, Object> payMchToUser(HttpServletRequest request, GradeAccount gradeAccount, Integer userId, BigDecimal amount);
+    Map<Object, Object> payMchToUser(HttpServletRequest request, GradeAccount gradeAccount, Integer userId, BigDecimal amount,String desc);
 
 }

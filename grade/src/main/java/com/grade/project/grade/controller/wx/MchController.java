@@ -101,7 +101,11 @@ public class MchController {
     }
 
     /**
-     *
+     * wxMch/codeMchNum
+     * 总代理校验商户是否设置成功
+     * @param request
+     * @param gradeAccount   转账商户信息及公众号信息
+     * @param userId         收款人用户id
      * @return
      */
     @RequestMapping(value = "/codeMchNum")
@@ -110,7 +114,8 @@ public class MchController {
         Map<Object, Object> dataMap = new HashMap<Object, Object>();
         try {
             BigDecimal amount = new BigDecimal("1.00");
-            mchService.payMchToUser(request,gradeAccount,userId,amount);
+            String desc = "商户可使用";
+            dataMap = mchService.payMchToUser(request,gradeAccount,userId,amount,desc);
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);

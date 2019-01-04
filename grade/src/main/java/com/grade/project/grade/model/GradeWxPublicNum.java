@@ -26,6 +26,11 @@ public class GradeWxPublicNum {
     private String wxUserName;
 
     /**
+     * 公众账号APPID
+     */
+    private String appid;
+
+    /**
      * 认证过的公众号主键id    grade_account表主键
      */
     private Integer gaId;
@@ -107,5 +112,13 @@ public class GradeWxPublicNum {
 
     public void setWxUserName(String wxUserName) {
         this.wxUserName = wxUserName;
+    }
+
+    public String getAppid() {
+        return appid;
+    }
+
+    public void setAppid(String appid) {
+        this.appid = appid;
     }
 }

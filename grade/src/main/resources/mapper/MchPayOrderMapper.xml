@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.grade.project.grade.mapper.GradeWxPublicNumMapper" >
-  <resultMap id="BaseResultMap" type="com.grade.project.grade.model.GradeWxPublicNum" >
+<mapper namespace="com.grade.project.grade.mapper.MchPayOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.grade.project.grade.model.MchPayOrder" >
     <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="ORDER_NUM" property="orderNum" jdbcType="VARCHAR" />
     <result column="USER_ID" property="userId" jdbcType="INTEGER" />
-    <result column="OPEN_ID" property="openId" jdbcType="VARCHAR" />
-    <result column="APPID" property="appid" jdbcType="VARCHAR" />
     <result column="WX_USER_NAME" property="wxUserName" jdbcType="VARCHAR" />
-    <result column="GA_ID" property="gaId" jdbcType="INTEGER" />
+    <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+    <result column="PAY_PRICE" property="payPrice" jdbcType="DECIMAL" />
+    <result column="PAY_MSG" property="payMsg" jdbcType="VARCHAR" />
+    <result column="PAY_STATUS" property="payStatus" jdbcType="INTEGER" />
     <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
     <result column="GMT_CREATE" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
@@ -71,15 +73,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ID, USER_ID, OPEN_ID, APPID, WX_USER_NAME, GA_ID, IS_DEL, GMT_CREATE, GMT_MODIFIED
+    ID, ORDER_NUM, USER_ID, WX_USER_NAME, PARENT_CODE, PAY_PRICE, PAY_MSG, PAY_STATUS, 
+    IS_DEL, GMT_CREATE, GMT_MODIFIED
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grade.project.grade.model.GradeWxPublicNumExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grade.project.grade.model.MchPayOrderExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from grade_wx_public_num
+    from grade_mch_pay
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,49 +93,55 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from grade_wx_public_num
+    from grade_mch_pay
     where ID = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from grade_wx_public_num
+    delete from grade_mch_pay
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.grade.project.grade.model.GradeWxPublicNumExample" >
-    delete from grade_wx_public_num
+  <delete id="deleteByExample" parameterType="com.grade.project.grade.model.MchPayOrderExample" >
+    delete from grade_mch_pay
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.grade.project.grade.model.GradeWxPublicNum" >
-    insert into grade_wx_public_num (ID, USER_ID, OPEN_ID, 
-      APPID, WX_USER_NAME, GA_ID, 
-      IS_DEL, GMT_CREATE, GMT_MODIFIED
-      )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, 
-      #{appid,jdbcType=VARCHAR}, #{wxUserName,jdbcType=VARCHAR}, #{gaId,jdbcType=INTEGER}, 
-      #{isDel,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
-      )
+  <insert id="insert" parameterType="com.grade.project.grade.model.MchPayOrder" >
+    insert into grade_mch_pay (ID, ORDER_NUM, USER_ID, 
+      WX_USER_NAME, PARENT_CODE, PAY_PRICE, 
+      PAY_MSG, PAY_STATUS, IS_DEL, 
+      GMT_CREATE, GMT_MODIFIED)
+    values (#{id,jdbcType=INTEGER}, #{orderNum,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{wxUserName,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{payPrice,jdbcType=DECIMAL}, 
+      #{payMsg,jdbcType=VARCHAR}, #{payStatus,jdbcType=INTEGER}, #{isDel,jdbcType=INTEGER}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.grade.project.grade.model.GradeWxPublicNum" >
-    insert into grade_wx_public_num
+  <insert id="insertSelective" parameterType="com.grade.project.grade.model.MchPayOrder" >
+    insert into grade_mch_pay
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         ID,
       </if>
+      <if test="orderNum != null" >
+        ORDER_NUM,
+      </if>
       <if test="userId != null" >
         USER_ID,
-      </if>
-      <if test="openId != null" >
-        OPEN_ID,
-      </if>
-      <if test="appid != null" >
-        APPID,
       </if>
       <if test="wxUserName != null" >
         WX_USER_NAME,
       </if>
-      <if test="gaId != null" >
-        GA_ID,
+      <if test="parentCode != null" >
+        PARENT_CODE,
+      </if>
+      <if test="payPrice != null" >
+        PAY_PRICE,
+      </if>
+      <if test="payMsg != null" >
+        PAY_MSG,
+      </if>
+      <if test="payStatus != null" >
+        PAY_STATUS,
       </if>
       <if test="isDel != null" >
         IS_DEL,
@@ -148,20 +157,26 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="openId != null" >
-        #{openId,jdbcType=VARCHAR},
-      </if>
-      <if test="appid != null" >
-        #{appid,jdbcType=VARCHAR},
       </if>
       <if test="wxUserName != null" >
         #{wxUserName,jdbcType=VARCHAR},
       </if>
-      <if test="gaId != null" >
-        #{gaId,jdbcType=INTEGER},
+      <if test="parentCode != null" >
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payPrice != null" >
+        #{payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMsg != null" >
+        #{payMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=INTEGER},
       </if>
       <if test="isDel != null" >
         #{isDel,jdbcType=INTEGER},
@@ -174,32 +189,38 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.grade.project.grade.model.GradeWxPublicNumExample" resultType="java.lang.Integer" >
-    select count(*) from grade_wx_public_num
+  <select id="countByExample" parameterType="com.grade.project.grade.model.MchPayOrderExample" resultType="java.lang.Integer" >
+    select count(*) from grade_mch_pay
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update grade_wx_public_num
+    update grade_mch_pay
     <set >
       <if test="record.id != null" >
         ID = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.orderNum != null" >
+        ORDER_NUM = #{record.orderNum,jdbcType=VARCHAR},
+      </if>
       <if test="record.userId != null" >
         USER_ID = #{record.userId,jdbcType=INTEGER},
-      </if>
-      <if test="record.openId != null" >
-        OPEN_ID = #{record.openId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.appid != null" >
-        APPID = #{record.appid,jdbcType=VARCHAR},
       </if>
       <if test="record.wxUserName != null" >
         WX_USER_NAME = #{record.wxUserName,jdbcType=VARCHAR},
       </if>
-      <if test="record.gaId != null" >
-        GA_ID = #{record.gaId,jdbcType=INTEGER},
+      <if test="record.parentCode != null" >
+        PARENT_CODE = #{record.parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payPrice != null" >
+        PAY_PRICE = #{record.payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payMsg != null" >
+        PAY_MSG = #{record.payMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payStatus != null" >
+        PAY_STATUS = #{record.payStatus,jdbcType=INTEGER},
       </if>
       <if test="record.isDel != null" >
         IS_DEL = #{record.isDel,jdbcType=INTEGER},
@@ -216,13 +237,15 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update grade_wx_public_num
+    update grade_mch_pay
     set ID = #{record.id,jdbcType=INTEGER},
+      ORDER_NUM = #{record.orderNum,jdbcType=VARCHAR},
       USER_ID = #{record.userId,jdbcType=INTEGER},
-      OPEN_ID = #{record.openId,jdbcType=VARCHAR},
-      APPID = #{record.appid,jdbcType=VARCHAR},
       WX_USER_NAME = #{record.wxUserName,jdbcType=VARCHAR},
-      GA_ID = #{record.gaId,jdbcType=INTEGER},
+      PARENT_CODE = #{record.parentCode,jdbcType=VARCHAR},
+      PAY_PRICE = #{record.payPrice,jdbcType=DECIMAL},
+      PAY_MSG = #{record.payMsg,jdbcType=VARCHAR},
+      PAY_STATUS = #{record.payStatus,jdbcType=INTEGER},
       IS_DEL = #{record.isDel,jdbcType=INTEGER},
       GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
       GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP}
@@ -230,23 +253,29 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.grade.project.grade.model.GradeWxPublicNum" >
-    update grade_wx_public_num
+  <update id="updateByPrimaryKeySelective" parameterType="com.grade.project.grade.model.MchPayOrder" >
+    update grade_mch_pay
     <set >
+      <if test="orderNum != null" >
+        ORDER_NUM = #{orderNum,jdbcType=VARCHAR},
+      </if>
       <if test="userId != null" >
         USER_ID = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="openId != null" >
-        OPEN_ID = #{openId,jdbcType=VARCHAR},
-      </if>
-      <if test="appid != null" >
-        APPID = #{appid,jdbcType=VARCHAR},
       </if>
       <if test="wxUserName != null" >
         WX_USER_NAME = #{wxUserName,jdbcType=VARCHAR},
       </if>
-      <if test="gaId != null" >
-        GA_ID = #{gaId,jdbcType=INTEGER},
+      <if test="parentCode != null" >
+        PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payPrice != null" >
+        PAY_PRICE = #{payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMsg != null" >
+        PAY_MSG = #{payMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        PAY_STATUS = #{payStatus,jdbcType=INTEGER},
       </if>
       <if test="isDel != null" >
         IS_DEL = #{isDel,jdbcType=INTEGER},
@@ -260,13 +289,15 @@
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.grade.project.grade.model.GradeWxPublicNum" >
-    update grade_wx_public_num
-    set USER_ID = #{userId,jdbcType=INTEGER},
-      OPEN_ID = #{openId,jdbcType=VARCHAR},
-      APPID = #{appid,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.grade.project.grade.model.MchPayOrder" >
+    update grade_mch_pay
+    set ORDER_NUM = #{orderNum,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=INTEGER},
       WX_USER_NAME = #{wxUserName,jdbcType=VARCHAR},
-      GA_ID = #{gaId,jdbcType=INTEGER},
+      PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      PAY_PRICE = #{payPrice,jdbcType=DECIMAL},
+      PAY_MSG = #{payMsg,jdbcType=VARCHAR},
+      PAY_STATUS = #{payStatus,jdbcType=INTEGER},
       IS_DEL = #{isDel,jdbcType=INTEGER},
       GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
       GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP}

@@ -22,7 +22,7 @@ public class GradeAccount {
     private String gzName;
 
     /**
-     * 公众账号APPID dddd
+     * 公众账号APPID
      */
     private String appid;
 
