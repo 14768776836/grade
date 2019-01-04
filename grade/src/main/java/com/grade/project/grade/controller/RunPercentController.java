@@ -70,7 +70,7 @@ public class RunPercentController {
     }
 
     /**
-     * runPercent/updateRun
+     *
      * 修改分润比例数据
      * @param gradeRunPercent
      * @return
@@ -97,7 +97,8 @@ public class RunPercentController {
     }
 
     /**
-     * 根据总代理用户ID获取设置过的分润比例数据
+     * runPercent/updIsDel
+     * 删除分润数据
      * @param gradeRunPercent
      * @return
      */

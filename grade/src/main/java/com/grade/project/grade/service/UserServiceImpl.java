@@ -4,7 +4,9 @@ import com.grade.project.grade.mapper.UserMapper;
 import com.grade.project.grade.mapper.vo.PublicNumVoMapper;
 import com.grade.project.grade.model.User;
 import com.grade.project.grade.model.UserExample;
+import com.grade.project.grade.model.UserWithBLOBs;
 import com.grade.project.grade.model.vo.PublicNumVo;
+import com.grade.project.grade.util.StatusUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,14 @@ public class UserServiceImpl implements UserService {
             userParent = userMapper.selectByExample(userExample).get(0);
         }
         return userParent;
+    }
+
+    @Override
+    public List<User> findChildrenList(Integer userId) {
+        UserWithBLOBs user = userMapper.selectByPrimaryKey(userId);
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andParentCodeEqualTo(user.getExtensionCode()).andIsDelEqualTo(StatusUtils.IS_DEL_0);
+        return userMapper.selectByExample(userExample);
     }
 
     @Override

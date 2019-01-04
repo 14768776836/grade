@@ -1,5 +1,6 @@
 package com.grade.project.grade.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.grade.project.grade.model.User;
 import com.grade.project.grade.model.vo.PublicNumVo;
 import com.grade.project.grade.service.UserService;
@@ -58,5 +59,24 @@ public class UserController {
         return dataMap;
     }
 
-
+    /**
+     * user/findChildrenList
+     * 查询当前用户所有下级玩家数据
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/findChildrenList")
+    @ResponseBody
+    public JSONObject findChildrenList(Integer userId){
+        Map<Object, Object> dataMap = new HashMap<Object, Object>();
+        try {
+            dataMap.put("childrenUserList",userDAO.findChildrenList(userId));
+            dataMap.put("success",true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            dataMap.put("success",false);
+            dataMap.put("msg", "删除失败");
+        }
+        return (JSONObject) JSONObject.toJSON(dataMap);
+    }
 }

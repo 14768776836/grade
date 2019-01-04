@@ -22,6 +22,13 @@ public interface UserService {
     User findUserByIdParentData(Integer userId);
 
     /**
+     * 查询所有下级用户
+     * @param userId
+     * @return
+     */
+    List<User> findChildrenList(Integer userId);
+
+    /**
      * 根据用户id查询当前用户是否存在未授权的公众号
      * @param userId
      * @return
