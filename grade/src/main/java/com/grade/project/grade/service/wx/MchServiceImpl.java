@@ -16,7 +16,7 @@ public class MchServiceImpl implements MchService {
     @Override
     public List<GradeAccount> getMchList(Integer userId) {
         GradeAccountExample gradeAccountExample = new GradeAccountExample();
-        gradeAccountExample.createCriteria().andUserIdEqualTo(userId);
+        gradeAccountExample.createCriteria().andUserIdEqualTo(userId).andIsDelEqualTo(0);
         return gradeAccountMapper.selectByExample(gradeAccountExample);
     }
 
@@ -28,6 +28,9 @@ public class MchServiceImpl implements MchService {
 
     @Override
     public int delMch(Integer id) {
-        return gradeAccountMapper.deleteByPrimaryKey(id);
+        GradeAccount gradeAccount = new GradeAccount();
+        gradeAccount.setId(id);
+        gradeAccount.setIsDel(1);
+        return gradeAccountMapper.updateByPrimaryKeySelective(gradeAccount);
     }
 }

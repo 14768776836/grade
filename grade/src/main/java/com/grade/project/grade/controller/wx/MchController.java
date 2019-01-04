@@ -87,7 +87,7 @@ public class MchController {
                 dataMap.put("success",true);
                 dataMap.put("msg", "已删除！");
             }else{
-                dataMap.put("success",true);
+                dataMap.put("success",false);
                 dataMap.put("msg", "删除失败！");
             }
         } catch (Exception e) {
