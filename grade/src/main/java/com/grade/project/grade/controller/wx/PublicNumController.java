@@ -44,6 +44,29 @@ public class PublicNumController {
     }
 
     /**
+     * wxPublicNum/getWxLoginOauth2URLBoss
+     * 总代理校验公众号获取openId等信息
+     * @param appId
+     * @return
+     */
+    @RequestMapping(value = "/getWxLoginOauth2URLBoss")
+    @ResponseBody
+    public JSONObject getWxLoginOauth2URLBoss(String appId,Integer userId){
+        Map<Object, Object> dataMap = new HashMap<Object, Object>();
+        try {
+            String url = WxConfigUtils.OAUTH2_URL.replace("APPID",appId).replace("REDIRECT_URL",WxConfigUtils.WX_BOSS_USER_AUTH);
+            dataMap.put("url",url);
+            dataMap.put("userId",userId);
+            dataMap.put("success",true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            dataMap.put("success",false);
+            dataMap.put("msg", "获取认证信息失败！");
+        }
+        return (JSONObject) JSONObject.toJSON(dataMap);
+    }
+
+    /**
      * wxPublicNum/getPublicNumList
      * 获取认证过的公众号列表数据
      * @param userId
