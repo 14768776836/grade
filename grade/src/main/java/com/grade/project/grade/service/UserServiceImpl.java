@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
         pswd = DigestUtils.md5DigestAsHex(pswd.getBytes());//密码进行加密
         userExample.createCriteria().andUsernameEqualTo(username).andLoginPswdEqualTo(pswd);
         List<User> user = userMapper.selectByExample(userExample);
-        if(user != null){
+        if(user.size() > 0){
             return user.get(0);
         }
         return null;
@@ -45,12 +45,13 @@ public class UserServiceImpl implements UserService {
     public List<PublicNumVo> findNotBindPublicNum(Integer userId) {
         User userParent = findUserByIdParentData(userId);
         for(int i = 0;i < 10; i++){
-            if(userParent.getUserStatus() != 1){
+            int status = userParent.getUserStatus();
+            if(status == 1){
+                break;
+            }else{
                 UserExample userExample = new UserExample();
                 userExample.createCriteria().andExtensionCodeEqualTo(userParent.getParentCode());
                 userParent = userMapper.selectByExample(userExample).get(0);
-            }else{
-                break;
             }
         }
         //查询当前用户是否有未授权认证过的公众号列表

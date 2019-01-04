@@ -20,6 +20,7 @@ public class UserController {
     private UserService userDAO;
 
     /**
+     * user/userLogin
      * 登录接口
      * @param username  用户名
      * @param pswd      密码
