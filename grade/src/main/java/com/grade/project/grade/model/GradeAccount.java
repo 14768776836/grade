@@ -1,5 +1,7 @@
 package com.grade.project.grade.model;
 
+import com.grade.project.grade.util.StatusUtils;
+
 import java.util.Date;
 
 /**
@@ -44,7 +46,7 @@ public class GradeAccount {
     /**
      * 状态   是否开启   0：开启   1：关闭
      */
-    private Integer status = 0;
+    private Integer status = StatusUtils.IS_DEL_0;
 
     /**
      * 是否删除 0:未删除   1：已删除

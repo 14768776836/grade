@@ -4,41 +4,35 @@ import com.grade.project.grade.util.StatusUtils;
 
 import java.util.Date;
 
-/**
- * 用户认证过的公众账号
- */
-public class GradeWxPublicNum {
+public class GradeRunPercent {
+
     /**
-     * 主键ID
+     * 主键id
      */
     private Integer id;
+
     /**
-     * 用户ID
+     * 用户id
      */
     private Integer userId;
 
     /**
-     * 授权后此用户对应公众号的唯一标识
+     * 用户邀请码
      */
-    private String openId;
+    private String extensionCode;
 
     /**
-     * 授权成功微信返回的昵称
+     * 分润级数
      */
-    private String wxUserName;
+    private Integer runLevel;
 
     /**
-     * 公众账号APPID
+     * 分润百分比
      */
-    private String appid;
+    private String runPercent;
 
     /**
-     * 认证过的公众号主键id    grade_account表主键
-     */
-    private Integer gaId;
-
-    /**
-     * 是否删除  0：未删除   1已删除
+     * 是否删除
      */
     private Integer isDel = StatusUtils.IS_DEL_0;
 
@@ -68,12 +62,28 @@ public class GradeWxPublicNum {
         this.userId = userId;
     }
 
-    public Integer getGaId() {
-        return gaId;
+    public String getExtensionCode() {
+        return extensionCode;
     }
 
-    public void setGaId(Integer gaId) {
-        this.gaId = gaId;
+    public void setExtensionCode(String extensionCode) {
+        this.extensionCode = extensionCode == null ? null : extensionCode.trim();
+    }
+
+    public Integer getRunLevel() {
+        return runLevel;
+    }
+
+    public void setRunLevel(Integer runLevel) {
+        this.runLevel = runLevel;
+    }
+
+    public String getRunPercent() {
+        return runPercent;
+    }
+
+    public void setRunPercent(String runPercent) {
+        this.runPercent = runPercent == null ? null : runPercent.trim();
     }
 
     public Integer getIsDel() {
@@ -98,29 +108,5 @@ public class GradeWxPublicNum {
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
-
-    public String getWxUserName() {
-        return wxUserName;
-    }
-
-    public void setWxUserName(String wxUserName) {
-        this.wxUserName = wxUserName;
-    }
-
-    public String getAppid() {
-        return appid;
-    }
-
-    public void setAppid(String appid) {
-        this.appid = appid;
     }
 }
