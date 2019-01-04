@@ -29,4 +29,10 @@ public class WxConfigUtils {
      * 参数：ACCESSTOKEN、OPENID
      */
     public final static String GET_WX_USERINFO = "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESSTOKEN&openid=OPENID&lang=zh_CN";
+
+    /**
+     * 企业付款
+     * 商户转账URL
+     */
+    public final static String TRANSFERS_PAY = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
 }

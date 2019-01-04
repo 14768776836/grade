@@ -5,6 +5,7 @@ import com.grade.project.grade.mapper.vo.PublicNumVoMapper;
 import com.grade.project.grade.model.User;
 import com.grade.project.grade.model.UserExample;
 import com.grade.project.grade.model.vo.PublicNumVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -35,9 +36,12 @@ public class UserServiceImpl implements UserService {
     public User findUserByIdParentData(Integer userId) {
         User user = userMapper.selectByPrimaryKey(userId);//查询当前用户信息，获取上级邀请码
         UserExample userExample = new UserExample();
-        //根据当前用户的上级邀请码查询所属上级
-        userExample.createCriteria().andExtensionCodeEqualTo(user.getParentCode());
-        User userParent = userMapper.selectByExample(userExample).get(0);
+        User userParent = new User();
+        if(!StringUtils.isBlank(user.getParentCode())){
+            //根据当前用户的上级邀请码查询所属上级
+            userExample.createCriteria().andExtensionCodeEqualTo(user.getParentCode());
+            userParent = userMapper.selectByExample(userExample).get(0);
+        }
         return userParent;
     }
 

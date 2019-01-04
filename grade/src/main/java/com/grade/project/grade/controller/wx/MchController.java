@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,6 +96,25 @@ public class MchController {
             e.printStackTrace();
             dataMap.put("success",false);
             dataMap.put("msg", "删除失败");
+        }
+        return (JSONObject) JSONObject.toJSON(dataMap);
+    }
+
+    /**
+     *
+     * @return
+     */
+    @RequestMapping(value = "/codeMchNum")
+    @ResponseBody
+    public JSONObject codeMchNum(HttpServletRequest request,GradeAccount gradeAccount,Integer userId){
+        Map<Object, Object> dataMap = new HashMap<Object, Object>();
+        try {
+            BigDecimal amount = new BigDecimal("1.00");
+            mchService.payMchToUser(request,gradeAccount,userId,amount);
+        } catch (Exception e) {
+            e.printStackTrace();
+            dataMap.put("success",false);
+            dataMap.put("msg", "校验失败");
         }
         return (JSONObject) JSONObject.toJSON(dataMap);
     }

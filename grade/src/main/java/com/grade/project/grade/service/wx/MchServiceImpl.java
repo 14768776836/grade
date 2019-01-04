@@ -1,18 +1,34 @@
 package com.grade.project.grade.service.wx;
 
 import com.grade.project.grade.mapper.GradeAccountMapper;
+import com.grade.project.grade.mapper.GradeWxPublicNumMapper;
 import com.grade.project.grade.model.GradeAccount;
 import com.grade.project.grade.model.GradeAccountExample;
+import com.grade.project.grade.model.GradeWxPublicNum;
+import com.grade.project.grade.model.GradeWxPublicNumExample;
+import com.grade.project.grade.util.wx.*;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MchServiceImpl implements MchService {
+
+    private static final Logger logger = LoggerFactory.getLogger(MchServiceImpl.class);
+
     @Autowired
     private GradeAccountMapper gradeAccountMapper;
+    @Autowired
+    private GradeWxPublicNumMapper gradeWxPublicNumMapper;
     @Override
     public List<GradeAccount> getMchList(Integer userId) {
         GradeAccountExample gradeAccountExample = new GradeAccountExample();
@@ -33,4 +49,66 @@ public class MchServiceImpl implements MchService {
         gradeAccount.setIsDel(1);
         return gradeAccountMapper.updateByPrimaryKeySelective(gradeAccount);
     }
+
+    @Override
+    public Map<Object, Object> payMchToUser(HttpServletRequest request, GradeAccount gradeAccount, Integer userId, BigDecimal amount) {
+        Map<Object, Object> dataMap = new HashMap<Object, Object>();
+        boolean orderStatus = false;
+        String msg = "转账成功";
+        try {
+            GradeWxPublicNumExample gradeWxPublicNumExample = new GradeWxPublicNumExample();
+            gradeWxPublicNumExample.createCriteria().andUserIdEqualTo(userId);
+            List<GradeWxPublicNum> user = gradeWxPublicNumMapper.selectByExample(gradeWxPublicNumExample);
+            if(user.size() > 0){
+                GradeWxPublicNum gradeWxPublicNum = user.get(0);
+                if(!StringUtils.isBlank(gradeWxPublicNum.getOpenId())){
+                    Map<String, String> parm = new HashMap<String, String>();
+                    int price = amount.multiply(new BigDecimal(100)).intValue();//金额转化以分为单位
+                    Map<String, String> restmap = null;
+                    // 订单生成的机器 IP
+                    String spbill_create_ip = PayCommonUtil.getIpAddress(request);
+                    spbill_create_ip = (spbill_create_ip.split(","))[0];
+                    parm.put("mch_appid", gradeAccount.getAppid()); //公众账号appid
+                    parm.put("mchid", gradeAccount.getMchId()); //商户号
+                    parm.put("nonce_str", PayCommonUtil.CreateNoncestr()); //随机字符串
+                    parm.put("partner_trade_no", PayCommonUtil.getOrderIdByUUId()); //商户订单号
+                    parm.put("openid", gradeWxPublicNum.getOpenId()); //用户openid
+                    parm.put("check_name", "NO_CHECK"); //校验用户姓名选项 OPTION_CHECK
+                    parm.put("amount", String.valueOf(price)); //转账金额
+                    parm.put("desc", "商户可使用"); //企业付款描述信息
+                    parm.put("spbill_create_ip", spbill_create_ip); //Ip地址
+                    parm.put("sign", PayCommonUtil.getSign(parm,gradeAccount.getApiKey() ));
+
+                    String restxml = HttpUtils.posts(WxConfigUtils.TRANSFERS_PAY, XmlUtil.xmlFormat(parm, false));
+                    logger.info("转账返回报文：" + restxml);
+                    restmap = XmlUtil.xmlParse(restxml);//xml格式数据转换为map
+                    if (CollectionUtil.isNotEmpty(restmap) && "SUCCESS".equals(restmap.get("result_code"))) {
+                        //保存转账成功相关账单数据
+                        orderStatus = true;
+                    }else{
+                        if (CollectionUtil.isNotEmpty(restmap)) {
+                            logger.info("转账失败：" + restmap.get("err_code") + ":" + restmap.get("err_code_des"));
+                            msg = restmap.get("err_code_des");
+                        }
+                    }
+                }else{
+                    logger.info("用户id="+userId+",openId丢失！");
+                    msg ="转账失败";
+                }
+            }else{
+                logger.info("用户id="+userId+",当前用户未授权“"+gradeAccount.getGzName()+"”公众号信息 appid="+gradeAccount.getAppid());
+                msg = "当前用户未授权“"+gradeAccount.getGzName()+"”公众号信息";
+            }
+
+            dataMap.put("success",orderStatus);
+            dataMap.put("msg", msg);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            dataMap.put("success",false);
+            dataMap.put("msg", "校验失败");
+        }
+        return dataMap;
+    }
+
 }

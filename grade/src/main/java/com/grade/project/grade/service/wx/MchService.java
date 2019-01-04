@@ -2,7 +2,10 @@ package com.grade.project.grade.service.wx;
 
 import com.grade.project.grade.model.GradeAccount;
 
+import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface MchService {
 
@@ -26,4 +29,15 @@ public interface MchService {
      * @return
      */
     int delMch(Integer id);
+
+    /**
+     * 打款给个人
+     * @param request
+     * @param gradeAccount   打款信息
+     * @param userId   用户id
+     * @param amount   打款金额（元）
+     * @return
+     */
+    Map<Object, Object> payMchToUser(HttpServletRequest request, GradeAccount gradeAccount, Integer userId, BigDecimal amount);
+
 }

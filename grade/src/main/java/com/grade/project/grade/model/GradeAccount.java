@@ -32,6 +32,11 @@ public class GradeAccount {
     private String appSecrect;
 
     /**
+     * API密钥用户自己设置
+     */
+    private String apiKey;
+
+    /**
      * 商户ID
      */
     private String mchId;
@@ -134,5 +139,13 @@ public class GradeAccount {
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 }
