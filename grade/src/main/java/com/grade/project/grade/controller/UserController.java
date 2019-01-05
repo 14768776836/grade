@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.grade.project.grade.model.User;
 import com.grade.project.grade.model.vo.PublicNumVo;
 import com.grade.project.grade.service.UserService;
+import com.grade.project.grade.util.StatusUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,13 +49,13 @@ public class UserController {
                         dataMap.put("notBindPublicNum",true);
                     }
                 }else{
-                    dataMap.put("parentUser","");
+                    dataMap.put("parentUser","");//没有上级，自己就是总代理
                 }
                 dataMap.put("success",true);
             }
         }catch(Exception e){
             e.printStackTrace();
-            dataMap.put("msg","查询错误");
+            dataMap.put("msg", StatusUtils.FIND_ERROR_MSG_EXCEPTION);
             dataMap.put("success",false);
         }
         return dataMap;
@@ -77,7 +78,7 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
-            dataMap.put("msg", "删除失败");
+            dataMap.put("msg", StatusUtils.FIND_ERROR_MSG_EXCEPTION);
         }
         return (JSONObject) JSONObject.toJSON(dataMap);
     }

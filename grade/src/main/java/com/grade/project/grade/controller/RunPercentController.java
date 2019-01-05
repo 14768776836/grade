@@ -3,6 +3,7 @@ package com.grade.project.grade.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.grade.project.grade.model.GradeRunPercent;
 import com.grade.project.grade.service.RunPercentService;
+import com.grade.project.grade.util.StatusUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,7 +38,7 @@ public class RunPercentController {
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
-            dataMap.put("msg", "查询分润数据错误");
+            dataMap.put("msg", StatusUtils.FIND_ERROR_MSG_EXCEPTION);
         }
         return (JSONObject) JSONObject.toJSON(dataMap);
     }
@@ -55,16 +56,16 @@ public class RunPercentController {
         try {
             int result = runPercentService.addRunPercent(gradeRunPercent);
             if(result == 1){
-                dataMap.put("msg", "设置成功");
+                dataMap.put("msg", StatusUtils.SUCCESS_MSG);
                 dataMap.put("success",true);
             }else{
                 dataMap.put("success",false);
-                dataMap.put("msg", "设置失败");
+                dataMap.put("msg", StatusUtils.SETTING_ERROR_MSG_EXCEPTION);
             }
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
-            dataMap.put("msg", "设置失败");
+            dataMap.put("msg", StatusUtils.SETTING_ERROR_MSG_EXCEPTION);
         }
         return (JSONObject) JSONObject.toJSON(dataMap);
     }
@@ -82,16 +83,16 @@ public class RunPercentController {
         try {
             int result = runPercentService.updateRun(gradeRunPercent);
             if(result == 1){
-                dataMap.put("msg", "编辑成功");
+                dataMap.put("msg", StatusUtils.SUCCESS_MSG);
                 dataMap.put("success",true);
             }else{
                 dataMap.put("success",false);
-                dataMap.put("msg", "编辑失败");
+                dataMap.put("msg", StatusUtils.EDIT_ERROR_MSG_EXCEPTION);
             }
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
-            dataMap.put("msg", "编辑失败");
+            dataMap.put("msg", StatusUtils.EDIT_ERROR_MSG_EXCEPTION);
         }
         return (JSONObject) JSONObject.toJSON(dataMap);
     }
@@ -109,16 +110,16 @@ public class RunPercentController {
         try {
             int result = runPercentService.updIsDel(gradeRunPercent);
             if(result == 1){
-                dataMap.put("msg", "删除成功");
+                dataMap.put("msg", StatusUtils.SUCCESS_MSG);
                 dataMap.put("success",true);
             }else{
                 dataMap.put("success",false);
-                dataMap.put("msg", "删除失败");
+                dataMap.put("msg", StatusUtils.DEL_ERROR_MSG_EXCEPTION);
             }
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
-            dataMap.put("msg", "删除失败");
+            dataMap.put("msg", StatusUtils.DEL_ERROR_MSG_EXCEPTION);
         }
         return (JSONObject) JSONObject.toJSON(dataMap);
     }

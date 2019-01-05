@@ -3,6 +3,7 @@ package com.grade.project.grade.controller.wx;
 import com.alibaba.fastjson.JSONObject;
 import com.grade.project.grade.model.GradeAccount;
 import com.grade.project.grade.service.wx.MchService;
+import com.grade.project.grade.util.StatusUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,12 +37,12 @@ public class MchController {
                 dataMap.put("success",true);
             }else{
                 dataMap.put("success",false);
-                dataMap.put("msg", "参数错误！");
+                dataMap.put("msg", StatusUtils.DATA_ERROR_MSG_EXCEPTION);
             }
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
-            dataMap.put("msg", "查询错误");
+            dataMap.put("msg", StatusUtils.FIND_ERROR_MSG_EXCEPTION);
         }
         return (JSONObject) JSONObject.toJSON(dataMap);
     }
@@ -60,15 +61,15 @@ public class MchController {
             int result = mchService.saveMchMessage(gradeAccount);
             if(result == 1){
                 dataMap.put("success",true);
-                dataMap.put("msg", "已添加！");
+                dataMap.put("msg", StatusUtils.SUCCESS_MSG);
             }else{
                 dataMap.put("success",true);
-                dataMap.put("msg", "添加失败！");
+                dataMap.put("msg", StatusUtils.SETTING_ERROR_MSG_EXCEPTION);
             }
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
-            dataMap.put("msg", "添加错误");
+            dataMap.put("msg", StatusUtils.SETTING_ERROR_MSG_EXCEPTION);
         }
         return (JSONObject) JSONObject.toJSON(dataMap);
     }
@@ -87,15 +88,15 @@ public class MchController {
             int result = mchService.delMch(id);
             if(result == 1){
                 dataMap.put("success",true);
-                dataMap.put("msg", "已删除！");
+                dataMap.put("msg", StatusUtils.SUCCESS_MSG);
             }else{
                 dataMap.put("success",false);
-                dataMap.put("msg", "删除失败！");
+                dataMap.put("msg", StatusUtils.DEL_ERROR_MSG_EXCEPTION);
             }
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
-            dataMap.put("msg", "删除失败");
+            dataMap.put("msg", StatusUtils.DEL_ERROR_MSG_EXCEPTION);
         }
         return (JSONObject) JSONObject.toJSON(dataMap);
     }
@@ -119,7 +120,7 @@ public class MchController {
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
-            dataMap.put("msg", "校验失败");
+            dataMap.put("msg", StatusUtils.ERROR_MSG);
         }
         return (JSONObject) JSONObject.toJSON(dataMap);
     }

@@ -2,6 +2,7 @@ package com.grade.project.grade.controller.wx;
 
 import com.alibaba.fastjson.JSONObject;
 import com.grade.project.grade.service.wx.PublicNumService;
+import com.grade.project.grade.util.StatusUtils;
 import com.grade.project.grade.util.wx.WxConfigUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class PublicNumController {
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
-            dataMap.put("msg", "获取认证信息失败！");
+            dataMap.put("msg", StatusUtils.ERROR_MSG);
         }
         return (JSONObject) JSONObject.toJSON(dataMap);
     }
@@ -61,7 +62,7 @@ public class PublicNumController {
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
-            dataMap.put("msg", "获取认证信息失败！");
+            dataMap.put("msg", StatusUtils.ERROR_MSG);
         }
         return (JSONObject) JSONObject.toJSON(dataMap);
     }
@@ -82,7 +83,7 @@ public class PublicNumController {
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
-            dataMap.put("msg", "获取公众号数据错误！");
+            dataMap.put("msg", StatusUtils.FIND_ERROR_MSG_EXCEPTION);
         }
         return (JSONObject) JSONObject.toJSON(dataMap);
     }
