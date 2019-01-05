@@ -19,6 +19,7 @@
   <select id="getNoBindPublicNumList" resultMap="BaseResultMap">
     select ga.ID,ga.GZ_NAME from grade_account ga
     where ga.USER_ID = #{parentUserId}
-    and ga.ID NOT IN (SELECT gx.GA_ID from grade_wx_public_num gx where gx.USER_ID = #{userId});
+    and ga.ID NOT IN (SELECT gx.GA_ID from grade_wx_public_num gx where gx.USER_ID = #{userId})
+    ORDER BY ga.GMT_CREATE DESC;
   </select>
 </mapper>

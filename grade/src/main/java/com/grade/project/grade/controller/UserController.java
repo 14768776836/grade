@@ -20,7 +20,7 @@ import java.util.Map;
 @RequestMapping(value = "/user")
 public class UserController {
     @Autowired
-    private UserService userDAO;
+    private UserService userService;
 
     /**
      * user/userLogin
@@ -38,13 +38,13 @@ public class UserController {
                 dataMap.put("msg","用户名或密码不能为空！");
                 dataMap.put("success",false);
             }else{
-                User user = userDAO.selectUsers(username,pswd);
+                User user = userService.selectUsers(username,pswd);
                 dataMap.put("user",user);
                 if(!StringUtils.isBlank(user.getParentCode())){
-                    dataMap.put("parentUser",userDAO.findUserByIdParentData(user.getId()));//当前用户所属上级信息
-                    List<PublicNumVo> notPublicNumList = userDAO.findNotBindPublicNum(user.getId());//当前用户是否存在未认证的公众号
+                    dataMap.put("parentUser",userService.findUserByIdParentData(user.getId()));//当前用户所属上级信息
+                    List<PublicNumVo> notPublicNumList = userService.findNotBindPublicNum(user.getId());//当前用户是否存在未认证的公众号
                     if(notPublicNumList == null){
-                        dataMap.put("notBindPublicNum",false);
+                        dataMap.put("notBindPublicNum",false);//当前登录用户手否存在未认证授权过的公众号
                     }else{
                         dataMap.put("notBindPublicNum",true);
                     }
@@ -72,7 +72,7 @@ public class UserController {
     public JSONObject findChildrenList(Integer userId,Integer pageNum){
         Map<Object, Object> dataMap = new HashMap<Object, Object>();
         try {
-            PageInfo<User> childrenUserList = userDAO.findChildrenList(userId,pageNum);
+            PageInfo<User> childrenUserList = userService.findChildrenList(userId,pageNum);
             dataMap.put("childrenUserList",childrenUserList);
             dataMap.put("success",true);
         } catch (Exception e) {

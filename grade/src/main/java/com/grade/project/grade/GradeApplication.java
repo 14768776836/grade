@@ -16,6 +16,7 @@ public class GradeApplication {
         SpringApplication.run(GradeApplication.class, args);
     }
 
+    //配置分页工具
     @Bean
     public PageHelper pageHelper(){
         PageHelper pageHelper = new PageHelper();

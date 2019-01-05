@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService {
         UserWithBLOBs user = userMapper.selectByPrimaryKey(userId);
         UserExample userExample = new UserExample();
         userExample.createCriteria().andParentCodeEqualTo(user.getExtensionCode()).andIsDelEqualTo(StatusUtils.IS_DEL_0);
+        userExample.setOrderByClause(" GMT_CREATE DESC");//时间倒序排序
         PageHelper.startPage(pageNum, StatusUtils.PAGE_SIZE);
         List<User> userList = userMapper.selectByExample(userExample);
         PageInfo<User> pageInfo = new PageInfo<>(userList);
@@ -62,10 +63,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<PublicNumVo> findNotBindPublicNum(Integer userId) {
-        User userParent = findUserByIdParentData(userId);
+        User userParent = findUserByIdParentData(userId);//获取当前用户的直属上级用户
         for(int i = 0;i < 10; i++){
             int status = userParent.getUserStatus();
-            if(status == 1){
+            //上级用户状态总代理 && 上级用户的上级邀请码为null
+            if(status == 1 && StringUtils.isBlank(userParent.getParentCode())){
                 break;
             }else{
                 UserExample userExample = new UserExample();

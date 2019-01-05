@@ -38,6 +38,7 @@ public class MchServiceImpl implements MchService {
     public List<GradeAccount> getMchList(Integer userId) {
         GradeAccountExample gradeAccountExample = new GradeAccountExample();
         gradeAccountExample.createCriteria().andUserIdEqualTo(userId).andIsDelEqualTo(StatusUtils.IS_DEL_0);
+        gradeAccountExample.setOrderByClause(" GMT_CREATE DESC");//时间倒序排序
         return gradeAccountMapper.selectByExample(gradeAccountExample);
     }
 
