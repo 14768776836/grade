@@ -1,10 +1,13 @@
 package com.grade.project.grade.controller.wx;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.grade.project.grade.model.GradeAccount;
 import com.grade.project.grade.service.UserService;
 import com.grade.project.grade.service.wx.PublicNumService;
 import com.grade.project.grade.util.StatusUtils;
 import com.grade.project.grade.util.wx.WxConfigUtils;
+import com.grade.project.grade.util.wx.WxUserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -62,6 +65,33 @@ public class PublicNumController {
             dataMap.put("url",url);
             dataMap.put("userId",userId);
             dataMap.put("success",true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            dataMap.put("success",false);
+            dataMap.put("msg", StatusUtils.ERROR_MSG);
+        }
+        return (JSONObject) JSONObject.toJSON(dataMap);
+    }
+
+    /**
+     * wxPublicNum/savePublicNumUser
+     * 授权成功后，微信会将code返回到回调的地址
+     * @param code    微信返回的code
+     * @param gradeAccount  商户信息
+     * @return
+     */
+    @RequestMapping(value = "/savePublicNumUser")
+    @ResponseBody
+    public JSONObject savePublicNumUser(String code, GradeAccount gradeAccount){
+        Map<Object, Object> dataMap = new HashMap<>();
+        try {
+            String result = publicNumService.saveWxUserIfo(code,gradeAccount);//保存微信授权相关信息
+            if(!"SUCCESS".equals(result)){
+                dataMap.put("success",false);
+                dataMap.put("msg", result);
+            }else{
+                dataMap.put("success",true);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
