@@ -21,6 +21,11 @@ public class PublicNumVo {
      * 公众号名称
      */
     private String gzName;
+
+    /**
+     * 公众号对应appid
+     */
+    private String appId;
     /**
      * 认证时间
      */
@@ -89,5 +94,13 @@ public class PublicNumVo {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 }

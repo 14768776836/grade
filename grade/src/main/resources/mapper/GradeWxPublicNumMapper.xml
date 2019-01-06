@@ -12,6 +12,9 @@
     <result column="GMT_CREATE" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
   </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.grade.project.grade.model.GradeWxPublicNum" extends="BaseResultMap" >
+    <result column="WX_HEAD_IMG" property="wxHeadImg" jdbcType="LONGVARCHAR" />
+  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -73,6 +76,25 @@
   <sql id="Base_Column_List" >
     ID, USER_ID, OPEN_ID, APPID, WX_USER_NAME, GA_ID, IS_DEL, GMT_CREATE, GMT_MODIFIED
   </sql>
+  <sql id="Blob_Column_List" >
+    WX_HEAD_IMG
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.grade.project.grade.model.GradeWxPublicNumExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from grade_wx_public_num
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grade.project.grade.model.GradeWxPublicNumExample" >
     select
     <if test="distinct" >
@@ -87,9 +109,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from grade_wx_public_num
     where ID = #{id,jdbcType=INTEGER}
   </select>
@@ -106,12 +130,12 @@
   <insert id="insert" parameterType="com.grade.project.grade.model.GradeWxPublicNum" >
     insert into grade_wx_public_num (ID, USER_ID, OPEN_ID, 
       APPID, WX_USER_NAME, GA_ID, 
-      IS_DEL, GMT_CREATE, GMT_MODIFIED
-      )
+      IS_DEL, GMT_CREATE, GMT_MODIFIED, 
+      WX_HEAD_IMG)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, 
       #{appid,jdbcType=VARCHAR}, #{wxUserName,jdbcType=VARCHAR}, #{gaId,jdbcType=INTEGER}, 
-      #{isDel,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
-      )
+      #{isDel,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{wxHeadImg,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.grade.project.grade.model.GradeWxPublicNum" >
     insert into grade_wx_public_num
@@ -143,6 +167,9 @@
       <if test="gmtModified != null" >
         GMT_MODIFIED,
       </if>
+      <if test="wxHeadImg != null" >
+        WX_HEAD_IMG,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -171,6 +198,9 @@
       </if>
       <if test="gmtModified != null" >
         #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wxHeadImg != null" >
+        #{wxHeadImg,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -210,7 +240,26 @@
       <if test="record.gmtModified != null" >
         GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.wxHeadImg != null" >
+        WX_HEAD_IMG = #{record.wxHeadImg,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update grade_wx_public_num
+    set ID = #{record.id,jdbcType=INTEGER},
+      USER_ID = #{record.userId,jdbcType=INTEGER},
+      OPEN_ID = #{record.openId,jdbcType=VARCHAR},
+      APPID = #{record.appid,jdbcType=VARCHAR},
+      WX_USER_NAME = #{record.wxUserName,jdbcType=VARCHAR},
+      GA_ID = #{record.gaId,jdbcType=INTEGER},
+      IS_DEL = #{record.isDel,jdbcType=INTEGER},
+      GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
+      WX_HEAD_IMG = #{record.wxHeadImg,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -257,7 +306,23 @@
       <if test="gmtModified != null" >
         GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
+      <if test="wxHeadImg != null" >
+        WX_HEAD_IMG = #{wxHeadImg,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.grade.project.grade.model.GradeWxPublicNum" >
+    update grade_wx_public_num
+    set USER_ID = #{userId,jdbcType=INTEGER},
+      OPEN_ID = #{openId,jdbcType=VARCHAR},
+      APPID = #{appid,jdbcType=VARCHAR},
+      WX_USER_NAME = #{wxUserName,jdbcType=VARCHAR},
+      GA_ID = #{gaId,jdbcType=INTEGER},
+      IS_DEL = #{isDel,jdbcType=INTEGER},
+      GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
+      WX_HEAD_IMG = #{wxHeadImg,jdbcType=LONGVARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.grade.project.grade.model.GradeWxPublicNum" >

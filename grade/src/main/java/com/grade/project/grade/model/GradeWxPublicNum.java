@@ -28,6 +28,11 @@ public class GradeWxPublicNum {
     private String wxUserName;
 
     /**
+     * 授权成功微信返回的用户头像信息
+     */
+    private String wxHeadImg;
+
+    /**
      * 公众账号APPID
      */
     private String appid;
@@ -122,5 +127,13 @@ public class GradeWxPublicNum {
 
     public void setAppid(String appid) {
         this.appid = appid;
+    }
+
+    public String getWxHeadImg() {
+        return wxHeadImg;
+    }
+
+    public void setWxHeadImg(String wxHeadImg) {
+        this.wxHeadImg = wxHeadImg;
     }
 }

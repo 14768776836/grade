@@ -16,15 +16,21 @@ public interface GradeWxPublicNumMapper {
 
     int insertSelective(GradeWxPublicNum record);
 
+    List<GradeWxPublicNum> selectByExampleWithBLOBs(GradeWxPublicNumExample example);
+
     List<GradeWxPublicNum> selectByExample(GradeWxPublicNumExample example);
 
     GradeWxPublicNum selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") GradeWxPublicNum record, @Param("example") GradeWxPublicNumExample example);
 
+    int updateByExampleWithBLOBs(@Param("record") GradeWxPublicNum record, @Param("example") GradeWxPublicNumExample example);
+
     int updateByExample(@Param("record") GradeWxPublicNum record, @Param("example") GradeWxPublicNumExample example);
 
     int updateByPrimaryKeySelective(GradeWxPublicNum record);
+
+    int updateByPrimaryKeyWithBLOBs(GradeWxPublicNum record);
 
     int updateByPrimaryKey(GradeWxPublicNum record);
 }

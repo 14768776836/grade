@@ -39,6 +39,7 @@ public class PublicNumServiceImpl implements PublicNumService {
             wxNum.setOpenId(openid);
             wxNum.setUserId(gradeAccount.getUserId());
             wxNum.setWxUserName(nickname);
+            wxNum.setWxHeadImg(jsonObject.getString("headimgurl"));
             GradeWxPublicNumExample gradeWxPublicNum = new GradeWxPublicNumExample();
             //根据公众号appid   及授权返回的openid   授权用户的userid  查询当前用户是否认证过
             gradeWxPublicNum.createCriteria().andAppidEqualTo(gradeAccount.getAppid()).andOpenIdEqualTo(openid).andUserIdEqualTo(gradeAccount.getUserId());

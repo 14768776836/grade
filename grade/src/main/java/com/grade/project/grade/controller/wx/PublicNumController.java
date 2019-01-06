@@ -1,13 +1,11 @@
 package com.grade.project.grade.controller.wx;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.grade.project.grade.model.GradeAccount;
 import com.grade.project.grade.service.UserService;
 import com.grade.project.grade.service.wx.PublicNumService;
 import com.grade.project.grade.util.StatusUtils;
 import com.grade.project.grade.util.wx.WxConfigUtils;
-import com.grade.project.grade.util.wx.WxUserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
