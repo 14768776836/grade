@@ -28,6 +28,8 @@ public class GradeRunPercent {
 
     /**
      * 分润百分比
+     * 数组的长度根据分润级数动态设置
+     * [{"levle":"1","value":"5"},{"levle":"2","value":"7"}]
      */
     private String runPercent;
 
