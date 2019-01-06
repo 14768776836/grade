@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50173
 File Encoding         : 65001
 
-Date: 2019-01-04 19:54:23
+Date: 2019-01-06 12:21:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -96,6 +96,7 @@ CREATE TABLE `grade_wx_public_num` (
   `OPEN_ID` varchar(64) DEFAULT NULL COMMENT '授权后此用户对应公众号的唯一标识',
   `APPID` varchar(32) DEFAULT NULL COMMENT '公众号appid',
   `WX_USER_NAME` varchar(128) DEFAULT NULL COMMENT '授权成功微信返回的昵称',
+  `WX_HEAD_IMG` text COMMENT '微信返回的头像信息',
   `GA_ID` int(16) DEFAULT NULL COMMENT '商户信息表主键id',
   `IS_DEL` int(4) DEFAULT NULL,
   `GMT_CREATE` datetime DEFAULT NULL,
@@ -106,8 +107,8 @@ CREATE TABLE `grade_wx_public_num` (
 -- ----------------------------
 -- Records of grade_wx_public_num
 -- ----------------------------
-INSERT INTO `grade_wx_public_num` VALUES ('0000000000000001', '1', 'openid1', null, '测试昵称', '1', '0', '2019-01-03 18:56:13', '2019-01-03 18:56:16');
-INSERT INTO `grade_wx_public_num` VALUES ('0000000000000002', '1', 'openid2', null, '测试昵称2', '2', '0', '2019-01-03 18:57:08', '2019-01-03 18:57:10');
+INSERT INTO `grade_wx_public_num` VALUES ('0000000000000001', '1', 'openid1', '测试appid', '测试昵称', null, '1', '0', '2019-01-03 18:56:13', '2019-01-03 18:56:16');
+INSERT INTO `grade_wx_public_num` VALUES ('0000000000000002', '1', 'openid2', '测试appid2', '测试昵称2', null, '2', '0', '2019-01-03 18:57:08', '2019-01-03 18:57:10');
 
 -- ----------------------------
 -- Table structure for `mage_admin_user`

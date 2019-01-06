@@ -39,6 +39,7 @@ public class GradeWxPublicNum {
 
     /**
      * 认证过的公众号主键id    grade_account表主键
+     * 可存可不存
      */
     private Integer gaId;
 
