@@ -13,7 +13,7 @@
 
   <select id="getPublicNumList" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select pn.USER_ID,pn.WX_USER_NAME,pn.APPID,pn.GMT_CREATE,ga.GZ_NAME,ga.IS_DEL,ga.STATUS from grade_wx_public_num pn
-    LEFT JOIN grade_account ga ON ON pn.APPID = ga.APPID
+    LEFT JOIN grade_account ga ON pn.APPID = ga.APPID
     where pn.USER_ID = #{userId}
   </select>
 

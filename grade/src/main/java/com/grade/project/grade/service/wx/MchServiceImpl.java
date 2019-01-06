@@ -57,7 +57,8 @@ public class MchServiceImpl implements MchService {
     }
 
     @Override
-    public Map<Object, Object> payMchToUser(HttpServletRequest request, GradeAccount gradeAccount, Integer userId, BigDecimal amount,String desc) {
+    public Map<Object, Object> payMchToUser(HttpServletRequest request, GradeAccount gradeAccount, BigDecimal amount,String desc) {
+        int userId = gradeAccount.getUserId();
         Map<Object, Object> dataMap = new HashMap<Object, Object>();
         boolean orderStatus = false;
         String msg = "转账成功";
@@ -105,6 +106,7 @@ public class MchServiceImpl implements MchService {
                             logger.info("转账失败：" + restmap.get("err_code") + ":" + restmap.get("err_code_des"));
                             msg = restmap.get("err_code_des");
                             mchPayOrder.setPayStatus(StatusUtils.ORDER_STATUS_3);
+                            gradeAccountMapper.insertSelective(gradeAccount);//保存商户信息
                         }
                     }
                 }else{

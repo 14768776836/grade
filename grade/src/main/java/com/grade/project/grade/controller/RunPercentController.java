@@ -44,17 +44,22 @@ public class RunPercentController {
     }
 
     /**
-     * runPercent/addRunPercent
-     * 新增分润比例数据
+     * runPercent/saveRunPercent
+     * 保存分润比例数据
      * @param gradeRunPercent
      * @return
      */
-    @RequestMapping(value = "/addRunPercent")
+    @RequestMapping(value = "/saveRunPercent")
     @ResponseBody
-    public JSONObject addRunPercent(GradeRunPercent gradeRunPercent){
+    public JSONObject saveRunPercent(GradeRunPercent gradeRunPercent){
         Map<Object, Object> dataMap = new HashMap<Object, Object>();
         try {
-            int result = runPercentService.addRunPercent(gradeRunPercent);
+            int result = 0;
+            if(gradeRunPercent.getId() != null){
+                result = runPercentService.updateRun(gradeRunPercent);//修改分润接口
+            }else{
+                result = runPercentService.addRunPercent(gradeRunPercent);//新增分润接口
+            }
             if(result == 1){
                 dataMap.put("msg", StatusUtils.SUCCESS_MSG);
                 dataMap.put("success",true);
@@ -71,33 +76,7 @@ public class RunPercentController {
     }
 
     /**
-     *
-     * 修改分润比例数据
-     * @param gradeRunPercent
-     * @return
-     */
-    @RequestMapping(value = "/updateRun")
-    @ResponseBody
-    public JSONObject updateRun(GradeRunPercent gradeRunPercent){
-        Map<Object, Object> dataMap = new HashMap<Object, Object>();
-        try {
-            int result = runPercentService.updateRun(gradeRunPercent);
-            if(result == 1){
-                dataMap.put("msg", StatusUtils.SUCCESS_MSG);
-                dataMap.put("success",true);
-            }else{
-                dataMap.put("success",false);
-                dataMap.put("msg", StatusUtils.EDIT_ERROR_MSG_EXCEPTION);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            dataMap.put("success",false);
-            dataMap.put("msg", StatusUtils.EDIT_ERROR_MSG_EXCEPTION);
-        }
-        return (JSONObject) JSONObject.toJSON(dataMap);
-    }
-
-    /**
+     * 暂无调用
      * runPercent/updIsDel
      * 删除分润数据
      * @param gradeRunPercent

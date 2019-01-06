@@ -106,17 +106,16 @@ public class MchController {
      * 总代理校验商户是否设置成功
      * @param request
      * @param gradeAccount   转账商户信息及公众号信息
-     * @param userId         收款人用户id
      * @return
      */
     @RequestMapping(value = "/codeMchNum")
     @ResponseBody
-    public JSONObject codeMchNum(HttpServletRequest request,GradeAccount gradeAccount,Integer userId){
+    public JSONObject codeMchNum(HttpServletRequest request,GradeAccount gradeAccount){
         Map<Object, Object> dataMap = new HashMap<Object, Object>();
         try {
             BigDecimal amount = new BigDecimal("1.00");
             String desc = "商户可使用";
-            dataMap = mchService.payMchToUser(request,gradeAccount,userId,amount,desc);
+            dataMap = mchService.payMchToUser(request,gradeAccount,amount,desc);
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success",false);
