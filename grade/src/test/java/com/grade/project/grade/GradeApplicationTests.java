@@ -45,14 +45,15 @@ public class GradeApplicationTests {
 //        System.out.println(sun);
 
         MyTask myTask = new MyTask();
-        String text = "[{\"level\":\"1\",\"value\":\"5\"},{\"level\":\"2\",\"value\":\"7\"}]";
-        JSONArray array = JSONArray.parseArray(text);
-        List<Percent> percents = array.toJavaList(Percent.class);
-
-        User user = new User();
-        user.setId(40);
-        user.setExtensionCode("ID40JNPNGL");
-        myTask.recursive(user,"ID10XWLKUQ",percents,"2018-12-01","2018-12-15");
+//        String text = "[{\"level\":\"1\",\"value\":\"5\"},{\"level\":\"2\",\"value\":\"7\"}]";
+//        JSONArray array = JSONArray.parseArray(text);
+//        List<Percent> percents = array.toJavaList(Percent.class);
+//
+//        User user = new User();
+//        user.setId(40);
+//        user.setExtensionCode("ID40JNPNGL");
+//        myTask.recursive(user,"ID10XWLKUQ",percents,"2018-12-01","2018-12-15");
+        myTask.task();
 
     }
 
