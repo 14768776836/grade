@@ -1,10 +1,10 @@
 package com.grade.project.grade.task;
 
 import com.alibaba.fastjson.JSONArray;
-import com.grade.project.grade.mapper.MchPayOrderMapper;
-import com.grade.project.grade.mapper.ShopHistoryMapper;
-import com.grade.project.grade.mapper.UserMapper;
+import com.grade.project.grade.mapper.*;
+import com.grade.project.grade.mapper.vo.OrderVoMapper;
 import com.grade.project.grade.model.*;
+import com.grade.project.grade.model.vo.GradeOrderVo;
 import com.grade.project.grade.service.RunPercentService;
 import com.grade.project.grade.util.StatusUtils;
 import com.grade.project.grade.util.wx.PayCommonUtil;
@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,102 +36,19 @@ public class MyTask {
 
     @Scheduled(cron = "0 0 3 1,15 * ? ")
     public void task() {
-        ShopHistoryMapper shopHistoryMapper = getBean(ShopHistoryMapper.class);
+        OrderVoMapper orderVoMapper = getBean(OrderVoMapper.class);
         UserMapper userMapper = getBean(UserMapper.class);
-        RunPercentService runPercentService = getBean(RunPercentService.class);
-        MchPayOrderMapper mchPayOrderMapper = getBean(MchPayOrderMapper.class);
-
-        LocalDate date = LocalDate.now();
-        int year = date.getYear();          //年
-        int month = date.getMonthValue();   //月
-        int day = date.getDayOfMonth();     //日
-        // 获取当前时间的上一个开始计算的时间点
-        LocalDate start;
-        if (day == 1 && month == 1) {
-            start = LocalDate.of(year - 1, 12, 15);
-        } else if (day == 1) {
-            start = LocalDate.of(year, month - 1, 15);
-        } else {
-            start = LocalDate.of(year, month, 1);
-        }
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String endTime = date.format(format);
-        String startTime = start.format(format);
-
-
-//        BEGIN
-//        DECLARE sTemp VARCHAR(1000);
-//        DECLARE sTempChd VARCHAR(1000);
-//
-//        SET sTemp = '$';
-//        SET sTempChd =cast(rootId as CHAR);
-//
-//        WHILE sTempChd is not null DO
-//        SET sTemp = concat(sTemp,',',sTempChd);
-//        SELECT group_concat(EXTENSION_CODE) INTO sTempChd FROM  mv_user where FIND_IN_SET(PARENT_CODE,sTempChd)>0;
-//        END WHILE;
-//        RETURN sTemp;
-//        END
-
-
-
-
-
-
-
-
-
-
-        // 获取所有的总代理的集合
-        UserExample example = new UserExample();
-        example.createCriteria().andParentCodeEqualTo(null).andUserStatusEqualTo(0);
-        List<User> list = userMapper.selectByExample(example);
-
-        if (list != null && list.size() > 0) {
-            for (User user : list) {
-                // 获取该总代理的下级在该时间段内的所有的消费的总额
-                BigDecimal sum = shopHistoryMapper.sumLevelShop(user.getExtensionCode(), startTime.toString(), endTime);
-                // 总代理获取的分成
-                BigDecimal result = getResultRun(sum, WxConfigUtils.GENERAL_AGENT_RUN);
-                // 产生订单，存入数据库
-                mchPayOrderMapper.insertSelective(generateOrder(user, user.getExtensionCode(), result));
-                // 获取该总代理的分润表
-                GradeRunPercent runPercent = runPercentService.findDataByUserId(user.getId());
-                String run = runPercent.getRunPercent();
-                if (run == null) return;
-
-                JSONArray array = JSONArray.parseArray(run);
-                List<Percent> percents = array.toJavaList(Percent.class);
-
-                // 这里是总代理的直属下级集合
-                List<User> users = getSubordinate(user);
-
+        //查询所有有效的商户数据 = 总代理
+        List<GradeOrderVo> gradeMchList = orderVoMapper.getIsTrueMchUser();
+        for(GradeOrderVo gradeOrderVo : gradeMchList){
+            //查询总代理所有下属子级用户
+            List<User> uList = orderVoMapper.getAllChildrenList(gradeOrderVo.getExtensionCode());
+            for(int i = 0; i <uList.size(); i++){
+                OrderThread orderThread = new OrderThread(uList.get(i),gradeOrderVo);
+                Thread thread = new Thread(orderThread,i+"order");
+                thread.start();
             }
         }
-    }
-
-    /**
-     * 通过上级以及该分支的总代理、打款金额生成订单
-     *
-     * @param u1            生成订单的用户
-     * @param extensionCode 总代理的推广码
-     * @param res           分成数额
-     * @return
-     */
-
-    private MchPayOrder generateOrder(User u1, String extensionCode, BigDecimal res) {
-        MchPayOrder order1 = new MchPayOrder();
-        order1.setOrderNum(PayCommonUtil.getOrderIdByUUId());   //设置订单号
-        // 账单未支付状态
-        order1.setPayStatus(StatusUtils.ORDER_STATUS_4);
-        order1.setUserId(u1.getId());       //设置用户id
-        order1.setParentCode(u1.getParentCode());  //设置直属上级推广码
-        order1.setGeneralAgentCode(extensionCode);    //设置本支线总代理的推广码
-        order1.setPayPrice(res);    //设置打款金额
-        order1.setWxUserName(u1.getUsername()); //设置用户昵称
-        order1.setGmtCreate(new Date());    //设置创建订单时间
-        order1.setGmtModified(new Date());  //设置修改订单时间
-        return order1;
     }
 
     /**
@@ -158,34 +76,7 @@ public class MyTask {
         return userMapper.selectByExample(userExample);
     }
 
-    /**
-     * 递归获取各级玩家的收益并产生账单
-     *
-     * @param superior     产生账单的用户
-     * @param generalAgent 总代理的推广码
-     * @param percents     分成比例
-     * @param startTime    开始时间
-     * @param endTime      结束时间
-     */
-    private void recursive(User superior, String generalAgent , List<Percent> percents,String startTime,String endTime) {
-        ShopHistoryMapper shopHistoryMapper = getBean(ShopHistoryMapper.class);
-        MchPayOrderMapper mchPayOrderMapper = getBean(MchPayOrderMapper.class);
-        for(int i = 0 ; i < percents.size() ; i ++){
-            Percent percent = percents.get(i);
-            List<User> users = getSubordinate(superior);
-            BigDecimal result = new BigDecimal(0);
-            for(User user : users){
-                result.add(shopHistoryMapper.sumShopHistory(user.getId(), startTime , endTime));
-//                List<User> users1 = getSubordinate(user);
 
-
-                if(i+1 >= percents.size()) break;
-                recursive(user,generalAgent,percents,startTime,endTime);
-            }
-            logger.info("user :{} level :{} count :{}",superior.getId(),percent.getLevel(),result);
-            mchPayOrderMapper.insertSelective(generateOrder(superior, generalAgent, getResultRun(result, percent.getValue())));
-        }
-    }
 
 
 }

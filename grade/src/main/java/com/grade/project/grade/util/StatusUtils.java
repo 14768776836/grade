@@ -88,4 +88,15 @@ public class StatusUtils {
      * 错误信息异常提示  参数错误
      */
     public final static String DATA_ERROR_MSG_EXCEPTION = "参数错误";
+
+    //商户账户状态  gradeAccount表
+
+    /**
+     * 失效
+     */
+    public final static Integer STATUS_0 = 0;
+    /**
+     * 有效
+     */
+    public final static Integer STATUS_1 = 1;
 }

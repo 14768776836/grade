@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grade.project.grade.mapper.vo.OrderVoMapper" >
+  <resultMap id="BaseResultMap" type="com.grade.project.grade.model.User" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="TELNO" property="telno" jdbcType="INTEGER" />
+    <result column="EXTENSION_CODE" property="extensionCode" jdbcType="VARCHAR" />
+    <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+    <result column="FACTION" property="faction" jdbcType="VARCHAR" />
+    <result column="TRUENAME" property="truename" jdbcType="VARCHAR" />
+    <result column="LOGIN_PSWD" property="loginPswd" jdbcType="VARCHAR" />
+    <result column="PAY_PSWD" property="payPswd" jdbcType="VARCHAR" />
+    <result column="NO_PRICE" property="noPrice" jdbcType="DECIMAL" />
+    <result column="IS_PRICE" property="isPrice" jdbcType="DECIMAL" />
+    <result column="GMT_CREATE" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="USER_TYPE" property="userType" jdbcType="INTEGER" />
+    <result column="USER_STATUS" property="userStatus" jdbcType="INTEGER" />
+    <result column="TOKEN" property="token" jdbcType="VARCHAR" />
+    <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="GradeOrderResultMap" type="com.grade.project.grade.model.vo.GradeOrderVo" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="GZ_NAME" property="gzName" jdbcType="VARCHAR" />
+    <result column="APPID" property="appid" jdbcType="VARCHAR" />
+    <result column="APP_SECRECT" property="appSecrect" jdbcType="VARCHAR" />
+    <result column="API_KEY" property="apiKey" jdbcType="VARCHAR" />
+    <result column="MCH_ID" property="mchId" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
+    <result column="GMT_CREATE" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="FILE_PATH" property="filePath" jdbcType="VARCHAR" />
+
+    <result column="EXTENSION_CODE" property="extensionCode" jdbcType="VARCHAR" />
+    <result column="RUN_LEVEL" property="runLevel" jdbcType="INTEGER" />
+    <result column="RUN_PERCENT" property="runPercent" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="getChildrenList" resultMap="BaseResultMap">
+    select ID,EXTENSION_CODE,PARENT_CODE from mv_user where PARENT_CODE in
+    <foreach collection="uParentList" item="extensionCode" index="index"
+             open="(" close=")" separator=",">
+      #{extensionCode}
+    </foreach>
+
+  </select>
+
+  <select id="countChildrenPay" resultType="java.math.BigDecimal">
+      select sum(sh.SH_PAY) from mv_user u
+      LEFT JOIN mv_shop_history sh ON u.ID = sh.SH_USERID
+      where sh.SH_USERID in
+    <foreach collection="uList" item="id" index="index"
+             open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+      and sh.IS_PAY = 1
+      and sh.GMT_CREATE BETWEEN #{startTime} and #{endTime}
+  </select>
+
+  <select id="getIsTrueMchUser" resultMap="GradeOrderResultMap">
+    select ga.USER_ID,ga.APPID,ga.GZ_NAME,gr.USER_ID,gr.RUN_LEVEL,gr.RUN_PERCENT,gr.EXTENSION_CODE from grade_account ga
+    LEFT JOIN grade_run_percent gr ON ga.USER_ID = gr.USER_ID
+    where ga.`STATUS` = 1
+  </select>
+
+  <select id="getAllChildrenList" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select ID,EXTENSION_CODE,PARENT_CODE from mv_user where FIND_IN_SET(PARENT_CODE,getChildList(#{parentCode}))
+  </select>
+</mapper>
