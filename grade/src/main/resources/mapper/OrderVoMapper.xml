@@ -42,9 +42,9 @@
 
   <select id="getChildrenList" resultMap="BaseResultMap">
     select ID,EXTENSION_CODE,PARENT_CODE from mv_user where PARENT_CODE in
-    <foreach collection="uParentList" item="extensionCode" index="index"
+    <foreach collection="uParentList" item="items" index="index"
              open="(" close=")" separator=",">
-      #{extensionCode}
+      #{items.extensionCode}
     </foreach>
 
   </select>

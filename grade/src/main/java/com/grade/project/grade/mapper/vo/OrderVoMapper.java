@@ -17,7 +17,7 @@ public interface OrderVoMapper {
      * @param uParentList
      * @return
      */
-    List<User> getChildrenList(List<User> uParentList);
+    List<User> getChildrenList(@Param("uParentList") List<User> uParentList);
 
     /**
      * 查询充值总金额
