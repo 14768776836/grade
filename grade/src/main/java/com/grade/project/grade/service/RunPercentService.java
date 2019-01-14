@@ -31,4 +31,11 @@ public interface RunPercentService {
      * @return
      */
     int updIsDel(GradeRunPercent gradeRunPercent);
+
+    /**
+     * 新增或修改分销比例数据
+     * @param gradeRunPercent
+     * @return
+     */
+    int addOrUpdateRunPercent(GradeRunPercent gradeRunPercent);
 }

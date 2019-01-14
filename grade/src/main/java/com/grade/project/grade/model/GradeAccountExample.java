@@ -435,6 +435,76 @@ public class GradeAccountExample {
             return (Criteria) this;
         }
 
+        public Criteria andApiKeyIsNull() {
+            addCriterion("API_KEY is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiKeyIsNotNull() {
+            addCriterion("API_KEY is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiKeyEqualTo(String value) {
+            addCriterion("API_KEY =", value, "apiKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiKeyNotEqualTo(String value) {
+            addCriterion("API_KEY <>", value, "apiKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiKeyGreaterThan(String value) {
+            addCriterion("API_KEY >", value, "apiKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiKeyGreaterThanOrEqualTo(String value) {
+            addCriterion("API_KEY >=", value, "apiKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiKeyLessThan(String value) {
+            addCriterion("API_KEY <", value, "apiKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiKeyLessThanOrEqualTo(String value) {
+            addCriterion("API_KEY <=", value, "apiKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiKeyLike(String value) {
+            addCriterion("API_KEY like", value, "apiKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiKeyNotLike(String value) {
+            addCriterion("API_KEY not like", value, "apiKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiKeyIn(List<String> values) {
+            addCriterion("API_KEY in", values, "apiKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiKeyNotIn(List<String> values) {
+            addCriterion("API_KEY not in", values, "apiKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiKeyBetween(String value1, String value2) {
+            addCriterion("API_KEY between", value1, value2, "apiKey");
+            return (Criteria) this;
+        }
+
+        public Criteria andApiKeyNotBetween(String value1, String value2) {
+            addCriterion("API_KEY not between", value1, value2, "apiKey");
+            return (Criteria) this;
+        }
+
         public Criteria andMchIdIsNull() {
             addCriterion("MCH_ID is null");
             return (Criteria) this;
@@ -742,6 +812,76 @@ public class GradeAccountExample {
 
         public Criteria andGmtModifiedNotBetween(Date value1, Date value2) {
             addCriterion("GMT_MODIFIED not between", value1, value2, "gmtModified");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathIsNull() {
+            addCriterion("FILE_PATH is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathIsNotNull() {
+            addCriterion("FILE_PATH is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathEqualTo(String value) {
+            addCriterion("FILE_PATH =", value, "filePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathNotEqualTo(String value) {
+            addCriterion("FILE_PATH <>", value, "filePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathGreaterThan(String value) {
+            addCriterion("FILE_PATH >", value, "filePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathGreaterThanOrEqualTo(String value) {
+            addCriterion("FILE_PATH >=", value, "filePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathLessThan(String value) {
+            addCriterion("FILE_PATH <", value, "filePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathLessThanOrEqualTo(String value) {
+            addCriterion("FILE_PATH <=", value, "filePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathLike(String value) {
+            addCriterion("FILE_PATH like", value, "filePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathNotLike(String value) {
+            addCriterion("FILE_PATH not like", value, "filePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathIn(List<String> values) {
+            addCriterion("FILE_PATH in", values, "filePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathNotIn(List<String> values) {
+            addCriterion("FILE_PATH not in", values, "filePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathBetween(String value1, String value2) {
+            addCriterion("FILE_PATH between", value1, value2, "filePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilePathNotBetween(String value1, String value2) {
+            addCriterion("FILE_PATH not between", value1, value2, "filePath");
             return (Criteria) this;
         }
     }

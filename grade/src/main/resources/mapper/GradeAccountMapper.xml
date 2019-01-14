@@ -7,11 +7,13 @@
     <result column="GZ_NAME" property="gzName" jdbcType="VARCHAR" />
     <result column="APPID" property="appid" jdbcType="VARCHAR" />
     <result column="APP_SECRECT" property="appSecrect" jdbcType="VARCHAR" />
+    <result column="API_KEY" property="apiKey" jdbcType="VARCHAR" />
     <result column="MCH_ID" property="mchId" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="INTEGER" />
     <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
     <result column="GMT_CREATE" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="FILE_PATH" property="filePath" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -72,7 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ID, USER_ID, GZ_NAME, APPID, APP_SECRECT, MCH_ID, STATUS, IS_DEL, GMT_CREATE, GMT_MODIFIED
+    ID, USER_ID, GZ_NAME, APPID, APP_SECRECT, API_KEY, MCH_ID, STATUS, IS_DEL, GMT_CREATE, 
+    GMT_MODIFIED, FILE_PATH
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grade.project.grade.model.GradeAccountExample" >
     select
@@ -106,13 +109,15 @@
   </delete>
   <insert id="insert" parameterType="com.grade.project.grade.model.GradeAccount" >
     insert into grade_account (ID, USER_ID, GZ_NAME, 
-      APPID, APP_SECRECT, MCH_ID, 
-      STATUS, IS_DEL, GMT_CREATE, 
-      GMT_MODIFIED)
+      APPID, APP_SECRECT, API_KEY, 
+      MCH_ID, STATUS, IS_DEL, 
+      GMT_CREATE, GMT_MODIFIED, FILE_PATH
+      )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{gzName,jdbcType=VARCHAR}, 
-      #{appid,jdbcType=VARCHAR}, #{appSecrect,jdbcType=VARCHAR}, #{mchId,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{isDel,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtModified,jdbcType=TIMESTAMP})
+      #{appid,jdbcType=VARCHAR}, #{appSecrect,jdbcType=VARCHAR}, #{apiKey,jdbcType=VARCHAR}, 
+      #{mchId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{isDel,jdbcType=INTEGER}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{filePath,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.grade.project.grade.model.GradeAccount" >
     insert into grade_account
@@ -132,6 +137,9 @@
       <if test="appSecrect != null" >
         APP_SECRECT,
       </if>
+      <if test="apiKey != null" >
+        API_KEY,
+      </if>
       <if test="mchId != null" >
         MCH_ID,
       </if>
@@ -146,6 +154,9 @@
       </if>
       <if test="gmtModified != null" >
         GMT_MODIFIED,
+      </if>
+      <if test="filePath != null" >
+        FILE_PATH,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -164,6 +175,9 @@
       <if test="appSecrect != null" >
         #{appSecrect,jdbcType=VARCHAR},
       </if>
+      <if test="apiKey != null" >
+        #{apiKey,jdbcType=VARCHAR},
+      </if>
       <if test="mchId != null" >
         #{mchId,jdbcType=VARCHAR},
       </if>
@@ -178,6 +192,9 @@
       </if>
       <if test="gmtModified != null" >
         #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filePath != null" >
+        #{filePath,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -205,6 +222,9 @@
       <if test="record.appSecrect != null" >
         APP_SECRECT = #{record.appSecrect,jdbcType=VARCHAR},
       </if>
+      <if test="record.apiKey != null" >
+        API_KEY = #{record.apiKey,jdbcType=VARCHAR},
+      </if>
       <if test="record.mchId != null" >
         MCH_ID = #{record.mchId,jdbcType=VARCHAR},
       </if>
@@ -220,6 +240,9 @@
       <if test="record.gmtModified != null" >
         GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.filePath != null" >
+        FILE_PATH = #{record.filePath,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -232,11 +255,13 @@
       GZ_NAME = #{record.gzName,jdbcType=VARCHAR},
       APPID = #{record.appid,jdbcType=VARCHAR},
       APP_SECRECT = #{record.appSecrect,jdbcType=VARCHAR},
+      API_KEY = #{record.apiKey,jdbcType=VARCHAR},
       MCH_ID = #{record.mchId,jdbcType=VARCHAR},
       STATUS = #{record.status,jdbcType=INTEGER},
       IS_DEL = #{record.isDel,jdbcType=INTEGER},
       GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP}
+      GMT_MODIFIED = #{record.gmtModified,jdbcType=TIMESTAMP},
+      FILE_PATH = #{record.filePath,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -256,6 +281,9 @@
       <if test="appSecrect != null" >
         APP_SECRECT = #{appSecrect,jdbcType=VARCHAR},
       </if>
+      <if test="apiKey != null" >
+        API_KEY = #{apiKey,jdbcType=VARCHAR},
+      </if>
       <if test="mchId != null" >
         MCH_ID = #{mchId,jdbcType=VARCHAR},
       </if>
@@ -271,6 +299,9 @@
       <if test="gmtModified != null" >
         GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
+      <if test="filePath != null" >
+        FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
@@ -280,11 +311,13 @@
       GZ_NAME = #{gzName,jdbcType=VARCHAR},
       APPID = #{appid,jdbcType=VARCHAR},
       APP_SECRECT = #{appSecrect,jdbcType=VARCHAR},
+      API_KEY = #{apiKey,jdbcType=VARCHAR},
       MCH_ID = #{mchId,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=INTEGER},
       IS_DEL = #{isDel,jdbcType=INTEGER},
       GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
-      GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP}
+      GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
+      FILE_PATH = #{filePath,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

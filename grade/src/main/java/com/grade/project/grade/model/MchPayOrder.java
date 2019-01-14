@@ -4,61 +4,29 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class MchPayOrder {
-    /**
-     * 主键id
-     */
     private Integer id;
 
-    /**
-     * 订单编号
-     */
     private String orderNum;
 
-    /**
-     * 收款人用户id
-     */
     private Integer userId;
 
-    /**
-     * 收款人对应微信用户昵称
-     */
     private String wxUserName;
 
-    /**
-     * 当前收款人所属上级邀请码
-     */
     private String parentCode;
 
-    /**
-     * 收款人收款金额
-     */
+    private String generalAgentCode;
+
     private BigDecimal payPrice;
 
-    /**
-     * 收款信息
-     */
     private String payMsg;
 
-    /**
-     * 订单状态
-     * 详细状态说明  StatusUtils 订单状态
-     */
     private Integer payStatus;
 
-    /**
-     * 是否删除
-     */
-    private Integer isDel = 0;
+    private Integer isDel;
 
-    /**
-     * 创建时间
-     */
-    private Date gmtCreate = new Date();
+    private Date gmtCreate;
 
-    /**
-     * 修改时间
-     */
-    private Date gmtModified = new Date();
+    private Date gmtModified;
 
     public Integer getId() {
         return id;
@@ -98,6 +66,14 @@ public class MchPayOrder {
 
     public void setParentCode(String parentCode) {
         this.parentCode = parentCode == null ? null : parentCode.trim();
+    }
+
+    public String getGeneralAgentCode() {
+        return generalAgentCode;
+    }
+
+    public void setGeneralAgentCode(String generalAgentCode) {
+        this.generalAgentCode = generalAgentCode == null ? null : generalAgentCode.trim();
     }
 
     public BigDecimal getPayPrice() {

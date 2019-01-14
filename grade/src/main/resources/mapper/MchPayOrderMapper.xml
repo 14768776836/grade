@@ -7,6 +7,7 @@
     <result column="USER_ID" property="userId" jdbcType="INTEGER" />
     <result column="WX_USER_NAME" property="wxUserName" jdbcType="VARCHAR" />
     <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+    <result column="GENERAL_AGENT_CODE" property="generalAgentCode" jdbcType="VARCHAR" />
     <result column="PAY_PRICE" property="payPrice" jdbcType="DECIMAL" />
     <result column="PAY_MSG" property="payMsg" jdbcType="VARCHAR" />
     <result column="PAY_STATUS" property="payStatus" jdbcType="INTEGER" />
@@ -73,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ID, ORDER_NUM, USER_ID, WX_USER_NAME, PARENT_CODE, PAY_PRICE, PAY_MSG, PAY_STATUS, 
-    IS_DEL, GMT_CREATE, GMT_MODIFIED
+    ID, ORDER_NUM, USER_ID, WX_USER_NAME, PARENT_CODE, GENERAL_AGENT_CODE, PAY_PRICE, 
+    PAY_MSG, PAY_STATUS, IS_DEL, GMT_CREATE, GMT_MODIFIED
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grade.project.grade.model.MchPayOrderExample" >
     select
@@ -108,13 +109,15 @@
   </delete>
   <insert id="insert" parameterType="com.grade.project.grade.model.MchPayOrder" >
     insert into grade_mch_pay (ID, ORDER_NUM, USER_ID, 
-      WX_USER_NAME, PARENT_CODE, PAY_PRICE, 
-      PAY_MSG, PAY_STATUS, IS_DEL, 
-      GMT_CREATE, GMT_MODIFIED)
+      WX_USER_NAME, PARENT_CODE, GENERAL_AGENT_CODE, 
+      PAY_PRICE, PAY_MSG, PAY_STATUS, 
+      IS_DEL, GMT_CREATE, GMT_MODIFIED
+      )
     values (#{id,jdbcType=INTEGER}, #{orderNum,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
-      #{wxUserName,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{payPrice,jdbcType=DECIMAL}, 
-      #{payMsg,jdbcType=VARCHAR}, #{payStatus,jdbcType=INTEGER}, #{isDel,jdbcType=INTEGER}, 
-      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+      #{wxUserName,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{generalAgentCode,jdbcType=VARCHAR}, 
+      #{payPrice,jdbcType=DECIMAL}, #{payMsg,jdbcType=VARCHAR}, #{payStatus,jdbcType=INTEGER}, 
+      #{isDel,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.grade.project.grade.model.MchPayOrder" >
     insert into grade_mch_pay
@@ -133,6 +136,9 @@
       </if>
       <if test="parentCode != null" >
         PARENT_CODE,
+      </if>
+      <if test="generalAgentCode != null" >
+        GENERAL_AGENT_CODE,
       </if>
       <if test="payPrice != null" >
         PAY_PRICE,
@@ -168,6 +174,9 @@
       </if>
       <if test="parentCode != null" >
         #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="generalAgentCode != null" >
+        #{generalAgentCode,jdbcType=VARCHAR},
       </if>
       <if test="payPrice != null" >
         #{payPrice,jdbcType=DECIMAL},
@@ -213,6 +222,9 @@
       <if test="record.parentCode != null" >
         PARENT_CODE = #{record.parentCode,jdbcType=VARCHAR},
       </if>
+      <if test="record.generalAgentCode != null" >
+        GENERAL_AGENT_CODE = #{record.generalAgentCode,jdbcType=VARCHAR},
+      </if>
       <if test="record.payPrice != null" >
         PAY_PRICE = #{record.payPrice,jdbcType=DECIMAL},
       </if>
@@ -243,6 +255,7 @@
       USER_ID = #{record.userId,jdbcType=INTEGER},
       WX_USER_NAME = #{record.wxUserName,jdbcType=VARCHAR},
       PARENT_CODE = #{record.parentCode,jdbcType=VARCHAR},
+      GENERAL_AGENT_CODE = #{record.generalAgentCode,jdbcType=VARCHAR},
       PAY_PRICE = #{record.payPrice,jdbcType=DECIMAL},
       PAY_MSG = #{record.payMsg,jdbcType=VARCHAR},
       PAY_STATUS = #{record.payStatus,jdbcType=INTEGER},
@@ -267,6 +280,9 @@
       </if>
       <if test="parentCode != null" >
         PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="generalAgentCode != null" >
+        GENERAL_AGENT_CODE = #{generalAgentCode,jdbcType=VARCHAR},
       </if>
       <if test="payPrice != null" >
         PAY_PRICE = #{payPrice,jdbcType=DECIMAL},
@@ -295,6 +311,7 @@
       USER_ID = #{userId,jdbcType=INTEGER},
       WX_USER_NAME = #{wxUserName,jdbcType=VARCHAR},
       PARENT_CODE = #{parentCode,jdbcType=VARCHAR},
+      GENERAL_AGENT_CODE = #{generalAgentCode,jdbcType=VARCHAR},
       PAY_PRICE = #{payPrice,jdbcType=DECIMAL},
       PAY_MSG = #{payMsg,jdbcType=VARCHAR},
       PAY_STATUS = #{payStatus,jdbcType=INTEGER},

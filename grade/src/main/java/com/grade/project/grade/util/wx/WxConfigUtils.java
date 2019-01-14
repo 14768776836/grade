@@ -5,12 +5,16 @@ public class WxConfigUtils {
     /**
      * 微信普通用户认证地址
      */
-    public final static String WX_USER_AUTH = "";
+    public final static String WX_USER_AUTH = "http://192.168.10.181/#/wechatBind";
 
+    public final static String WX_APPID = "wxba2ae291ef2cbda7";
+
+    public final static String WX_TOKEN = "10086";
     /**
      * 微信总代理用户认证地址
      */
-    public final static String WX_BOSS_USER_AUTH = "";
+    public final static String WX_BOSS_USER_AUTH = "http://192.168.10.181/#/checkStore";
+
 
     /**
      * oauth2授权接口(GET)
@@ -35,4 +39,9 @@ public class WxConfigUtils {
      * 商户转账URL
      */
     public final static String TRANSFERS_PAY = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
+
+    /**
+     * 总代理的分支下的分成比例
+     */
+    public final static Integer GENERAL_AGENT_RUN = 5;
 }

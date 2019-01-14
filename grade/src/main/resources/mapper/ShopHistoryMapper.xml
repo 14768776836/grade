@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grade.project.grade.mapper.ShopHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.grade.project.grade.model.ShopHistory" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SH_ORDER" property="shOrder" jdbcType="VARCHAR" />
+    <result column="SH_USERID" property="shUserid" jdbcType="INTEGER" />
+    <result column="HPID" property="hpid" jdbcType="INTEGER" />
+    <result column="SHID" property="shid" jdbcType="INTEGER" />
+    <result column="SH_NAME" property="shName" jdbcType="VARCHAR" />
+    <result column="SH_PRICE" property="shPrice" jdbcType="DECIMAL" />
+    <result column="SH_PAY" property="shPay" jdbcType="DECIMAL" />
+    <result column="IS_PAY" property="isPay" jdbcType="INTEGER" />
+    <result column="SH_END" property="shEnd" jdbcType="TIMESTAMP" />
+    <result column="GMT_CREATE" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="GMT_MODIFED" property="gmtModifed" jdbcType="TIMESTAMP" />
+    <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, SH_ORDER, SH_USERID, HPID, SHID, SH_NAME, SH_PRICE, SH_PAY, IS_PAY, SH_END, GMT_CREATE, 
+    GMT_MODIFED, IS_DEL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grade.project.grade.model.ShopHistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mv_shop_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mv_shop_history
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mv_shop_history
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.grade.project.grade.model.ShopHistoryExample" >
+    delete from mv_shop_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.grade.project.grade.model.ShopHistory" >
+    insert into mv_shop_history (ID, SH_ORDER, SH_USERID, 
+      HPID, SHID, SH_NAME, 
+      SH_PRICE, SH_PAY, IS_PAY, 
+      SH_END, GMT_CREATE, GMT_MODIFED, 
+      IS_DEL)
+    values (#{id,jdbcType=INTEGER}, #{shOrder,jdbcType=VARCHAR}, #{shUserid,jdbcType=INTEGER}, 
+      #{hpid,jdbcType=INTEGER}, #{shid,jdbcType=INTEGER}, #{shName,jdbcType=VARCHAR}, 
+      #{shPrice,jdbcType=DECIMAL}, #{shPay,jdbcType=DECIMAL}, #{isPay,jdbcType=INTEGER}, 
+      #{shEnd,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModifed,jdbcType=TIMESTAMP}, 
+      #{isDel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.grade.project.grade.model.ShopHistory" >
+    insert into mv_shop_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="shOrder != null" >
+        SH_ORDER,
+      </if>
+      <if test="shUserid != null" >
+        SH_USERID,
+      </if>
+      <if test="hpid != null" >
+        HPID,
+      </if>
+      <if test="shid != null" >
+        SHID,
+      </if>
+      <if test="shName != null" >
+        SH_NAME,
+      </if>
+      <if test="shPrice != null" >
+        SH_PRICE,
+      </if>
+      <if test="shPay != null" >
+        SH_PAY,
+      </if>
+      <if test="isPay != null" >
+        IS_PAY,
+      </if>
+      <if test="shEnd != null" >
+        SH_END,
+      </if>
+      <if test="gmtCreate != null" >
+        GMT_CREATE,
+      </if>
+      <if test="gmtModifed != null" >
+        GMT_MODIFED,
+      </if>
+      <if test="isDel != null" >
+        IS_DEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shOrder != null" >
+        #{shOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="shUserid != null" >
+        #{shUserid,jdbcType=INTEGER},
+      </if>
+      <if test="hpid != null" >
+        #{hpid,jdbcType=INTEGER},
+      </if>
+      <if test="shid != null" >
+        #{shid,jdbcType=INTEGER},
+      </if>
+      <if test="shName != null" >
+        #{shName,jdbcType=VARCHAR},
+      </if>
+      <if test="shPrice != null" >
+        #{shPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="shPay != null" >
+        #{shPay,jdbcType=DECIMAL},
+      </if>
+      <if test="isPay != null" >
+        #{isPay,jdbcType=INTEGER},
+      </if>
+      <if test="shEnd != null" >
+        #{shEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModifed != null" >
+        #{gmtModifed,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.grade.project.grade.model.ShopHistoryExample" resultType="java.lang.Integer" >
+    select count(*) from mv_shop_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mv_shop_history
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.shOrder != null" >
+        SH_ORDER = #{record.shOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shUserid != null" >
+        SH_USERID = #{record.shUserid,jdbcType=INTEGER},
+      </if>
+      <if test="record.hpid != null" >
+        HPID = #{record.hpid,jdbcType=INTEGER},
+      </if>
+      <if test="record.shid != null" >
+        SHID = #{record.shid,jdbcType=INTEGER},
+      </if>
+      <if test="record.shName != null" >
+        SH_NAME = #{record.shName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shPrice != null" >
+        SH_PRICE = #{record.shPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.shPay != null" >
+        SH_PAY = #{record.shPay,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isPay != null" >
+        IS_PAY = #{record.isPay,jdbcType=INTEGER},
+      </if>
+      <if test="record.shEnd != null" >
+        SH_END = #{record.shEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtCreate != null" >
+        GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModifed != null" >
+        GMT_MODIFED = #{record.gmtModifed,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDel != null" >
+        IS_DEL = #{record.isDel,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mv_shop_history
+    set ID = #{record.id,jdbcType=INTEGER},
+      SH_ORDER = #{record.shOrder,jdbcType=VARCHAR},
+      SH_USERID = #{record.shUserid,jdbcType=INTEGER},
+      HPID = #{record.hpid,jdbcType=INTEGER},
+      SHID = #{record.shid,jdbcType=INTEGER},
+      SH_NAME = #{record.shName,jdbcType=VARCHAR},
+      SH_PRICE = #{record.shPrice,jdbcType=DECIMAL},
+      SH_PAY = #{record.shPay,jdbcType=DECIMAL},
+      IS_PAY = #{record.isPay,jdbcType=INTEGER},
+      SH_END = #{record.shEnd,jdbcType=TIMESTAMP},
+      GMT_CREATE = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      GMT_MODIFED = #{record.gmtModifed,jdbcType=TIMESTAMP},
+      IS_DEL = #{record.isDel,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grade.project.grade.model.ShopHistory" >
+    update mv_shop_history
+    <set >
+      <if test="shOrder != null" >
+        SH_ORDER = #{shOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="shUserid != null" >
+        SH_USERID = #{shUserid,jdbcType=INTEGER},
+      </if>
+      <if test="hpid != null" >
+        HPID = #{hpid,jdbcType=INTEGER},
+      </if>
+      <if test="shid != null" >
+        SHID = #{shid,jdbcType=INTEGER},
+      </if>
+      <if test="shName != null" >
+        SH_NAME = #{shName,jdbcType=VARCHAR},
+      </if>
+      <if test="shPrice != null" >
+        SH_PRICE = #{shPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="shPay != null" >
+        SH_PAY = #{shPay,jdbcType=DECIMAL},
+      </if>
+      <if test="isPay != null" >
+        IS_PAY = #{isPay,jdbcType=INTEGER},
+      </if>
+      <if test="shEnd != null" >
+        SH_END = #{shEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null" >
+        GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModifed != null" >
+        GMT_MODIFED = #{gmtModifed,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        IS_DEL = #{isDel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.grade.project.grade.model.ShopHistory" >
+    update mv_shop_history
+    set SH_ORDER = #{shOrder,jdbcType=VARCHAR},
+      SH_USERID = #{shUserid,jdbcType=INTEGER},
+      HPID = #{hpid,jdbcType=INTEGER},
+      SHID = #{shid,jdbcType=INTEGER},
+      SH_NAME = #{shName,jdbcType=VARCHAR},
+      SH_PRICE = #{shPrice,jdbcType=DECIMAL},
+      SH_PAY = #{shPay,jdbcType=DECIMAL},
+      IS_PAY = #{isPay,jdbcType=INTEGER},
+      SH_END = #{shEnd,jdbcType=TIMESTAMP},
+      GMT_CREATE = #{gmtCreate,jdbcType=TIMESTAMP},
+      GMT_MODIFED = #{gmtModifed,jdbcType=TIMESTAMP},
+      IS_DEL = #{isDel,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="sumLevelShop"  resultType="java.math.BigDecimal" >
+        select sum(SH_PAY) from mv_shop_history where SH_USERID in
+       (select ID from mv_user where FIND_IN_SET(EXTENSION_CODE,getChildList(#{generalAgentCode})))
+and IS_PAY = 1 and SH_END <![CDATA[>]]> #{startTime} and  SH_END <![CDATA[<]]> #{endTime}
+    </select>
+    <select id="sumShopHistory" resultType="java.math.BigDecimal">
+        select sum(SH_PAY) from mv_shop_history where SH_USERID = #{userId} and IS_PAY = 1
+        and GMT_CREATE <![CDATA[>]]> #{startTime} and  GMT_CREATE <![CDATA[<]]> #{endTime}
+    </select>
+</mapper>

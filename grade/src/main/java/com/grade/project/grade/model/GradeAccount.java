@@ -1,67 +1,31 @@
 package com.grade.project.grade.model;
 
-import com.grade.project.grade.util.StatusUtils;
-
 import java.util.Date;
 
-/**
- * 用户绑定过的公众账号
- */
 public class GradeAccount {
-    /**
-     * 主键ID
-     */
     private Integer id;
 
-    /**
-     * 用户ID（总代理）
-     */
     private Integer userId;
 
-    /**
-     * 公众账号名称
-     */
     private String gzName;
 
-    /**
-     * 公众账号APPID
-     */
     private String appid;
 
-    /**
-     * 公众账号密钥Secrect
-     */
     private String appSecrect;
 
-    /**
-     * API密钥用户自己设置
-     */
     private String apiKey;
 
-    /**
-     * 商户ID
-     */
     private String mchId;
 
-    /**
-     * 状态   是否开启   0：开启   1：关闭
-     */
-    private Integer status = StatusUtils.IS_DEL_0;
+    private Integer status;
 
-    /**
-     * 是否删除 0:未删除   1：已删除
-     */
-    private Integer isDel = 0;
+    private Integer isDel;
 
-    /**
-     * 创建时间
-     */
-    private Date gmtCreate = new Date();
+    private Date gmtCreate;
 
-    /**
-     * 修改时间
-     */
     private Date gmtModified;
+
+    private String filePath;
 
     public Integer getId() {
         return id;
@@ -101,6 +65,14 @@ public class GradeAccount {
 
     public void setAppSecrect(String appSecrect) {
         this.appSecrect = appSecrect == null ? null : appSecrect.trim();
+    }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey == null ? null : apiKey.trim();
     }
 
     public String getMchId() {
@@ -143,11 +115,11 @@ public class GradeAccount {
         this.gmtModified = gmtModified;
     }
 
-    public String getApiKey() {
-        return apiKey;
+    public String getFilePath() {
+        return filePath;
     }
 
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath == null ? null : filePath.trim();
     }
 }

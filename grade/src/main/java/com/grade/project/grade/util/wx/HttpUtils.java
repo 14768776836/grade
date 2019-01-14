@@ -44,19 +44,19 @@ public class HttpUtils {
 
     private static final RequestConfig REQUEST_CONFIG = RequestConfig.custom().setConnectTimeout(CONNECT_TIME_OUT).build();
 
-    private static SSLContext wx_ssl_context = null; //微信支付ssl证书
+//    private static SSLContext wx_ssl_context = null; //微信支付ssl证书
 
-    static {
-        Resource resource = new ClassPathResource("apiclient_cert.p12");
-        try {
-            KeyStore keystore = KeyStore.getInstance("PKCS12");
-            char[] keyPassword = "MCH_IDH5".toCharArray(); //证书密码
-            keystore.load(resource.getInputStream(), keyPassword);
-            wx_ssl_context = SSLContexts.custom().loadKeyMaterial(keystore, keyPassword).build();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    static {
+//        Resource resource = new ClassPathResource("apiclient_cert.p12");
+//        try {
+//            KeyStore keystore = KeyStore.getInstance("PKCS12");
+//            char[] keyPassword = "MCH_IDH5".toCharArray(); //证书密码
+//            keystore.load(resource.getInputStream(), keyPassword);
+//            wx_ssl_context = SSLContexts.custom().loadKeyMaterial(keystore, keyPassword).build();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * @param url     请求地址
@@ -232,47 +232,47 @@ public class HttpUtils {
      * @return 请求失败返回null
      * @description 功能描述: post https请求，服务器双向证书验证
      */
-    public static String posts(String url, Map<String, String> params) {
-        CloseableHttpClient httpClient = null;
-        HttpPost httpPost = new HttpPost(url);
-        List<NameValuePair> nameValuePairs = new ArrayList<>();
-        if (params != null && !params.isEmpty()) {
-            for (Entry<String, String> entry : params.entrySet()) {
-                nameValuePairs.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
-            }
-        }
-
-        String body = null;
-        CloseableHttpResponse response = null;
-        try {
-            httpClient = HttpClients.custom()
-                    .setDefaultRequestConfig(REQUEST_CONFIG)
-                    .setSSLSocketFactory(getSSLConnectionSocket())
-                    .build();
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, DEFAULT_CHARSET));
-            response = httpClient.execute(httpPost);
-            body = EntityUtils.toString(response.getEntity(), DEFAULT_CHARSET);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (response != null) {
-                try {
-                    response.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (httpClient != null) {
-                try {
-                    httpClient.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return body;
-    }
+//    public static String posts(String url, Map<String, String> params) {
+//        CloseableHttpClient httpClient = null;
+//        HttpPost httpPost = new HttpPost(url);
+//        List<NameValuePair> nameValuePairs = new ArrayList<>();
+//        if (params != null && !params.isEmpty()) {
+//            for (Entry<String, String> entry : params.entrySet()) {
+//                nameValuePairs.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+//            }
+//        }
+//
+//        String body = null;
+//        CloseableHttpResponse response = null;
+//        try {
+//            httpClient = HttpClients.custom()
+//                    .setDefaultRequestConfig(REQUEST_CONFIG)
+//                    .setSSLSocketFactory(getSSLConnectionSocket())
+//                    .build();
+//            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, DEFAULT_CHARSET));
+//            response = httpClient.execute(httpPost);
+//            body = EntityUtils.toString(response.getEntity(), DEFAULT_CHARSET);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (response != null) {
+//                try {
+//                    response.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            if (httpClient != null) {
+//                try {
+//                    httpClient.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//        return body;
+//    }
 
     /**
      * @param url 请求地址
@@ -280,13 +280,13 @@ public class HttpUtils {
      * @return 请求失败返回null
      * @description 功能描述: post https请求，服务器双向证书验证
      */
-    public static String posts(String url, String s) {
+    public static String posts(String url, String s,String filePath) {
         CloseableHttpClient httpClient = null;
         HttpPost httpPost = new HttpPost(url);
         String body = null;
         CloseableHttpResponse response = null;
         try {
-            httpClient = HttpClients.custom().setDefaultRequestConfig(REQUEST_CONFIG).setSSLSocketFactory(getSSLConnectionSocket()).build();
+            httpClient = HttpClients.custom().setDefaultRequestConfig(REQUEST_CONFIG).setSSLSocketFactory(getSSLConnectionSocket(filePath)).build();
             httpPost.setEntity(new StringEntity(s, DEFAULT_CHARSET));
             response = httpClient.execute(httpPost);
             body = EntityUtils.toString(response.getEntity(), DEFAULT_CHARSET);
@@ -313,7 +313,17 @@ public class HttpUtils {
     }
 
     //获取ssl connection链接
-    private static SSLConnectionSocketFactory getSSLConnectionSocket() {
+    private static SSLConnectionSocketFactory getSSLConnectionSocket(String filePath) {
+        Resource resource = new ClassPathResource("public/p12/apiclient_cert.p12");
+        SSLContext wx_ssl_context = null;
+        try {
+            KeyStore keystore = KeyStore.getInstance("PKCS12");
+            char[] keyPassword = "MCH_IDH5".toCharArray(); //证书密码
+            keystore.load(resource.getInputStream(), keyPassword);
+            wx_ssl_context = SSLContexts.custom().loadKeyMaterial(keystore, keyPassword).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return new SSLConnectionSocketFactory(wx_ssl_context, new String[]{"TLSv1", "TLSv1.1", "TLSv1.2"}, null,
                 SSLConnectionSocketFactory.getDefaultHostnameVerifier());
     }

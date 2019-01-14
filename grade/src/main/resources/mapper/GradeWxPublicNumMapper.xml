@@ -5,7 +5,7 @@
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="USER_ID" property="userId" jdbcType="INTEGER" />
     <result column="OPEN_ID" property="openId" jdbcType="VARCHAR" />
-    <result column="APPID" property="appid" jdbcType="VARCHAR" />
+    <result column="APPID" property="appId" jdbcType="VARCHAR" />
     <result column="WX_USER_NAME" property="wxUserName" jdbcType="VARCHAR" />
     <result column="GA_ID" property="gaId" jdbcType="INTEGER" />
     <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />

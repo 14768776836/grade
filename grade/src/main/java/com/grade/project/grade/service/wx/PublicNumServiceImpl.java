@@ -71,7 +71,7 @@ public class PublicNumServiceImpl implements PublicNumService {
                 gradeWxPublicNumMapper.updateByPrimaryKeySelective(wxNum);
             }else{
                 //没认证过，保存信息
-                wxNum.setAppid(gradeAccount.getAppid());
+                wxNum.setAppId(gradeAccount.getAppid());
                 gradeWxPublicNumMapper.insertSelective(wxNum);
             }
         }else{

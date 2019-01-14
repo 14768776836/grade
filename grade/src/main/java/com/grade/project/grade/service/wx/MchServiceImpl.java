@@ -45,6 +45,7 @@ public class MchServiceImpl implements MchService {
     @Override
     public int saveMchMessage(GradeAccount gradeAccount) {
         gradeAccount.setGmtModified(new Date());
+        gradeAccount.setGmtCreate(new Date());
         return gradeAccountMapper.insertSelective(gradeAccount);
     }
 
@@ -57,9 +58,9 @@ public class MchServiceImpl implements MchService {
     }
 
     @Override
-    public Map<Object, Object> payMchToUser(HttpServletRequest request, GradeAccount gradeAccount, BigDecimal amount,String desc) {
+    public Map<String, Object> payMchToUser(HttpServletRequest request, GradeAccount gradeAccount, BigDecimal amount,String desc) {
         int userId = gradeAccount.getUserId();
-        Map<Object, Object> dataMap = new HashMap<Object, Object>();
+        Map<String, Object> dataMap = new HashMap<>();
         boolean orderStatus = false;
         String msg = "转账成功";
         String orderNum = PayCommonUtil.getOrderIdByUUId();//订单编号
@@ -77,7 +78,7 @@ public class MchServiceImpl implements MchService {
                 GradeWxPublicNum gradeWxPublicNum = user.get(0);//收款人公众号相关信息
                 wxUserName = gradeWxPublicNum.getWxUserName();
                 if(!StringUtils.isBlank(gradeWxPublicNum.getOpenId())){
-                    Map<String, String> parm = new HashMap<String, String>();
+                    Map<String, String> parm = new HashMap<>();
                     int price = amount.multiply(new BigDecimal(100)).intValue();//金额转化以分为单位
                     Map<String, String> restmap = null;
                     // 订单生成的机器 IP
@@ -94,7 +95,7 @@ public class MchServiceImpl implements MchService {
                     parm.put("spbill_create_ip", spbill_create_ip); //Ip地址
                     parm.put("sign", PayCommonUtil.getSign(parm,gradeAccount.getApiKey() ));
 
-                    String restxml = HttpUtils.posts(WxConfigUtils.TRANSFERS_PAY, XmlUtil.xmlFormat(parm, false));
+                    String restxml = HttpUtils.posts(WxConfigUtils.TRANSFERS_PAY, XmlUtil.xmlFormat(parm, false),gradeAccount.getFilePath());
                     logger.info("转账返回报文：" + restxml);
                     restmap = XmlUtil.xmlParse(restxml);//xml格式数据转换为map
                     if (CollectionUtil.isNotEmpty(restmap) && "SUCCESS".equals(restmap.get("result_code"))) {
@@ -106,9 +107,10 @@ public class MchServiceImpl implements MchService {
                             logger.info("转账失败：" + restmap.get("err_code") + ":" + restmap.get("err_code_des"));
                             msg = restmap.get("err_code_des");
                             mchPayOrder.setPayStatus(StatusUtils.ORDER_STATUS_3);
-                            gradeAccountMapper.insertSelective(gradeAccount);//保存商户信息
+//                            gradeAccountMapper.insertSelective(gradeAccount);//保存商户信息
                         }
                     }
+                    saveMchMessage(gradeAccount);
                 }else{
                     logger.info("用户id="+userId+",openId丢失！");
                     msg ="转账失败";

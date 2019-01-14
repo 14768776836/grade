@@ -436,6 +436,76 @@ public class MchPayOrderExample {
             return (Criteria) this;
         }
 
+        public Criteria andGeneralAgentCodeIsNull() {
+            addCriterion("GENERAL_AGENT_CODE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGeneralAgentCodeIsNotNull() {
+            addCriterion("GENERAL_AGENT_CODE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGeneralAgentCodeEqualTo(String value) {
+            addCriterion("GENERAL_AGENT_CODE =", value, "generalAgentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGeneralAgentCodeNotEqualTo(String value) {
+            addCriterion("GENERAL_AGENT_CODE <>", value, "generalAgentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGeneralAgentCodeGreaterThan(String value) {
+            addCriterion("GENERAL_AGENT_CODE >", value, "generalAgentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGeneralAgentCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("GENERAL_AGENT_CODE >=", value, "generalAgentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGeneralAgentCodeLessThan(String value) {
+            addCriterion("GENERAL_AGENT_CODE <", value, "generalAgentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGeneralAgentCodeLessThanOrEqualTo(String value) {
+            addCriterion("GENERAL_AGENT_CODE <=", value, "generalAgentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGeneralAgentCodeLike(String value) {
+            addCriterion("GENERAL_AGENT_CODE like", value, "generalAgentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGeneralAgentCodeNotLike(String value) {
+            addCriterion("GENERAL_AGENT_CODE not like", value, "generalAgentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGeneralAgentCodeIn(List<String> values) {
+            addCriterion("GENERAL_AGENT_CODE in", values, "generalAgentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGeneralAgentCodeNotIn(List<String> values) {
+            addCriterion("GENERAL_AGENT_CODE not in", values, "generalAgentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGeneralAgentCodeBetween(String value1, String value2) {
+            addCriterion("GENERAL_AGENT_CODE between", value1, value2, "generalAgentCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGeneralAgentCodeNotBetween(String value1, String value2) {
+            addCriterion("GENERAL_AGENT_CODE not between", value1, value2, "generalAgentCode");
+            return (Criteria) this;
+        }
+
         public Criteria andPayPriceIsNull() {
             addCriterion("PAY_PRICE is null");
             return (Criteria) this;

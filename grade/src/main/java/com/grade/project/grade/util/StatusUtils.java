@@ -31,6 +31,11 @@ public class StatusUtils {
      */
     public final static Integer ORDER_STATUS_3 = 3;
 
+    /**
+     * 账单未支付状态
+     */
+    public final static Integer ORDER_STATUS_4 = 4;
+
 
     //删除状态
     /**
