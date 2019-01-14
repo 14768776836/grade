@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
@@ -43,16 +45,42 @@ public class MyTask {
         int month = date.getMonthValue();   //月
         int day = date.getDayOfMonth();     //日
         // 获取当前时间的上一个开始计算的时间点
-        LocalDate startTime;
+        LocalDate start;
         if (day == 1 && month == 1) {
-            startTime = LocalDate.of(year - 1, 12, 15);
+            start = LocalDate.of(year - 1, 12, 15);
         } else if (day == 1) {
-            startTime = LocalDate.of(year, month - 1, 15);
+            start = LocalDate.of(year, month - 1, 15);
         } else {
-            startTime = LocalDate.of(year, month, 1);
+            start = LocalDate.of(year, month, 1);
         }
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String endTime = date.format(format);
+        String startTime = start.format(format);
+
+
+//        BEGIN
+//        DECLARE sTemp VARCHAR(1000);
+//        DECLARE sTempChd VARCHAR(1000);
+//
+//        SET sTemp = '$';
+//        SET sTempChd =cast(rootId as CHAR);
+//
+//        WHILE sTempChd is not null DO
+//        SET sTemp = concat(sTemp,',',sTempChd);
+//        SELECT group_concat(EXTENSION_CODE) INTO sTempChd FROM  mv_user where FIND_IN_SET(PARENT_CODE,sTempChd)>0;
+//        END WHILE;
+//        RETURN sTemp;
+//        END
+
+
+
+
+
+
+
+
+
+
         // 获取所有的总代理的集合
         UserExample example = new UserExample();
         example.createCriteria().andParentCodeEqualTo(null).andUserStatusEqualTo(0);
@@ -77,31 +105,6 @@ public class MyTask {
                 // 这里是总代理的直属下级集合
                 List<User> users = getSubordinate(user);
 
-//                for(User user1 : users){
-//                    recursive(user1,user.getExtensionCode(),percents,startTime.toString(),endTime);
-//                }
-//                for (int i = arr.size(); i > 0; ) {
-//                    i--;
-//                    for (User u1 : users) {
-//                        List<User> users1 = getSubordinate(u1);
-//                        BigDecimal b1 = BigDecimal.valueOf(0);
-//                        for (User u2 : users1) {
-//                            b1.add(shopHistoryMapper.sumShopHistory(u2.getId(), startTime.toString(), endTime));
-//
-//                            // 二级代理
-//                            List<User> users2 = getSubordinate(u2);
-//                            BigDecimal b2 = BigDecimal.valueOf(0);
-//                            for (User u3 : users2) {
-//                                b2.add(shopHistoryMapper.sumShopHistory(u3.getId(), startTime.toString(), endTime));
-//
-//                            }
-//                            // 一级代理的分成数据
-//                            mchPayOrderMapper.insertSelective(generateOrder(u2, user, getResultRun(b2, v2)));
-//                        }
-//                        // 一级代理的分成数据
-//                        mchPayOrderMapper.insertSelective(generateOrder(u1, user, getResultRun(b1, v1)));
-//                    }
-//                }
             }
         }
     }
@@ -164,55 +167,25 @@ public class MyTask {
      * @param startTime    开始时间
      * @param endTime      结束时间
      */
-//    private void recursive(User superior, String generalAgent , List<Percent> percents,String startTime,String endTime) {
-//        ShopHistoryMapper shopHistoryMapper = getBean(ShopHistoryMapper.class);
-//        MchPayOrderMapper mchPayOrderMapper = getBean(MchPayOrderMapper.class);
-//        for(int i = 0 ; i < percents.size() ; i ++){
-//            Percent percent = percents.get(i);
-//            List<User> users = getSubordinate(superior);
-//            BigDecimal result = new BigDecimal(0);
-//            for(User user : users){
-//                result.add(shopHistoryMapper.sumShopHistory(user.getId(), startTime , endTime));
-////                List<User> users1 = getSubordinate(user);
-//
-//
-//                if(i+1 >= percents.size()) break;
-//                recursive(user,generalAgent,percents,startTime,endTime);
-//            }
-//            logger.info("user :{} level :{} count :{}",superior.getId(),percent.getLevel(),result);
-//            mchPayOrderMapper.insertSelective(generateOrder(superior, generalAgent, getResultRun(result, percent.getValue())));
-//        }
-//    }
-    public void recursive(User superior, String generalAgent, List<Percent> percents, String startTime, String endTime) {
+    private void recursive(User superior, String generalAgent , List<Percent> percents,String startTime,String endTime) {
         ShopHistoryMapper shopHistoryMapper = getBean(ShopHistoryMapper.class);
         MchPayOrderMapper mchPayOrderMapper = getBean(MchPayOrderMapper.class);
-
-        for(Percent percent : percents){
+        for(int i = 0 ; i < percents.size() ; i ++){
+            Percent percent = percents.get(i);
             List<User> users = getSubordinate(superior);
             BigDecimal result = new BigDecimal(0);
             for(User user : users){
-                BigDecimal d = shopHistoryMapper.sumShopHistory(user.getId(),startTime,endTime);
-                result = result.add(d == null ? new BigDecimal(0) : d);
-                recursive(user, generalAgent, percents, startTime, endTime);
+                result.add(shopHistoryMapper.sumShopHistory(user.getId(), startTime , endTime));
+//                List<User> users1 = getSubordinate(user);
+
+
+                if(i+1 >= percents.size()) break;
+                recursive(user,generalAgent,percents,startTime,endTime);
             }
-            logger.info("user :{} level :{} count :{}", superior.getId(), percent.getLevel(), result);
-            if (result.compareTo(new BigDecimal(0)) == 0) continue;
+            logger.info("user :{} level :{} count :{}",superior.getId(),percent.getLevel(),result);
             mchPayOrderMapper.insertSelective(generateOrder(superior, generalAgent, getResultRun(result, percent.getValue())));
         }
-//        for (int i = 0; i < percents.size(); ) {
-//            Percent percent = percents.get(i);
-//            i++; if (i > percents.size()) break;
-//            List<User> users = getSubordinate(superior);
-//            BigDecimal result = new BigDecimal(0);
-//            for (User user : users) {
-//                BigDecimal d = shopHistoryMapper.sumShopHistory(user.getId(), startTime, endTime);
-//                result = result.add(d == null ? new BigDecimal(0) : d);
-//                logger.info("result :{}", result);
-//                recursive(user.getId(), generalAgent, percents, startTime, endTime);
-//            }
-//            logger.info("user :{} level :{} count :{}", superior.getId(), percent.getLevel(), result);
-//            if (result.compareTo(new BigDecimal(0)) == 0) continue;
-//            mchPayOrderMapper.insertSelective(generateOrder(superior, generalAgent, getResultRun(result, percent.getValue())));
-//        }
     }
+
+
 }
