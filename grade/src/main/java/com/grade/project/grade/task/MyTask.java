@@ -49,6 +49,14 @@ public class MyTask {
                 thread.start();
             }
         }
+        //测试  要删除的
+        while (true) {
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

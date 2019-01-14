@@ -1,6 +1,5 @@
 package com.grade.project.grade.task;
 
-import com.alibaba.fastjson.JSONObject;
 import com.grade.project.grade.mapper.MchPayOrderMapper;
 import com.grade.project.grade.mapper.vo.OrderVoMapper;
 import com.grade.project.grade.model.MchPayOrder;
@@ -8,6 +7,8 @@ import com.grade.project.grade.model.User;
 import com.grade.project.grade.model.vo.GradeOrderVo;
 import com.grade.project.grade.util.StatusUtils;
 import com.grade.project.grade.util.wx.PayCommonUtil;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -35,11 +36,14 @@ public class OrderThread implements Runnable {
         List<User> userChildrenList = new ArrayList<>();
         userChildrenList.add(user);
         BigDecimal countPirce = new BigDecimal("0.00");
-        for(int i = 1; i <= gradeOrderVo.getRunLevel();i++){
+        for(int i = 0; i < gradeOrderVo.getRunLevel();i++){
             userChildrenList = orderVoMapper.getChildrenList(userChildrenList);
             BigDecimal price = orderVoMapper.countChildrenPay(userChildrenList,gradeOrderVo.getStartTime(),gradeOrderVo.getEndTime());//获取充值总金额
-            JSONObject jsonObject = JSONObject.parseObject(gradeOrderVo.getRunPercent());
-            BigDecimal runB = new BigDecimal(jsonObject.getString(String.valueOf(i)));
+            if(price == null){
+                price = new BigDecimal("0.00");
+            }
+            JSONArray jsonArray = JSONArray.fromObject(gradeOrderVo.getRunPercent());
+            BigDecimal runB = new BigDecimal(String.valueOf(((JSONObject) jsonArray.get(0)).get("value")));
             //当前级数的分润 = price(当前下级用户充值总额) x 分润级数对应的比例
             countPirce.add(price.multiply((runB.multiply(new BigDecimal("100")))));
         }

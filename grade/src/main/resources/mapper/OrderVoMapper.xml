@@ -53,12 +53,15 @@
       select sum(sh.SH_PAY) from mv_user u
       LEFT JOIN mv_shop_history sh ON u.ID = sh.SH_USERID
       where sh.SH_USERID in
-    <foreach collection="uList" item="id" index="index"
+    <foreach collection="uList" item="items" index="index"
              open="(" close=")" separator=",">
-      #{id}
+      #{items.id}
     </foreach>
-      and sh.IS_PAY = 1
-      and sh.GMT_CREATE BETWEEN #{startTime} and #{endTime}
+      and sh.IS_PAY = 1 
+      <if test="startTime != null and endTime != null">
+        and sh.GMT_CREATE BETWEEN #{startTime} and #{endTime}
+      </if>
+
   </select>
 
   <select id="getIsTrueMchUser" resultMap="GradeOrderResultMap">
