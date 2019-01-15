@@ -1,0 +1,26 @@
+/* .shareProfitForm{
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+} */
+.shareProfitForm{padding-top: 5rem;}
+.shareProfitForm .shareBox{
+	padding: 0 1rem;
+}
+.shareProfitForm .shareCol{
+	position: relative;
+	width: 90%;
+}
+.shareProfitForm .percent{
+	position: absolute;
+	bottom: 0;
+	right: 1rem;
+}
+.shareProfitForm .shareBtn{
+	text-align: center;
+}

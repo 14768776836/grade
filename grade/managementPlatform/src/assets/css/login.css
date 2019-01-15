@@ -1,0 +1,15 @@
+.login{
+	position: fixed;
+	top: 35%;
+	left: 15%;
+	width: 70%;
+}
+.login .login-form .btnBox{text-align: center;}
+.login .login-form .ant-input{
+	height: 4rem;
+}
+.login .ant-btn-primary{
+    width: 6em;
+    height: 3.5rem;
+    font-size: 1.8rem;
+}

@@ -1,0 +1,86 @@
+#body{
+	display: block;
+}
+.moneyBox .addBtn{
+	position: absolute;
+	right: 1.5rem;
+	top: 1rem;
+	z-index: 2;
+}
+
+.moneyModal.ant-modal{
+	top: 2rem;
+}
+.moneyModal .ant-form .ant-form-item{
+	margin-bottom: 1.5rem;
+}
+.moneyBox .accountBox,
+.bill .accountBox,
+.childLists .accountBox{
+	padding-top: 5.5rem;
+}
+.moneyBox .accountBox .accountList,
+.bill .accountBox .accountList,
+.childLists .accountBox .accountList{
+	position: relative;
+	margin: 0 1.5rem 2rem 1.5rem;
+	border: solid rgba(24, 144, 255,.8) 1px;
+	border-radius: 1rem;
+}
+.moneyBox .accountBox .accountList p,
+.bill .accountBox .accountList p,
+.childLists .accountBox .accountList p{
+	height: 4rem;
+	line-height: 4rem;
+	padding: 0 1rem;
+	margin-bottom: 0;
+}
+.moneyBox .accountBox .accountList .deleteBtn,
+.moneyBox .accountBox .checkBtn{
+	text-align: center;
+	color: rgba(24, 144, 255,.8);
+	border: solid rgba(24, 144, 255,.8) 1px;
+	border-radius: .5rem;
+}
+.moneyBox .accountBox .accountList .deleteBtn{
+	position: fixed;
+	top: 1rem;
+	right: 1rem;
+	width: 4rem;
+	height: 2.5rem;
+	line-height: 2.5rem;
+	z-index: 1;
+}
+.moneyBox .accountBox .checkBtn{
+	width: 9rem;
+	height: 4.5rem;
+	line-height: 4.5rem;
+	margin: 0 auto 2rem;
+}
+#body .deleteBtn{position: absolute;}
+
+
+
+
+/* 返回按钮 */
+#body .returnBox{
+	position: fixed;
+	top: 0;
+	width: 100%;
+	padding: 1.25rem 1.5rem; 
+	background: #fff;
+	z-index: 1
+}
+#body .returnBox .returnBtn{
+	display: block;
+	width: 4rem;
+	height: 2.5rem;
+	line-height: 2.5rem;
+	z-index: 1;
+}
+#body .returnBox .returnBtn{
+	text-align: center;
+	color: rgba(24, 144, 255,.8);
+	border: solid rgba(24, 144, 255,.8) 1px;
+	border-radius: .5rem;
+}
