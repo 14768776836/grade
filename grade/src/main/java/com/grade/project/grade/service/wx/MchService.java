@@ -38,6 +38,6 @@ public interface MchService {
      * @param desc   订单名称（微信消息显示title）
      * @return
      */
-    Map<String, Object> payMchToUser(HttpServletRequest request, GradeAccount gradeAccount, BigDecimal amount,String desc);
+    Map<String, Object> payMchToUser(HttpServletRequest request, GradeAccount gradeAccount, BigDecimal amount,String desc,Integer userId);
 
 }

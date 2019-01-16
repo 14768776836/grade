@@ -41,23 +41,28 @@
   </resultMap>
 
   <select id="getChildrenList" resultMap="BaseResultMap">
-    select ID,EXTENSION_CODE,PARENT_CODE from mv_user where PARENT_CODE in
-    <foreach collection="uParentList" item="items" index="index"
-             open="(" close=")" separator=",">
-      #{items.extensionCode}
-    </foreach>
+    select ID,EXTENSION_CODE,PARENT_CODE from mv_user where 1 = 1
+      <if test="uParentList != null and uParentList.size() > 0">
+          and PARENT_CODE in
+          <foreach collection="uParentList" item="items" index="index"
+                   open="(" close=")" separator=",">
+              #{items.extensionCode}
+          </foreach>
+      </if>
 
   </select>
 
   <select id="countChildrenPay" resultType="java.math.BigDecimal">
       select sum(sh.SH_PAY) from mv_user u
-      LEFT JOIN mv_shop_history sh ON u.ID = sh.SH_USERID
-      where sh.SH_USERID in
-    <foreach collection="uList" item="items" index="index"
-             open="(" close=")" separator=",">
-      #{items.id}
-    </foreach>
-      and sh.IS_PAY = 1 
+      inner JOIN mv_shop_history sh ON u.ID = sh.SH_USERID
+      where sh.IS_PAY = 1
+      <if test="uList != null and uList.size() > 0">
+          and sh.SH_USERID in
+          <foreach collection="uList" item="item" index="index"
+                   open="(" close=")" separator=",">
+              #{item.id}
+          </foreach>
+      </if>
       <if test="startTime != null and endTime != null">
         and sh.GMT_CREATE BETWEEN #{startTime} and #{endTime}
       </if>

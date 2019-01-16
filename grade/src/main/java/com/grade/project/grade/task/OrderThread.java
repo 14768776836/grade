@@ -9,6 +9,8 @@ import com.grade.project.grade.util.StatusUtils;
 import com.grade.project.grade.util.wx.PayCommonUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import static com.grade.project.grade.util.ApplicationContextProvider.getBean;
 
 public class OrderThread implements Runnable {
 
+    Logger logger = LoggerFactory.getLogger(OrderThread.class);
     private User user;//获取利润金额的邀请码
     private GradeOrderVo gradeOrderVo;//获取总代设置的分润数据
 
@@ -37,17 +40,24 @@ public class OrderThread implements Runnable {
         userChildrenList.add(user);
         BigDecimal countPirce = new BigDecimal("0.00");
         for(int i = 0; i < gradeOrderVo.getRunLevel();i++){
+            if(userChildrenList == null || userChildrenList.size() <= 0)continue;
             userChildrenList = orderVoMapper.getChildrenList(userChildrenList);
+            if(userChildrenList == null || userChildrenList.size() <= 0)continue;
             BigDecimal price = orderVoMapper.countChildrenPay(userChildrenList,gradeOrderVo.getStartTime(),gradeOrderVo.getEndTime());//获取充值总金额
             if(price == null){
-                price = new BigDecimal("0.00");
+                continue;
             }
             JSONArray jsonArray = JSONArray.fromObject(gradeOrderVo.getRunPercent());
-            BigDecimal runB = new BigDecimal(String.valueOf(((JSONObject) jsonArray.get(0)).get("value")));
+            BigDecimal runB = new BigDecimal(String.valueOf(((JSONObject) jsonArray.get(i)).get("value")));
             //当前级数的分润 = price(当前下级用户充值总额) x 分润级数对应的比例
-            countPirce.add(price.multiply((runB.multiply(new BigDecimal("100")))));
+            BigDecimal d = price.multiply(runB.divide(new BigDecimal("100")));
+            countPirce = countPirce.add(d);
         }
-        mchPayOrderMapper.insertSelective(generateOrder(user,gradeOrderVo.getExtensionCode(),countPirce));
+        // 应当获取的利润小数点后取两位
+        countPirce = countPirce.setScale(2,BigDecimal.ROUND_DOWN);
+        if(countPirce.compareTo(new BigDecimal(0)) != 0){
+            mchPayOrderMapper.insertSelective(generateOrder(user,gradeOrderVo.getExtensionCode(),countPirce));
+        }
     }
 
     /**

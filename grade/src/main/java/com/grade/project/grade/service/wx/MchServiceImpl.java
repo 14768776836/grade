@@ -58,8 +58,8 @@ public class MchServiceImpl implements MchService {
     }
 
     @Override
-    public Map<String, Object> payMchToUser(HttpServletRequest request, GradeAccount gradeAccount, BigDecimal amount,String desc) {
-        int userId = gradeAccount.getUserId();
+    public Map<String, Object> payMchToUser(HttpServletRequest request, GradeAccount gradeAccount, BigDecimal amount,String desc,Integer userId) {
+//        int userId = gradeAccount.getUserId();
         Map<String, Object> dataMap = new HashMap<>();
         boolean orderStatus = false;
         String msg = "转账成功";
@@ -110,7 +110,7 @@ public class MchServiceImpl implements MchService {
 //                            gradeAccountMapper.insertSelective(gradeAccount);//保存商户信息
                         }
                     }
-                    saveMchMessage(gradeAccount);
+//                    saveMchMessage(gradeAccount);
                 }else{
                     logger.info("用户id="+userId+",openId丢失！");
                     msg ="转账失败";

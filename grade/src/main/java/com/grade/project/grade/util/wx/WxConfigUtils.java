@@ -13,7 +13,7 @@ public class WxConfigUtils {
     /**
      * 微信总代理用户认证地址
      */
-    public final static String WX_BOSS_USER_AUTH = "http://192.168.10.181/#/checkStore";
+    public final static String WX_BOSS_USER_AUTH = "http://192.168.10.181/#/makeMoney/checkStore";
 
 
     /**

@@ -1,14 +1,11 @@
 package com.grade.project.grade.task;
 
-import com.alibaba.fastjson.JSONArray;
-import com.grade.project.grade.mapper.*;
+import com.grade.project.grade.mapper.UserMapper;
 import com.grade.project.grade.mapper.vo.OrderVoMapper;
-import com.grade.project.grade.model.*;
+import com.grade.project.grade.model.User;
+import com.grade.project.grade.model.UserExample;
 import com.grade.project.grade.model.vo.GradeOrderVo;
-import com.grade.project.grade.service.RunPercentService;
-import com.grade.project.grade.util.StatusUtils;
-import com.grade.project.grade.util.wx.PayCommonUtil;
-import com.grade.project.grade.util.wx.WxConfigUtils;
+import com.grade.project.grade.service.MchPayOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,12 +14,12 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import static com.grade.project.grade.util.ApplicationContextProvider.getBean;
 
@@ -34,29 +31,54 @@ import static com.grade.project.grade.util.ApplicationContextProvider.getBean;
 public class MyTask {
     Logger logger = LoggerFactory.getLogger(MyTask.class);
 
-    @Scheduled(cron = "0 0 3 1,15 * ? ")
+    @Scheduled(cron = "0 0 2 1,15 * ? ")
     public void task() {
+
+        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(5);
+        Future future = null;
+
+        LocalDate date = LocalDate.now();
+        int year = date.getYear();          //年
+        int month = date.getMonthValue();   //月
+        int day = date.getDayOfMonth();     //日
+        // 获取当前时间的上一个开始计算的时间点
+        LocalDate start;
+        if (day == 1 && month == 1) {
+            start = LocalDate.of(year - 1, 12, 15);
+        } else if (day == 1) {
+            start = LocalDate.of(year, month - 1, 15);
+        } else {
+            start = LocalDate.of(year, month, 1);
+        }
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String endTime = date.format(format);
+        String startTime = start.format(format);
+
+        // 自定义线程池
+//        ExecutorService fixedThreadPool=new ThreadPoolExecutor()
+
         OrderVoMapper orderVoMapper = getBean(OrderVoMapper.class);
-        UserMapper userMapper = getBean(UserMapper.class);
         //查询所有有效的商户数据 = 总代理
         List<GradeOrderVo> gradeMchList = orderVoMapper.getIsTrueMchUser();
-        for(GradeOrderVo gradeOrderVo : gradeMchList){
+        for (GradeOrderVo gradeOrderVo : gradeMchList) {
+            gradeOrderVo.setStartTime(startTime);
+            gradeOrderVo.setEndTime(endTime);
             //查询总代理所有下属子级用户
             List<User> uList = orderVoMapper.getAllChildrenList(gradeOrderVo.getExtensionCode());
-            for(int i = 0; i <uList.size(); i++){
-                OrderThread orderThread = new OrderThread(uList.get(i),gradeOrderVo);
-                Thread thread = new Thread(orderThread,i+"order");
-                thread.start();
+            for (User anUList : uList) {
+                OrderThread orderThread = new OrderThread(anUList, gradeOrderVo);
+                future = fixedThreadPool.submit(orderThread);
             }
         }
-        //测试  要删除的
-        while (true) {
+
+        while (future != null && !future.isDone()) {
             try {
-                Thread.sleep(10000);
+                TimeUnit.MILLISECONDS.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
     }
 
     /**
@@ -83,8 +105,6 @@ public class MyTask {
         userExample.createCriteria().andParentCodeEqualTo(user.getExtensionCode());
         return userMapper.selectByExample(userExample);
     }
-
-
 
 
 }

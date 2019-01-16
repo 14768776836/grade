@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grade.project.grade.mapper.vo.PublicPayOrderVoMapper" >
+
+  <resultMap id="PublicPayOrderResultMap" type="com.grade.project.grade.model.vo.PublicPayOrderVo" >
+      <id column="ID" property="id" jdbcType="INTEGER" />
+      <result column="ORDER_NUM" property="orderNum" jdbcType="VARCHAR" />
+      <result column="USER_ID" property="userId" jdbcType="INTEGER" />
+      <result column="WX_USER_NAME" property="wxUserName" jdbcType="VARCHAR" />
+      <result column="PARENT_CODE" property="parentCode" jdbcType="VARCHAR" />
+      <result column="GENERAL_AGENT_CODE" property="generalAgentCode" jdbcType="VARCHAR" />
+      <result column="PAY_PRICE" property="payPrice" jdbcType="DECIMAL" />
+      <result column="PAY_MSG" property="payMsg" jdbcType="VARCHAR" />
+      <result column="PAY_STATUS" property="payStatus" jdbcType="INTEGER" />
+      <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
+      <result column="GMT_CREATE" property="gmtCreate" jdbcType="TIMESTAMP" />
+      <result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
+
+      <result column="APP_ID" property="appId" jdbcType="VARCHAR"/>
+<result column="IS_CERTIFICATION" property="isCertification" jdbcType="INTEGER"/>
+  </resultMap>
+
+    <select id="getChildrenOrders" resultMap="PublicPayOrderResultMap">
+       select gmp.ID,gmp.PAY_STATUS, gmp.USER_ID,gmp.WX_USER_NAME, gmp.PAY_PRICE,gwx.APPID,ISNULL(gwx.APPID) IS_CERTIFICATION  from grade_mch_pay gmp
+LEFT JOIN grade_wx_public_num gwx on gmp.USER_ID = gwx.USER_ID and gwx.APPID = #{appId}
+where gmp.PARENT_CODE = #{parentCode} and gmp.PAY_STATUS = 4 and gmp.GMT_CREATE >= #{time}
+
+    </select>
+
+    <select id="getSpecificOrderList" resultMap="PublicPayOrderResultMap">
+        select gmp.ID,gmp.PAY_STATUS, gmp.USER_ID,gmp.WX_USER_NAME, gmp.PAY_PRICE,gwx.APPID,ISNULL(gwx.APPID) IS_CERTIFICATION
+         from grade_mch_pay gmp LEFT JOIN grade_wx_public_num gwx on gmp.USER_ID = gwx.USER_ID and gwx.APPID = #{appId}
+where gmp.PARENT_CODE = #{parentCode} and gmp.PAY_STATUS = #{payStatus} order by gmp.GMT_CREATE desc
+
+    </select>
+
+    <!--获取下级所有的已认证过的用户生成的订单-->
+    <select id="selectUnderCertification"  resultMap="PublicPayOrderResultMap">
+         SELECT gmp.ID,gmp.PAY_STATUS, gmp.USER_ID,gmp.WX_USER_NAME, gmp.PAY_PRICE FROM grade_mch_pay gmp
+         left join grade_wx_public_num gwx on gmp.USER_ID = gwx.USER_ID
+         WHERE PARENT_CODE in (SELECT EXTENSION_CODE FROM mv_user WHERE FIND_IN_SET(extension_code, getChildXiang(#{parentCode})))
+        and PAY_STATUS = 4 and gmp.GMT_CREATE >= #{time} and gwx.APPID = #{appId}
+    </select>
+
+</mapper>

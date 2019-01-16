@@ -320,4 +320,15 @@
       GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+
+    <select id="getAllUnders" resultMap="BaseResultMap">
+        select * from grade_mch_pay where PARENT_CODE in
+        <if test="users != null and users.size() >0">
+            <foreach collection="users" item="item" index="index"
+                     open="(" close=")" separator=",">
+                #{item.extensionCode}
+            </foreach>
+        </if>
+        and PAY_STATUS = 4 and GMT_CREATE >= #{time}
+    </select>
 </mapper>

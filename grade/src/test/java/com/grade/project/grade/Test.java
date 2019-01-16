@@ -15,16 +15,30 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
-        BigDecimal result = new BigDecimal(0);
-        System.out.println(result.compareTo(new BigDecimal(0)) == 0);
 
-        String text = "[{\"level\":\"1\",\"value\":\"5\"},{\"level\":\"2\",\"value\":\"7\"}]";
-        JSONArray array = JSONArray.parseArray(text);
-        List<Percent> percents = array.toJavaList(Percent.class);
-        percents.forEach(System.out::println);
-        System.out.println(array);
+        Date time = null;
+        LocalDate localDate = LocalDate.now();
+        int year = localDate.getYear();          //年
+        int month = localDate.getMonthValue();   //月
+        int day = localDate.getDayOfMonth();    //日
+        if(day>= 15) day = 15;
+        else  day = 1;
+        time = new Date(year,month,day);
+        System.out.println(time);
 
-        BigDecimal num = BigDecimal.valueOf(10000.02);
+
+
+
+//        BigDecimal result = new BigDecimal(0);
+//        System.out.println(result.compareTo(new BigDecimal(0)) == 0);
+//
+//        String text = "[{\"level\":\"1\",\"value\":\"5\"},{\"level\":\"2\",\"value\":\"7\"}]";
+//        JSONArray array = JSONArray.parseArray(text);
+//        List<Percent> percents = array.toJavaList(Percent.class);
+//        percents.forEach(System.out::println);
+//        System.out.println(array);
+//
+//        BigDecimal num = BigDecimal.valueOf(10000.02);
 
 //        BigDecimal result = num.multiply(new BigDecimal(3)).divide(new BigDecimal(100));
 ////        String res = String.format("%.2f", result);

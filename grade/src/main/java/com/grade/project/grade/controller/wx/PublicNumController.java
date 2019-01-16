@@ -1,6 +1,5 @@
 package com.grade.project.grade.controller.wx;
 
-import com.alibaba.fastjson.JSONObject;
 import com.grade.project.grade.model.GradeAccount;
 import com.grade.project.grade.service.UserService;
 import com.grade.project.grade.service.wx.PublicNumService;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -59,7 +57,7 @@ public class PublicNumController {
     @RequestMapping(value = "/getWxLoginOauth2URLBoss")
     @ResponseBody
     public Map<String, Object> getWxLoginOauth2URLBoss(Integer userId) throws UnsupportedEncodingException {
-        String url = WxConfigUtils.OAUTH2_URL.replace("APPID", WxConfigUtils.WX_APPID).replace("REDIRECT_URL", URLEncoder.encode(WxConfigUtils.WX_BOSS_USER_AUTH,"utf-8"));
+        String url = WxConfigUtils.OAUTH2_URL.replace("APPID", WxConfigUtils.WX_APPID).replace("REDIRECT_URL", URLEncoder.encode(WxConfigUtils.WX_BOSS_USER_AUTH, "utf-8"));
         return author2Map(userId, url);
     }
 
