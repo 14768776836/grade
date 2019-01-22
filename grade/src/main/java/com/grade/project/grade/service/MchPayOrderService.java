@@ -1,6 +1,7 @@
 package com.grade.project.grade.service;
 
 import com.github.pagehelper.PageInfo;
+import com.grade.project.grade.model.MchPayOrder;
 import com.grade.project.grade.model.vo.PublicPayOrderVo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,4 +17,8 @@ public interface MchPayOrderService {
     PageInfo<PublicPayOrderVo> getSpecificOrderList(Integer userId, Integer payStatus, Integer pageNum);
 
     void pay(HttpServletRequest request,Integer userId, List<Integer> orders);
+
+    PageInfo<PublicPayOrderVo> getAllUnPayOrders(Integer userId,Integer pageNum);
+
+    PageInfo<MchPayOrder> getCollectionRecord(Integer userId, Integer pageNum);
 }

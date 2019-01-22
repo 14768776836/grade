@@ -45,13 +45,13 @@ public class PublicNumServiceImpl implements PublicNumService {
         if(StringUtils.isBlank(gradeAccount.getAppSecrect())){
             //将userId定义到新的值中是因为gradeAccountMapper.selectByExample方法查询后，userId就会变成总代理的
             GradeAccountExample gradeAccountExample = new GradeAccountExample();
-            gradeAccountExample.createCriteria().andAppidEqualTo(gradeAccount.getAppid());
+            gradeAccountExample.createCriteria().andAppidEqualTo(gradeAccount.getAppId());
             List<GradeAccount> glist = gradeAccountMapper.selectByExample(gradeAccountExample);
             if(glist.size() > 0){
                 gradeAccount = glist.get(0);
             }
         }
-        String wxUserInfo = WxUserInfo.getWxUserInfo(gradeAccount.getAppid(),gradeAccount.getAppSecrect(),code);
+        String wxUserInfo = WxUserInfo.getWxUserInfo(gradeAccount.getAppId(),gradeAccount.getAppSecrect(),code);
         JSONObject jsonObject = (JSONObject) JSON.parse(wxUserInfo);
         if(jsonObject != null){
             String openid = jsonObject.getString("openid");
@@ -63,7 +63,7 @@ public class PublicNumServiceImpl implements PublicNumService {
             wxNum.setWxHeadImg(jsonObject.getString("headimgurl"));
             GradeWxPublicNumExample gradeWxPublicNum = new GradeWxPublicNumExample();
             //根据公众号appid   及授权返回的openid   授权用户的userid  查询当前用户是否认证过
-            gradeWxPublicNum.createCriteria().andAppidEqualTo(gradeAccount.getAppid()).andOpenIdEqualTo(openid).andUserIdEqualTo(userid);
+            gradeWxPublicNum.createCriteria().andAppidEqualTo(gradeAccount.getAppId()).andOpenIdEqualTo(openid).andUserIdEqualTo(userid);
             List<GradeWxPublicNum> wxPublicNum = gradeWxPublicNumMapper.selectByExample(gradeWxPublicNum);
             if(wxPublicNum.size() > 0){
                 //认证过   更新相关信息
@@ -71,7 +71,7 @@ public class PublicNumServiceImpl implements PublicNumService {
                 gradeWxPublicNumMapper.updateByPrimaryKeySelective(wxNum);
             }else{
                 //没认证过，保存信息
-                wxNum.setAppId(gradeAccount.getAppid());
+                wxNum.setAppId(gradeAccount.getAppId());
                 gradeWxPublicNumMapper.insertSelective(wxNum);
             }
         }else{

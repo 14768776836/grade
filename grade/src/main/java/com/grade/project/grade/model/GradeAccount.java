@@ -9,7 +9,7 @@ public class GradeAccount {
 
     private String gzName;
 
-    private String appid;
+    private String appId;
 
     private String appSecrect;
 
@@ -51,12 +51,12 @@ public class GradeAccount {
         this.gzName = gzName == null ? null : gzName.trim();
     }
 
-    public String getAppid() {
-        return appid;
+    public String getAppId() {
+        return appId;
     }
 
-    public void setAppid(String appid) {
-        this.appid = appid == null ? null : appid.trim();
+    public void setAppId(String appId) {
+        this.appId = appId == null ? null : appId.trim();
     }
 
     public String getAppSecrect() {

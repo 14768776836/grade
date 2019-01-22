@@ -76,6 +76,6 @@
   </select>
 
   <select id="getAllChildrenList" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select ID,EXTENSION_CODE,PARENT_CODE from mv_user where FIND_IN_SET(PARENT_CODE,getChildList(#{parentCode}))
+    select ID,EXTENSION_CODE,PARENT_CODE,USERNAME from mv_user where FIND_IN_SET(PARENT_CODE,getChildList(#{parentCode}))
   </select>
 </mapper>

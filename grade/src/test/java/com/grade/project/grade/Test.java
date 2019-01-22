@@ -6,8 +6,10 @@ import com.grade.project.grade.model.Percent;
 import jdk.nashorn.internal.runtime.arrays.IntElements;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -15,18 +17,19 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
+        int a = 11,b = 9;
 
-        Date time = null;
-        LocalDate localDate = LocalDate.now();
-        int year = localDate.getYear();          //年
-        int month = localDate.getMonthValue();   //月
-        int day = localDate.getDayOfMonth();    //日
-        if(day>= 15) day = 15;
-        else  day = 1;
-        time = new Date(year,month,day);
-        System.out.println(time);
+//        a = a^b;
+        System.out.println(b^a);
 
 
+//        Date date = new Date();
+//        System.out.println(date);
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(date);
+//        calendar.add(Calendar.DAY_OF_MONTH,1);
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        System.out.println(simpleDateFormat.format(calendar));
 
 
 //        BigDecimal result = new BigDecimal(0);

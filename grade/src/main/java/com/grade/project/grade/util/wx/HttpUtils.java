@@ -19,8 +19,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import javax.net.ssl.SSLContext;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.security.KeyStore;
 import java.util.ArrayList;
@@ -280,13 +279,13 @@ public class HttpUtils {
      * @return 请求失败返回null
      * @description 功能描述: post https请求，服务器双向证书验证
      */
-    public static String posts(String url, String s,String filePath) {
+    public static String posts(String url, String s,String mchId,String filePath) {
         CloseableHttpClient httpClient = null;
         HttpPost httpPost = new HttpPost(url);
         String body = null;
         CloseableHttpResponse response = null;
         try {
-            httpClient = HttpClients.custom().setDefaultRequestConfig(REQUEST_CONFIG).setSSLSocketFactory(getSSLConnectionSocket(filePath)).build();
+            httpClient = HttpClients.custom().setDefaultRequestConfig(REQUEST_CONFIG).setSSLSocketFactory(getSSLConnectionSocket(mchId,filePath)).build();
             httpPost.setEntity(new StringEntity(s, DEFAULT_CHARSET));
             response = httpClient.execute(httpPost);
             body = EntityUtils.toString(response.getEntity(), DEFAULT_CHARSET);
@@ -313,12 +312,12 @@ public class HttpUtils {
     }
 
     //获取ssl connection链接
-    private static SSLConnectionSocketFactory getSSLConnectionSocket(String filePath) {
-        Resource resource = new ClassPathResource("public/p12/apiclient_cert.p12");
+    private static SSLConnectionSocketFactory getSSLConnectionSocket(String mchId,String filePath) {
+        Resource resource = new ClassPathResource(filePath);
         SSLContext wx_ssl_context = null;
         try {
             KeyStore keystore = KeyStore.getInstance("PKCS12");
-            char[] keyPassword = "MCH_IDH5".toCharArray(); //证书密码
+            char[] keyPassword = mchId.toCharArray(); //证书密码
             keystore.load(resource.getInputStream(), keyPassword);
             wx_ssl_context = SSLContexts.custom().loadKeyMaterial(keystore, keyPassword).build();
         } catch (Exception e) {

@@ -17,29 +17,60 @@
       <result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
 
       <result column="APP_ID" property="appId" jdbcType="VARCHAR"/>
-<result column="IS_CERTIFICATION" property="isCertification" jdbcType="INTEGER"/>
+      <result column="IS_CERTIFICATION" property="isCertification" jdbcType="INTEGER"/>
+      <result column="OPEN_ID" property="openId" jdbcType="VARCHAR"/>
   </resultMap>
 
     <select id="getChildrenOrders" resultMap="PublicPayOrderResultMap">
-       select gmp.ID,gmp.PAY_STATUS, gmp.USER_ID,gmp.WX_USER_NAME, gmp.PAY_PRICE,gwx.APPID,ISNULL(gwx.APPID) IS_CERTIFICATION  from grade_mch_pay gmp
+       select gmp.ID,gmp.ORDER_NUM,gmp.USER_ID,gmp.WX_USER_NAME,gmp.PAY_PRICE, gwx.OPEN_ID,gmp.PAY_STATUS ,gwx.APPID APP_ID,
+        ISNULL(gwx.APPID) IS_CERTIFICATION  from grade_mch_pay gmp
 LEFT JOIN grade_wx_public_num gwx on gmp.USER_ID = gwx.USER_ID and gwx.APPID = #{appId}
-where gmp.PARENT_CODE = #{parentCode} and gmp.PAY_STATUS = 4 and gmp.GMT_CREATE >= #{time}
+where gmp.PARENT_CODE = #{parentCode} and gmp.PAY_STATUS > 0 and gmp.GMT_CREATE >= #{time}
 
     </select>
 
     <select id="getSpecificOrderList" resultMap="PublicPayOrderResultMap">
-        select gmp.ID,gmp.PAY_STATUS, gmp.USER_ID,gmp.WX_USER_NAME, gmp.PAY_PRICE,gwx.APPID,ISNULL(gwx.APPID) IS_CERTIFICATION
+        select gmp.ID,gmp.ORDER_NUM,gmp.USER_ID,gmp.WX_USER_NAME,gmp.PAY_PRICE, gwx.OPEN_ID,gmp.PAY_STATUS ,gwx.APPID APP_ID,
+        ISNULL(gwx.APPID) IS_CERTIFICATION
          from grade_mch_pay gmp LEFT JOIN grade_wx_public_num gwx on gmp.USER_ID = gwx.USER_ID and gwx.APPID = #{appId}
-where gmp.PARENT_CODE = #{parentCode} and gmp.PAY_STATUS = #{payStatus} order by gmp.GMT_CREATE desc
+where gmp.PARENT_CODE = #{parentCode}
+        <if test="payStatus != 0">
+        and gmp.PAY_STATUS > 0
+        </if>
+        <if test="payStatus == 0">
+            and gmp.PAY_STATUS = 0
+        </if>
+        order by gmp.GMT_CREATE desc
 
     </select>
 
+    <!--获取该总代理分支下的所有的未支付的订单-->
+    <select id="getAllUnPayOrders" resultMap="PublicPayOrderResultMap">
+        select gmp.ID,gmp.ORDER_NUM,gmp.USER_ID,gmp.WX_USER_NAME,gmp.PAY_PRICE, gwx.OPEN_ID,gmp.PAY_STATUS ,gwx.APPID APP_ID,
+        ISNULL(gwx.APPID) IS_CERTIFICATION
+         from grade_mch_pay gmp LEFT JOIN grade_wx_public_num gwx on gmp.USER_ID = gwx.USER_ID
+where gmp.PAY_STATUS = 4 and gwx.APPID = #{appId} order by gmp.GMT_CREATE desc
+    </select>
+
+    <!--重新生成一张表，用以后面的查询当前一级代理的所有的订单-->
+    <select id="getChildPeng" statementType="CALLABLE">
+        {call getChildPeng(#{parentCode,mode=IN})}
+    </select>
     <!--获取下级所有的已认证过的用户生成的订单-->
     <select id="selectUnderCertification"  resultMap="PublicPayOrderResultMap">
-         SELECT gmp.ID,gmp.PAY_STATUS, gmp.USER_ID,gmp.WX_USER_NAME, gmp.PAY_PRICE FROM grade_mch_pay gmp
-         left join grade_wx_public_num gwx on gmp.USER_ID = gwx.USER_ID
-         WHERE PARENT_CODE in (SELECT EXTENSION_CODE FROM mv_user WHERE FIND_IN_SET(extension_code, getChildXiang(#{parentCode})))
-        and PAY_STATUS = 4 and gmp.GMT_CREATE >= #{time} and gwx.APPID = #{appId}
+        select gmp.ID,gmp.ORDER_NUM,gmp.USER_ID,gmp.WX_USER_NAME,gmp.PAY_PRICE, gwx.OPEN_ID,gmp.PAY_STATUS ,gwx.APPID APP_ID,
+        ISNULL(gwx.APPID) IS_CERTIFICATION from grade_mch_pay gmp
+INNER JOIN tmpLsts t on gmp.USER_ID = t.id
+left join grade_wx_public_num gwx on gmp.USER_ID = gwx.USER_ID
+         WHERE  PAY_STATUS = 4 and gmp.GMT_CREATE >= #{time} and gmp.GMT_CREATE <![CDATA[<=]]> #{endTime} and gwx.APPID = #{appId}
+    </select>
+
+    <select id="selectOneByOrderId" resultMap="PublicPayOrderResultMap">
+  select gmp.ID,gmp.ORDER_NUM,gmp.USER_ID,gmp.WX_USER_NAME,gmp.PAY_PRICE, gwx.OPEN_ID,gmp.PAY_STATUS ,gwx.APPID APP_ID,
+        ISNULL(gwx.APPID) IS_CERTIFICATION
+  from grade_mch_pay gmp left join grade_wx_public_num gwx on gmp.USER_ID = gwx.USER_ID
+  where gmp.ID = #{orderId} and gwx.APPID = #{appId}
+
     </select>
 
 </mapper>

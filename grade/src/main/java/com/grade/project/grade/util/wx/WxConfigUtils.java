@@ -5,15 +5,16 @@ public class WxConfigUtils {
     /**
      * 微信普通用户认证地址
      */
-    public final static String WX_USER_AUTH = "http://192.168.10.181/#/wechatBind";
+    public final static String WX_USER_AUTH = "http://192.168.10.167:3000/#/wechatBind";
 
     public final static String WX_APPID = "wxba2ae291ef2cbda7";
 
     public final static String WX_TOKEN = "10086";
+    public final static String MCH_IDH5 = "1455666502";
     /**
      * 微信总代理用户认证地址
      */
-    public final static String WX_BOSS_USER_AUTH = "http://192.168.10.181/#/makeMoney/checkStore";
+    public final static String WX_BOSS_USER_AUTH = "http://192.168.10.167:3000/#/makeMoney/checkStore";
 
 
     /**

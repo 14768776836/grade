@@ -5,7 +5,7 @@
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="USER_ID" property="userId" jdbcType="INTEGER" />
     <result column="GZ_NAME" property="gzName" jdbcType="VARCHAR" />
-    <result column="APPID" property="appid" jdbcType="VARCHAR" />
+    <result column="APPID" property="appId" jdbcType="VARCHAR" />
     <result column="APP_SECRECT" property="appSecrect" jdbcType="VARCHAR" />
     <result column="API_KEY" property="apiKey" jdbcType="VARCHAR" />
     <result column="MCH_ID" property="mchId" jdbcType="VARCHAR" />
@@ -114,7 +114,7 @@
       GMT_CREATE, GMT_MODIFIED, FILE_PATH
       )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{gzName,jdbcType=VARCHAR}, 
-      #{appid,jdbcType=VARCHAR}, #{appSecrect,jdbcType=VARCHAR}, #{apiKey,jdbcType=VARCHAR}, 
+      #{appId,jdbcType=VARCHAR}, #{appSecrect,jdbcType=VARCHAR}, #{apiKey,jdbcType=VARCHAR},
       #{mchId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{isDel,jdbcType=INTEGER}, 
       #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{filePath,jdbcType=VARCHAR}
       )
@@ -131,7 +131,7 @@
       <if test="gzName != null" >
         GZ_NAME,
       </if>
-      <if test="appid != null" >
+      <if test="appId != null" >
         APPID,
       </if>
       <if test="appSecrect != null" >
@@ -169,8 +169,8 @@
       <if test="gzName != null" >
         #{gzName,jdbcType=VARCHAR},
       </if>
-      <if test="appid != null" >
-        #{appid,jdbcType=VARCHAR},
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
       </if>
       <if test="appSecrect != null" >
         #{appSecrect,jdbcType=VARCHAR},
@@ -216,8 +216,8 @@
       <if test="record.gzName != null" >
         GZ_NAME = #{record.gzName,jdbcType=VARCHAR},
       </if>
-      <if test="record.appid != null" >
-        APPID = #{record.appid,jdbcType=VARCHAR},
+      <if test="record.appId != null" >
+        APPID = #{record.appId,jdbcType=VARCHAR},
       </if>
       <if test="record.appSecrect != null" >
         APP_SECRECT = #{record.appSecrect,jdbcType=VARCHAR},
@@ -253,7 +253,7 @@
     set ID = #{record.id,jdbcType=INTEGER},
       USER_ID = #{record.userId,jdbcType=INTEGER},
       GZ_NAME = #{record.gzName,jdbcType=VARCHAR},
-      APPID = #{record.appid,jdbcType=VARCHAR},
+      APPID = #{record.appId,jdbcType=VARCHAR},
       APP_SECRECT = #{record.appSecrect,jdbcType=VARCHAR},
       API_KEY = #{record.apiKey,jdbcType=VARCHAR},
       MCH_ID = #{record.mchId,jdbcType=VARCHAR},
@@ -275,8 +275,8 @@
       <if test="gzName != null" >
         GZ_NAME = #{gzName,jdbcType=VARCHAR},
       </if>
-      <if test="appid != null" >
-        APPID = #{appid,jdbcType=VARCHAR},
+      <if test="appId != null" >
+        APPID = #{appId,jdbcType=VARCHAR},
       </if>
       <if test="appSecrect != null" >
         APP_SECRECT = #{appSecrect,jdbcType=VARCHAR},
@@ -309,7 +309,7 @@
     update grade_account
     set USER_ID = #{userId,jdbcType=INTEGER},
       GZ_NAME = #{gzName,jdbcType=VARCHAR},
-      APPID = #{appid,jdbcType=VARCHAR},
+      APPID = #{appId,jdbcType=VARCHAR},
       APP_SECRECT = #{appSecrect,jdbcType=VARCHAR},
       API_KEY = #{apiKey,jdbcType=VARCHAR},
       MCH_ID = #{mchId,jdbcType=VARCHAR},

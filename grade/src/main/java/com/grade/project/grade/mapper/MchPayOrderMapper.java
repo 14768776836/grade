@@ -2,10 +2,9 @@ package com.grade.project.grade.mapper;
 
 import com.grade.project.grade.model.MchPayOrder;
 import com.grade.project.grade.model.MchPayOrderExample;
-import java.util.List;
-
-import com.grade.project.grade.model.User;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface MchPayOrderMapper {
     int countByExample(MchPayOrderExample example);
@@ -31,5 +30,5 @@ public interface MchPayOrderMapper {
     int updateByPrimaryKey(MchPayOrder record);
 
 
-    List<MchPayOrder> getAllUnders(@Param("parentCode") String parentCode,@Param("time") String time);
+    List<MchPayOrder> getAllUnders(@Param("parentCode") String parentCode, @Param("time") String time);
 }

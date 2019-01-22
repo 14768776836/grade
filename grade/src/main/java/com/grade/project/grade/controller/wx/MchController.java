@@ -1,5 +1,7 @@
 package com.grade.project.grade.controller.wx;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.grade.project.grade.mapper.GradeAccountMapper;
 import com.grade.project.grade.model.GradeAccount;
 import com.grade.project.grade.model.GradeAccountExample;
@@ -100,11 +102,13 @@ public class MchController {
                 // 获取该总代理之前设置的所有的商户信息
                 example.createCriteria().andUserIdEqualTo(gradeAccount.getUserId()).andStatusEqualTo(1);
                 List<GradeAccount> accounts = gradeAccountMapper.selectByExample(example);
-                GradeAccount account = accounts.get(0);
-                account.setStatus(0);
-                gradeAccountMapper.updateByPrimaryKeySelective(account);
+                if(accounts != null && accounts.size() > 0){
+                    GradeAccount account = accounts.get(0);
+                    account.setStatus(0);
+                    gradeAccountMapper.updateByPrimaryKeySelective(account);
+                }
                 gradeAccount.setStatus(1);
-                gradeAccountMapper.updateByPrimaryKeySelective(gradeAccount);
+//                gradeAccountMapper.updateByPrimaryKeySelective(gradeAccount);
 
                 int result = mchService.saveMchMessage(gradeAccount);
                 dataMap = result2Map(result, StatusUtils.SETTING_ERROR_MSG_EXCEPTION);
@@ -127,12 +131,14 @@ public class MchController {
         Map<String, Object> dataMap = new HashMap<>();
         //文件存放路径
 //        System.getProperty("user.dir") + "/src/main/resources/playback/1.txt";
-        String filePath = System.getProperty("user.dir") + "/src/main/resources/public/p12/";
+        String filePath = System.getProperty("user.dir") + "/src/main/resources/";
+//        String path2 = System.getProperty("user.dir") + "/target/classes/";
 
         //调用文件处理类FileUtil，处理文件，将文件写入指定位置
         FileUtil.uploadFile(file.getBytes(), filePath, fileName);
+//        FileUtil.uploadFile(file.getBytes(), path2, fileName);
         dataMap.put("success", true);
-        dataMap.put("path", filePath + fileName);
+        dataMap.put("path",  fileName);
 
         // 返回图片的存放路径
         return dataMap;

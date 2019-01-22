@@ -26,7 +26,7 @@ public class OrderThread implements Runnable {
     private GradeOrderVo gradeOrderVo;//获取总代设置的分润数据
 
 
-    public OrderThread(User user, GradeOrderVo gradeOrderVo){
+    public OrderThread(User user, GradeOrderVo gradeOrderVo) {
         this.user = user;
         this.gradeOrderVo = gradeOrderVo;
     }
@@ -39,12 +39,12 @@ public class OrderThread implements Runnable {
         List<User> userChildrenList = new ArrayList<>();
         userChildrenList.add(user);
         BigDecimal countPirce = new BigDecimal("0.00");
-        for(int i = 0; i < gradeOrderVo.getRunLevel();i++){
-            if(userChildrenList == null || userChildrenList.size() <= 0)continue;
+        for (int i = 0; i < gradeOrderVo.getRunLevel(); i++) {
+            if (userChildrenList == null || userChildrenList.size() <= 0) continue;
             userChildrenList = orderVoMapper.getChildrenList(userChildrenList);
-            if(userChildrenList == null || userChildrenList.size() <= 0)continue;
-            BigDecimal price = orderVoMapper.countChildrenPay(userChildrenList,gradeOrderVo.getStartTime(),gradeOrderVo.getEndTime());//获取充值总金额
-            if(price == null){
+            if (userChildrenList == null || userChildrenList.size() <= 0) continue;
+            BigDecimal price = orderVoMapper.countChildrenPay(userChildrenList, gradeOrderVo.getStartTime(), gradeOrderVo.getEndTime());//获取充值总金额
+            if (price == null) {
                 continue;
             }
             JSONArray jsonArray = JSONArray.fromObject(gradeOrderVo.getRunPercent());
@@ -54,33 +54,32 @@ public class OrderThread implements Runnable {
             countPirce = countPirce.add(d);
         }
         // 应当获取的利润小数点后取两位
-        countPirce = countPirce.setScale(2,BigDecimal.ROUND_DOWN);
-        if(countPirce.compareTo(new BigDecimal(0)) != 0){
-            mchPayOrderMapper.insertSelective(generateOrder(user,gradeOrderVo.getExtensionCode(),countPirce));
+        countPirce = countPirce.setScale(2, BigDecimal.ROUND_DOWN);
+        if (countPirce.compareTo(new BigDecimal(0)) != 0) {
+            mchPayOrderMapper.insertSelective(generateOrder(user, gradeOrderVo.getExtensionCode(), countPirce));
         }
     }
 
     /**
      * 通过上级以及该分支的总代理、打款金额生成订单
      *
-     * @param u1            生成订单的用户
+     * @param user          生成订单的用户
      * @param extensionCode 总代理的推广码
      * @param res           分成数额
      * @return
      */
-
-    private MchPayOrder generateOrder(User u1, String extensionCode, BigDecimal res) {
-        MchPayOrder order1 = new MchPayOrder();
-        order1.setOrderNum(PayCommonUtil.getOrderIdByUUId());   //设置订单号
+    private MchPayOrder generateOrder(User user, String extensionCode, BigDecimal res) {
+        MchPayOrder order = new MchPayOrder();
+        order.setOrderNum(PayCommonUtil.getOrderIdByUUId());   //设置订单号
         // 账单未支付状态
-        order1.setPayStatus(StatusUtils.ORDER_STATUS_4);
-        order1.setUserId(u1.getId());       //设置用户id
-        order1.setParentCode(u1.getParentCode());  //设置直属上级推广码
-        order1.setGeneralAgentCode(extensionCode);    //设置本支线总代理的推广码
-        order1.setPayPrice(res);    //设置打款金额
-        order1.setWxUserName(u1.getUsername()); //设置用户昵称
-        order1.setGmtCreate(new Date());    //设置创建订单时间
-        order1.setGmtModified(new Date());  //设置修改订单时间
-        return order1;
+        order.setPayStatus(StatusUtils.ORDER_STATUS_4);
+        order.setUserId(user.getId());       //设置用户id
+        order.setParentCode(user.getParentCode());  //设置直属上级推广码
+        order.setGeneralAgentCode(extensionCode);    //设置本支线总代理的推广码
+        order.setPayPrice(res);    //设置打款金额
+        order.setWxUserName(user.getUsername()); //设置用户昵称
+        order.setGmtCreate(new Date());    //设置创建订单时间
+        order.setGmtModified(new Date());  //设置修改订单时间
+        return order;
     }
 }

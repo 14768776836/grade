@@ -1,7 +1,6 @@
 package com.grade.project.grade;
 
 import com.grade.project.grade.service.MchPayOrderServiceImpl;
-import com.grade.project.grade.task.MyTask;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +16,15 @@ public class GradeApplicationTests {
 
     @Autowired
     MchPayOrderServiceImpl service;
+
     @Test
     public void contextLoads() {
 
 //        MyTask myTask = new MyTask();
 //        myTask.task();
+        List<Integer> array = new ArrayList<>();
+        array.add(5);
+        service.payTest(10,array);
 
     }
 

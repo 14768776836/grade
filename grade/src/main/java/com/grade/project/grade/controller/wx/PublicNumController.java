@@ -41,12 +41,6 @@ public class PublicNumController {
         String url = WxConfigUtils.OAUTH2_URL.replace("APPID", WxConfigUtils.WX_APPID).replace("REDIRECT_URL", WxConfigUtils.WX_USER_AUTH);
         return author2Map(userId, url);
     }
-//    public void getWxLoginOauth2URL(HttpServletResponse response) throws IOException {
-//
-//        String url = WxConfigUtils.OAUTH2_URL.replace("APPID",WxConfigUtils.WN_APPID).replace("REDIRECT_URL",WxConfigUtils.WX_USER_AUTH);
-//     response.sendRedirect(url);
-////  return author2Map(userId,url);
-//    }
 
     /**
      * wxPublicNum/getWxLoginOauth2URLBoss

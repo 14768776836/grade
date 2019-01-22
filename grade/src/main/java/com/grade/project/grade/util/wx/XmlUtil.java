@@ -2,6 +2,7 @@ package com.grade.project.grade.util.wx;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.ByteArrayInputStream;
@@ -62,7 +63,7 @@ public class XmlUtil {
 	 * @param xml
 	 * @return
 	 */
-	public static Map<String, String> xmlParse(String xml) throws Exception {
+	public static Map<String, String> xmlParse(String xml)throws Exception {
 		Map<String, String> map = null;
 		if (StringUtils.isNotEmpty(xml)) {
 			InputStream inputStream = new ByteArrayInputStream(xml.getBytes());

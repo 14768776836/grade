@@ -1,6 +1,7 @@
 package com.grade.project.grade.service.wx;
 
 import com.grade.project.grade.model.GradeAccount;
+import com.grade.project.grade.model.vo.PublicPayOrderVo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
@@ -40,4 +41,14 @@ public interface MchService {
      */
     Map<String, Object> payMchToUser(HttpServletRequest request, GradeAccount gradeAccount, BigDecimal amount,String desc,Integer userId);
 
+
+    /**
+     * 向订单打款
+     * @param request
+     * @param gradeAccount  总代理设置的打款商户，公众号等
+     * @param desc          描述
+     * @param vo            订单vo
+     * @return
+     */
+    Map<String, Object> payMchToOrder(HttpServletRequest request, GradeAccount gradeAccount, String desc, PublicPayOrderVo vo);
 }
