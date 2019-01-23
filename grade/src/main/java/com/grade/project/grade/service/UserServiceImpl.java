@@ -80,4 +80,24 @@ public class UserServiceImpl implements UserService {
         List<PublicNumVo> noBindPublicNumList = publicNumVoMapper.getNoBindPublicNumList(userParent.getId(), userId);
         return noBindPublicNumList;
     }
+
+    @Override
+    public PageInfo<User> getAllGradeList(Integer pageNum) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andUserStatusEqualTo(StatusUtils.USER_STATUS_1).andIsDelEqualTo(StatusUtils.IS_DEL_0);
+        userExample.setOrderByClause(" GMT_CREATE DESC");//时间倒序排序
+        PageHelper.startPage(pageNum, StatusUtils.PAGE_SIZE);
+        List<User> userList = userMapper.selectByExample(userExample);
+        PageInfo<User> pageInfo = new PageInfo<>(userList);
+        return pageInfo;
+    }
+
+    @Override
+    public int removeUserAllGrade(Integer userId) {
+        UserWithBLOBs user = new UserWithBLOBs();
+        user.setUserStatus(StatusUtils.USER_STATUS_0);//取消总代理资格
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andIdEqualTo(userId);
+        return userMapper.updateByExampleSelective(user,userExample);
+    }
 }

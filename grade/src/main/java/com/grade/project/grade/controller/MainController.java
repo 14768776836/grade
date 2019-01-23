@@ -18,4 +18,5 @@ public class MainController {
         logger.info("进入首页");
         return "index";
     }
+
 }

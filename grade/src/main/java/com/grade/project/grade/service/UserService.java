@@ -36,4 +36,18 @@ public interface UserService {
      * @return
      */
     List<PublicNumVo> findNotBindPublicNum(Integer userId);
+
+    /**
+     * 分页查询所有总代理列表数据
+     * @param pageNum
+     * @return
+     */
+    PageInfo<User> getAllGradeList(Integer pageNum);
+
+    /**
+     * 取消用户总代理资格
+     * @param userId
+     * @return
+     */
+    int removeUserAllGrade(Integer userId);
 }

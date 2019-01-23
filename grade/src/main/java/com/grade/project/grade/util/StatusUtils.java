@@ -99,4 +99,11 @@ public class StatusUtils {
      * 有效
      */
     public final static Integer STATUS_1 = 1;
+
+    /**
+     * 总代理  1：是  0：不是
+     */
+    public final static Integer USER_STATUS_1 = 1;
+
+    public final static Integer USER_STATUS_0 = 0;
 }
