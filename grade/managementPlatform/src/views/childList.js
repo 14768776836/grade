@@ -40,15 +40,8 @@ class ChildLists extends Component {
 			pageNum = num? num : self.state.pageNum,
 			userId = JSON.parse((localStorage.getItem('userMsg'))).user.id;
 
-
-
-
-
 		// userId = JSON.parse(JSON.stringify({"success":true,"user":{"id":15,"username":"admin","telno":null,"extensionCode":"ID15PSNDZM","parentCode":"","faction":"","truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":"e10adc3949ba59abbe56e057f20f883e","noPrice":900,"isPrice":100,"gmtCreate":"2018-11-28T13:13:14.000+0000","gmtModified":"2018-12-25T06:51:49.000+0000","userType":0,"userStatus":1,"token":"6c661b6a0c717a065427c8a64d5f5ba3","isDel":0},"parentUser":""})).user.id;
-
-
-
-
+		
 		fetch('/user/findChildrenList?userId='+userId+'&pageNum='+pageNum)
 		.then(res => res.json())
 		.then(data => {
@@ -56,9 +49,11 @@ class ChildLists extends Component {
 			data1.childrenUserList.pageNum = 2;
 			data1.*/
 			// var datas = {"childrenUserList":{"pageNum":1,"pageSize":10,"size":7,"orderBy":null,"startRow":1,"endRow":7,"total":7,"pages":1,"list":[{"id":45,"username":"ts18069791015","telno":null,"extensionCode":"ID45QFJTRX","parentCode":"ID15PSNDZM","faction":null,"truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":null,"noPrice":0.00,"isPrice":0.00,"gmtCreate":"2018-12-29T04:51:56.000+0000","gmtModified":null,"userType":0,"userStatus":null,"token":"fdc7c4d704dbda86fb9a35c7941e73b0","isDel":0},{"id":44,"username":"sunnh","telno":null,"extensionCode":"ID44RREOFM","parentCode":"ID15PSNDZM","faction":null,"truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":null,"noPrice":0.00,"isPrice":0.00,"gmtCreate":"2018-12-26T17:04:10.000+0000","gmtModified":null,"userType":0,"userStatus":null,"token":"60cf88b31276bfcf7eda5caf71191588","isDel":0},{"id":43,"username":"zzcn77","telno":null,"extensionCode":"ID43QYYRUS","parentCode":"ID15PSNDZM","faction":null,"truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":null,"noPrice":0.00,"isPrice":0.00,"gmtCreate":"2018-12-26T05:34:59.000+0000","gmtModified":null,"userType":0,"userStatus":null,"token":"5500a8e2f94dcd80c090ef05b0895594","isDel":0},{"id":42,"username":"sunnyboy8888","telno":null,"extensionCode":"ID42ROJZDT","parentCode":"ID15PSNDZM","faction":"","truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":null,"noPrice":0.00,"isPrice":0.00,"gmtCreate":"2018-12-24T22:47:52.000+0000","gmtModified":null,"userType":1,"userStatus":null,"token":"982c904b81008f7df25d4ba32ee957fb","isDel":0},{"id":39,"username":"ege123","telno":null,"extensionCode":"ID39SMLEBP","parentCode":"ID15PSNDZM","faction":null,"truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":null,"noPrice":0.00,"isPrice":0.00,"gmtCreate":"2018-12-09T08:56:03.000+0000","gmtModified":null,"userType":0,"userStatus":null,"token":"863fed7fd43cfabbd06d29f96ed48cfe","isDel":0},{"id":38,"username":"255","telno":null,"extensionCode":"ID38GZPXKB","parentCode":"ID15PSNDZM","faction":null,"truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":null,"noPrice":0.00,"isPrice":0.00,"gmtCreate":"2018-12-09T08:31:25.000+0000","gmtModified":null,"userType":0,"userStatus":null,"token":"03fd72431ff77f632fd58114795afb27","isDel":0},{"id":16,"username":"han","telno":null,"extensionCode":"ID16RCWBKW","parentCode":"ID15PSNDZM","faction":null,"truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":null,"noPrice":0.00,"isPrice":0.00,"gmtCreate":"2018-12-03T08:58:15.000+0000","gmtModified":null,"userType":0,"userStatus":null,"token":"a466f11f1c385411eaee56b8003aee6e","isDel":0}],"firstPage":1,"prePage":0,"nextPage":0,"lastPage":1,"isFirstPage":true,"isLastPage":true,"hasPreviousPage":false,"hasNextPage":false,"navigatePages":8,"navigatepageNums":[1]},"success":true};
-			console.log('-----+++++',this.state.datas)
 			if (data.success) {
-				if (this.state.pageLast < 10) return;
+				if (this.state.pageLast && this.state.pageLast < 10) {
+					message.info('已加载全部内容！');
+					return;
+				}
 				let datas = num ? this.state.datas.concat(data.childrenUserList.list)
 								: data.childrenUserList.list;
 				const accountLists = datas.map((v,inx)=>{
@@ -86,9 +81,6 @@ class ChildLists extends Component {
 	    }
 	    if(action === STATS.refreshing){//刷新
 	       	this.handRefreshing();
-
-
-
 	    } else if(action === STATS.loading){//加载更多
 	       	this.handLoadMore();
 	    } else{
@@ -102,8 +94,6 @@ class ChildLists extends Component {
 		if(STATS.refreshing === this.state.action){
 	      	return false
 	    }
-
-
 	    // var data2 = {"childrenUserList":{"pageNum":2,"pageSize":10,"size":3,"orderBy":null,"startRow":11,"endRow":13,"total":13,"pages":2,"list":[{"id":39,"username":"ege123","telno":null,"extensionCode":"ID39SMLEBP","parentCode":"ID15PSNDZM","faction":null,"truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":null,"noPrice":0.00,"isPrice":0.00,"gmtCreate":"2018-12-09T08:56:03.000+0000","gmtModified":null,"userType":0,"userStatus":null,"token":"863fed7fd43cfabbd06d29f96ed48cfe","isDel":0},{"id":38,"username":"255","telno":null,"extensionCode":"ID38GZPXKB","parentCode":"ID15PSNDZM","faction":null,"truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":null,"noPrice":0.00,"isPrice":0.00,"gmtCreate":"2018-12-09T08:31:25.000+0000","gmtModified":null,"userType":0,"userStatus":null,"token":"03fd72431ff77f632fd58114795afb27","isDel":0},{"id":16,"username":"han","telno":null,"extensionCode":"ID16RCWBKW","parentCode":"ID15PSNDZM","faction":null,"truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":null,"noPrice":0.00,"isPrice":0.00,"gmtCreate":"2018-12-03T08:58:15.000+0000","gmtModified":null,"userType":0,"userStatus":null,"token":"a466f11f1c385411eaee56b8003aee6e","isDel":0}],"firstPage":1,"prePage":1,"nextPage":0,"lastPage":2,"isFirstPage":false,"isLastPage":true,"hasPreviousPage":true,"hasNextPage":false,"navigatePages":8,"navigatepageNums":[1,2]},"success":true};
 
 

@@ -46,12 +46,13 @@ class CheckStoreCom extends Component {
 			mchId=${values.mchId}&
 			filePath=${values.filePath}&
 		`;
-		fetch(`/wxMch/codeMchNum?userId=${userId}&gzName=${values.gzName}&appid=${values.appid}&mchId=${values.mchId}&apiKey=${values.apiKey}`)
+		fetch(`/wxMch/codeMchNum?userId=${userId}&gzName=${values.gzName}&appid=${values.appid}&mchId=${values.mchId}&apiKey=${values.apiKey}&filePath=${values.filePath}`)
 		.then(res => res.json())
 		.then(data => {
 			if (data.success) {
 				self.addMchList(params);
 				message.success(data.msg);
+				window.location.href = '/makeMoney';
 			} else {
 				message.error(data.msg);
 			}
@@ -82,7 +83,7 @@ class CheckStoreCom extends Component {
 		}	
 		return (
 			<div>
-				<div className='returnBox'><Link to='' className='returnBtn'>返回</Link></div>
+				<div className='returnBox'><Link to='/makeMoney' className='returnBtn'>返回</Link></div>
 				<div className='ant-modal-content checkStoreIdBox' style={wechatSuccess ? {display:'block'} : {display:'none'}}>
 					<button className='ant-modal-close' onClick={this.cancel}>
 						<span className='ant-modal-close-x'></span>

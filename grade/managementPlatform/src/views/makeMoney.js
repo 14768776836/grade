@@ -15,7 +15,13 @@ import {
 	Redirect,
 	Link
 } from 'react-router-dom';
-
+import ReactPullLoad ,{ STATS } from 'react-pullload';
+/*import HeadNode from './../components/toUpdate/HeadNode';
+import FooterNode from './../components/toUpdate/FooterNode';
+import './../components/toUpdate/ReactPullLoad.css';*/
+import HeadNode from './../../node_modules/react-pullload/dist/HeadNode';
+import FooterNode from './../../node_modules/react-pullload/dist/FooterNode';
+import './../../node_modules/react-pullload/dist/ReactPullLoad.css';
 import './../assets/css/makeMoney.css';
 
 
@@ -28,13 +34,21 @@ class MoneyForm extends Component {
 	state = {
 		userId      : null,
 		visible     : false,
-		accountArr  : null,
+		accountArr  : [],
 		accountLists: null,
 		uploadProps : null,
 	  	fileList    : [],
 	  	appId       : null,
 	  	// 未上传授权文件时，输入框禁止使用
 	  	isFileSuccess: true,
+	  	// 上传文件按钮
+	  	isUse       : null,
+  		pageNum      : 1,
+		pageLast     : 0,
+		datas        : [], // 就是accountArr
+		// 上滑、下拉
+		hasMore      : true,
+      	action       : STATS.init
 	}
 	constructor (props) {
 		super(props);
@@ -42,7 +56,6 @@ class MoneyForm extends Component {
 		if (new Date(Number(overdueDate)).getTime() < new Date().getTime()) {
 			localStorage.removeItem('overdueDate');
 		}
-		
 	}
 	componentDidMount () {
 		this.searchBusinessList();
@@ -50,20 +63,8 @@ class MoneyForm extends Component {
 	/*查询商户列表*/
 	searchBusinessList = () => {
 		let userId = JSON.parse(localStorage.getItem('userMsg')).user.id;
-		
-
-
-
-
 		/*let user = JSON.parse(JSON.stringify({"success":true,"user":{"id":15,"username":"admin","telno":null,"extensionCode":"ID15PSNDZM","parentCode":"","faction":"","truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":"e10adc3949ba59abbe56e057f20f883e","noPrice":900,"isPrice":100,"gmtCreate":"2018-11-28T13:13:14.000+0000","gmtModified":"2018-12-25T06:51:49.000+0000","userType":0,"userStatus":1,"token":"6c661b6a0c717a065427c8a64d5f5ba3","isDel":0},"parentUser":""}));
 		let userId = user.user.id;*/
-
-
-
-
-
-
-
 		this.setState({
 			userId: userId
 		})
@@ -82,18 +83,8 @@ class MoneyForm extends Component {
 				status: 0
 				userId: 10}]*/
 
-				const accountLists = data.mchList.map((v,inx)=>{
-					return <div className='accountList' key={v.id}>
-						<p>公众号名称&nbsp;&nbsp;：{v.gzName}</p>
-						<p>公众号appId：{v.appid}</p>
-						<p>秘钥&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：{v.appSecrect}</p>
-						<p>商户号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：{v.mchId}</p>
-						<div className='deleteBtn' onClick={(e)=>this.accountListDelete(e,inx,v.id)}>删除</div>
-					</div>
-				});
 				this.setState({
 					accountArr  : data.mchList,
-					accountLists: accountLists
 				});
 			} else {
 				message.error(data.msg);
@@ -124,44 +115,28 @@ class MoneyForm extends Component {
 		this.props.form.validateFields((err,values) => {
 			console.log(values)
 			if (!err) {
-				formValues.appid      = values.appid;
+			/*	formValues.appid      = values.appid;
 				formValues.gzName     = values.gzName;
 				formValues.appSecrect = values.appSecrect;
 				formValues.mchId      = values.mchId;
-				formValues.apiKey     = values.apiKey;
 				formValues.filePath   = values.fileLoad.file.response.path;
+				formValues.apiKey     = values.apiKey;*/
+				
+				// 测试数据开始------
+				formValues.appid      = 'wx97f93285af090c3e';
+				formValues.gzName     = '骚帅';
+				formValues.appSecrect = '1f9470d9289615b41e0a6b487bbe5b85';
+				formValues.mchId      = '1455666502';
+				formValues.apiKey     = 'C50E092772003E8BAFAD8FB7D453888C';
+				formValues.filePath   =  encodeURI(values.fileLoad.file.response.path);
+				// 测试数据结束------
+				
 				localStorage.setItem('formValues',JSON.stringify(formValues));
 				
 				if (!self.checkWechatId({
 					userId  : self.state.userId,
 					appId   : values.appid
 				})) return;
-		
-
-				/*let params = `
-					userId=${self.state.userId}&
-					gzName=${values.gzName}&
-					appid=${values.appid}&
-					appSecrect=${values.appSecrect}&
-					mchId=${values.mchId}
-				`;
-
-				// 提交新增内容
-				fetch(`/wxMch/addMch?${params}`)
-				.then(res => res.json())
-				.then(data => {
-					if (data.success) {
-						message.success('添加成功！');
-						this.setState({
-							visible: false
-						});
-						self.searchBusinessList();
-						localStorage.removeItem('wechatSuccess');
-					} else {
-						message.error(data.msg);
-					}
-				})*/
-
 			}
 		})		
 	}
@@ -195,7 +170,6 @@ class MoneyForm extends Component {
 	* return url     微信授权成功后跳转的地址
 	*/
 	// 在确定提交之前进行校验
-	// wxPublicNum/getWxLoginOauth2URLBoss
 	checkWechatId = ({userId,appId}) => {
 		let flag,
 			self = this;
@@ -229,6 +203,7 @@ class MoneyForm extends Component {
 				}
 				localStorage.setItem('wechatSuccess','true');
 				window.location.href = decodeURI(data.url);
+
 				flag = true;
 			} else {
 				message.error(data.msg);
@@ -243,10 +218,12 @@ class MoneyForm extends Component {
       		console.log(info.file, info.fileList);
     	}
    		if (info.file.status === 'done') {
+   			console.log(decodeURI(info.file.response.path));
       		message.success(`${info.file.name} 文件上传成功！`);
 
       		this.setState({
-      			isFileSuccess: false
+      			isFileSuccess: false,
+      			isUse        : 1
       		})
 		} else if (info.file.status === 'error') {
       		message.error(`${info.file.name} 文件上传失败！`);
@@ -267,6 +244,12 @@ class MoneyForm extends Component {
 		  	},
   		})
   	}
+  	/* 移除文件之后 */
+  	removeFile = () => {
+  		this.setState({
+  			isUse: null
+  		});
+  	}
   	/*保存授权用户信息,微信授权之后*/
   	savePublicNumUser = ({code,appId,userId}) => {
   		let appSecrect = JSON.parse(localStorage.getItem('formValues')).appSecrect;
@@ -281,7 +264,74 @@ class MoneyForm extends Component {
 			}
 		});
   	}
+  	/* 下拉、上滑状态处理 */
+	handleAction = (action) => {
+	    console.info(action, this.state.action,action === this.state.action);
+	    if(action === this.state.action){
+	       return false
+	    }
+	    if(action === STATS.refreshing){//刷新
+	       	this.handRefreshing();
+	    } else if(action === STATS.loading){//加载更多
+	       	this.handLoadMore();
+	    } else{
+	        this.setState({
+	          	action: action
+	       	})
+	    }
+	}
+	/* 是否'刷新'状态 */
+	handRefreshing = () => {
+		if(STATS.refreshing === this.state.action){
+	      	return false
+	    }
+	    let timer = setTimeout(()=>{
+	     	this.setState({
+		        hasMore: true,
+		        action: STATS.refreshed,
+	      	});
+	      	clearTimeout(timer);
+	    }, 1500)
+
+	    this.setState({
+	      	action: STATS.refreshing
+	    });	
+	}
+	/* 是否'更多'状态,'更多'状态处理 */
+	handLoadMore = () => {
+		if(STATS.loading === this.state.action){
+	      	return false
+	    }
+
+	    let timer = setTimeout( () => {
+	      	if(this.state.index === 0){
+	        	this.setState({
+	          		action: STATS.reset,
+	          		hasMore: false
+	        	});
+      		} else{
+      			let pageNum = this.state.pageNum;
+      			pageNum++;
+		        this.setState({
+		         	action: STATS.reset,
+		          	pageNum: pageNum
+		        });
+		        console.log('---------pageNum---',pageNum)
+		        this.searchBusinessList(pageNum);
+	      	}
+	      	clearTimeout(timer);
+	    }, 1500);
+
+	    this.setState({
+	      action: STATS.loading
+	    })
+	}
 	render () {
+		const { 
+			accountArr,
+			hasMore,
+			action
+		} = this.state;
 		const {getFieldDecorator} = this.props.form;
 		const itemStyle = {
 			labelCol: {span: 8},
@@ -291,13 +341,37 @@ class MoneyForm extends Component {
 		if (!overdueDate) {
 			message.warning('登录失效，请重新登录！');
             return <Redirect push to={'/login'}/>
-		}		
+		}	
+		const accountLists = accountArr.map((v,inx)=>{
+			return <div className='accountList' key={v.id}>
+				<p>公众号名称&nbsp;&nbsp;：{v.gzName}</p>
+				<p>公众号appId：{v.appid}</p>
+				<p>秘钥&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：{v.appSecrect}</p>
+				<p>商户号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：{v.mchId}</p>
+				<div className='deleteBtn' onClick={(e)=>this.accountListDelete(e,inx,v.id)}>删除</div>
+			</div>
+		});	
 		return (
 			<div className='moneyBox' id='moneyBox'>
-				<div className='returnBox'><Link to='' className='returnBtn'>返回</Link></div>
-				<Button onClick={this.modalAction} className='addBtn'>新增打款账户</Button>
+				<div className='returnBox'>
+					<Link to='' className='returnBtn'>返回</Link>
+					<Button onClick={this.modalAction} className='addBtn'>新增打款账户</Button>
+				</div>
+				{/*<ReactPullLoad 
+						          	downEnough={100}
+						          	action={action}
+						          	handleAction={this.handleAction}
+						          	hasMore={hasMore}
+						          	distanceBottom={100}
+						          	HeadNode={HeadNode}
+						          	FooterNode={FooterNode}
+						        >
+						          	<ul className='accountBox' style={{paddingLeft: 0}}>
+						            	{accountLists}
+						          	</ul>
+						        </ReactPullLoad>*/}
 				<div className='accountBox'>
-					{this.state.accountLists}
+					{accountLists}
 				</div>
 				<Modal
 					className='moneyModal'
@@ -342,8 +416,8 @@ class MoneyForm extends Component {
 						</FormItem>
 						<FormItem label='配置文件'>
 							{getFieldDecorator('fileLoad',{
-								rules:[{required: true,message: '请填写微信公众号'}]})(<Upload {...this.state.uploadProps} onChange={this.onChange} showUploadList={true}>
-								    <Button disabled={this.state.appId ? false : true}>
+								rules:[{required: true,message: '请填写微信公众号'}]})(<Upload {...this.state.uploadProps} onChange={this.onChange} showUploadList={true} onRemove={this.removeFile}>
+								    <Button disabled={!this.state.appId || this.state.isUse === 1 ? true : false}>
 								      	<Icon type="upload" /> 选择授权文件
 								    </Button>
 						  		</Upload>)

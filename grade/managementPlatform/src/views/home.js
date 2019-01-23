@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {
 	Avatar,
 	Row,
@@ -13,9 +14,13 @@ import './../assets/css/home.css';
 
 
 class Home extends Component {
-
-	constructor (props) {
+	static contextTypes = {
+		userMsg: PropTypes.object
+	}
+	constructor (props,context) {
 		super(props);
+		console.log(context)
+
 		const overdueDate = localStorage.getItem('overdueDate');
 		var user = JSON.parse(localStorage.getItem('userMsg'));
 		/*var user;
@@ -33,10 +38,10 @@ class Home extends Component {
 				{pageName: '微信绑定',inx: '3',router: '/wechatBind'},
 				{pageName: '开始打款',inx: '4',router: '/remit'      ,userStatus: 1},
 				{pageName: '分享'    ,inx: '5',router: '/share'},
-				{pageName: '账单'    ,inx: '6',router: '/bill',userStatus: 1},
+				// {pageName: '账单'    ,inx: '6',router: '/bill',userStatus: 1},
 				{pageName: '收款纪录',inx: '7',router: '/recordMoney'},
 				{pageName: '退出登录',inx: '8',router: '/login'},
-				{pageName: '商户检查',inx: '10',router: '/makeMoney/checkStore'},
+				// {pageName: '商户检查',inx: '10',router: '/makeMoney/checkStore'},
 				// {pageName: '上传文件',inx: '9',router: '/uploadFile'},// 测试功能
 
 			],

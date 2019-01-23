@@ -10,6 +10,7 @@ import  {
 	Link
 } from 'react-router-dom';
 import './../assets/css/makeMoney.css';
+import throttle from 'lodash.throttle';
 
 message.config({
 	duration: 3
@@ -17,19 +18,12 @@ message.config({
 class WechatCom extends Component {
 	state = {
 		user           : JSON.parse(localStorage.getItem('userMsg')).user,
-
-
-
-
-		// user :{"success":true,"user":{"id":15,"username":"admin","telno":null,"extensionCode":"ID15PSNDZM","parentCode":"","faction":"","truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":"e10adc3949ba59abbe56e057f20f883e","noPrice":900,"isPrice":100,"gmtCreate":"2018-11-28T13:13:14.000+0000","gmtModified":"2018-12-25T06:51:49.000+0000","userType":0,"userStatus":1,"token":"6c661b6a0c717a065427c8a64d5f5ba3","isDel":0},"parentUser":""}.user,
-
-
-
-
-
-
-		accountLists   : null,
-		accountListsNot: null
+		accountLists   : [],
+		accountListsNot: []
+	}
+	constructor () {
+		super();
+		this.validateWechat = throttle(this.validateWechat,2500);
 	}
 	componentDidMount () {
 		let overdueDate = localStorage.getItem('overdueDate');
@@ -38,12 +32,15 @@ class WechatCom extends Component {
 		}
 		this.searchWechatLists();
 	}
+	componentWillUnmount () {
+		this.validateWechat.cancel();
+	}
 	/*查询公众号列表*/
 	searchWechatLists = () => {
 		let self = this,
 			userId = self.state.user.id;
 
-		// 测试开始------
+		/*// 测试开始------
 		var data = {
 			publicNumList: [
 				{
@@ -65,7 +62,7 @@ class WechatCom extends Component {
 		self.addWechatList({
 			list     : data,
 			stateList: 'accountLists',
-			isPub    : false
+			isPub    : true,// 已经认证
 		});
 		// 测试结束------*/
 		fetch(`/wxPublicNum/getPublicNumList?userId=${userId}`)
@@ -74,7 +71,7 @@ class WechatCom extends Component {
 			// console.log(data)
 			if (data.success) {
 
-				/*const accountLists = data.publicNumList.map((v,inx)=>{
+				const accountLists = data.publicNumList.map((v,inx)=>{
 					return <div className='accountList' key={v.id}>
 						<p>微信用户昵称：{v.wxUserName}</p>
 						<p>公众号名称&nbsp;&nbsp;&nbsp;&nbsp;：{v.gzName}</p>
@@ -89,8 +86,9 @@ class WechatCom extends Component {
 					</div>
 				});
 				this.setState({
-					accountLists: accountLists
-				});*/
+					accountLists: accountLists,
+					accountListsNot: accountListsNot
+				});
 			} else {
 				message.error(data.msg);
 			}
@@ -107,7 +105,7 @@ class WechatCom extends Component {
 				<p>微信用户昵称：{v.wxUserName}</p>
 				<p>公众号名称&nbsp;&nbsp;&nbsp;&nbsp;：{v.gzName}</p>
 				<p>认证时间&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：{v.bindTime}</p>
-				<div className='deleteBtn' style={!isPub ? {display: 'block'} : null } onClick={(e)=>this.validateWechat(e,v.appId)}>认证</div>
+				<div className='deleteBtn' onClick={(e)=>this.validateWechat(e,v.appId)}>{!isPub ? '认证' : '已认证'}</div>
 			</div>
 		});
 		this.setState({
@@ -164,6 +162,7 @@ class WechatCom extends Component {
 				<div className='returnBox'><Link to='' className='returnBtn'>返回</Link></div>
 				<div className='accountBox'>
 					{this.state.accountLists}
+					{this.state.accountListsNot}
 				</div>
 			</div>
 		)

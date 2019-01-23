@@ -17,7 +17,7 @@ class ShareCom extends Component {
 		super();
 	}
 	componentDidMount () {	
-
+		message.info('即将开放，敬请期待！');
 	}	
 	render () {
 		const overdueDate = localStorage.getItem('overdueDate');

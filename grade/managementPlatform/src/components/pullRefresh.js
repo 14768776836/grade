@@ -25,7 +25,7 @@ class PullRefreshCom extends Component {
 	componentDidMount () {
 
 	}
-	/* 接收更新到props */
+	/* 接收更新到props ,react17版之前有用*/
 	componentWillReceiveProps (nextProps) {
 		this.setState({
 			data      : nextProps.datas,

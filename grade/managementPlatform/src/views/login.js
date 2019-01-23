@@ -40,8 +40,9 @@ class LoginFormBox extends Component {
 						// let overdueDate = new Date().getTime() + new Date(6000).getTime();// 6S以后失效
 						localStorage.setItem('userMsg',JSON.stringify(data));
 						localStorage.setItem('overdueDate',overdueDate);
-						window.location.href='/';
 						message.success('登录成功!');	
+						// window.location.href='/';
+						window.location.hash='/';
 					} else {
 						message.error(data.msg);
 					}

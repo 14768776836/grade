@@ -1,23 +1,49 @@
 /*开始打款*/
-.remitBox{padding: 5.5rem 1.5rem 0 0;}
+.remitBox{padding: 12.3rem 1.5rem 0 0;}
 .remitBox .ant-checkbox-wrapper{
     display: block;
-    height: 4rem;
+    height: 4.2rem;
 }
 .remitBox .remitBtn{
-    width: 6rem;
+    display: block;
     height: 3.5rem;
     line-height: 3.5rem;
     margin: 0 auto;
     font-size: 1.4rem;
-    color: #d9d9d9;
-    text-align: center;
-    background: #1890ff;
-    border-radius: .5rem;
+   /*  color: #d9d9d9;
+   text-align: center;
+   background: #1890ff;
+   border-radius: .5rem;   */
 }
 .remitBox .checkBox{
     padding-left: 1.5rem;
 }
+.remitBox .returnBox .searchBtnBox{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+}
+.remitBox .checkBox .ant-checkbox-wrapper{
+    display: flex;
+    margin: 0;
+}
+.remitBox .checkBox .checkMsgNode>span:nth-child(2){
+    display: flex;
+    justify-content: space-between;
+    flex: 2;
+}
+ .remitBox .checkBox .payStatus{
+    height: 2rem;
+    padding: 0  .5rem;
+    text-align: center;
+    color: rgba(217, 217, 217,1);
+    border: solid rgba(217, 217, 217,.8) 1px;
+    border-radius: .5rem;
+}   
+
+
+
+
 /*ant-checkbox ant-checkbox-indeterminate*/
 /* .remitBox .ant-checkbox-inner{
     width: 2rem;
