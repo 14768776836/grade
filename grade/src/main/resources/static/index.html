@@ -58,6 +58,12 @@
                                 总代理人员列表
                             </a>
                         </li>
+                        <li>
+                            <a href="member-add.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                新增总代理
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -87,7 +93,7 @@
                 <tbody>
                     <tr>
                         <td>总数</td>
-                        <td>92</td>
+                        <td id="count">0</td>
                     </tr>
                 </tbody>
             </table>
@@ -141,6 +147,11 @@
     </div>
     <!-- 背景切换结束 -->
     <script>
+        $.post("../allGrade/getAllGradeCount",function (data) {
+            if(data.success){
+                document.getElementById("count").innerHTML = data.count;
+            }
+        });
     //百度统计可去掉
     var _hmt = _hmt || [];
     (function() {

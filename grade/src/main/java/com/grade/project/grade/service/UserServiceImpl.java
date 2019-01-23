@@ -82,9 +82,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<User> getAllGradeList(Integer pageNum) {
+    public PageInfo<User> getAllGradeList(Integer pageNum,Integer status) {
         UserExample userExample = new UserExample();
-        userExample.createCriteria().andUserStatusEqualTo(StatusUtils.USER_STATUS_1).andIsDelEqualTo(StatusUtils.IS_DEL_0);
+        userExample.createCriteria().andUserStatusEqualTo(status).andIsDelEqualTo(StatusUtils.IS_DEL_0);
         userExample.setOrderByClause(" GMT_CREATE DESC");//时间倒序排序
         PageHelper.startPage(pageNum, StatusUtils.PAGE_SIZE);
         List<User> userList = userMapper.selectByExample(userExample);
@@ -93,11 +93,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int removeUserAllGrade(Integer userId) {
+    public int removeUserAllGrade(Integer userId,Integer status) {
         UserWithBLOBs user = new UserWithBLOBs();
-        user.setUserStatus(StatusUtils.USER_STATUS_0);//取消总代理资格
+        user.setUserStatus(status);//取消总代理资格
         UserExample userExample = new UserExample();
         userExample.createCriteria().andIdEqualTo(userId);
         return userMapper.updateByExampleSelective(user,userExample);
+    }
+
+    @Override
+    public int getAllGradeCount() {
+        UserExample user = new UserExample();
+        user.createCriteria().andUserStatusEqualTo(StatusUtils.USER_STATUS_1).andIsDelEqualTo(StatusUtils.IS_DEL_0);
+        return userMapper.countByExample(user);
     }
 }

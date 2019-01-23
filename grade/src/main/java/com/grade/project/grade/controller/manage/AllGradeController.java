@@ -28,10 +28,10 @@ public class AllGradeController {
      */
     @ResponseBody
     @RequestMapping("/getAllGradeList")
-    public JSONObject getAllGradeList(Integer pageNum){
+    public JSONObject getAllGradeList(Integer pageNum,Integer status){
         Map<Object, Object> dataMap = new HashMap<Object, Object>();
         try {
-            PageInfo<User> allGradeList = userService.getAllGradeList(pageNum);
+            PageInfo<User> allGradeList = userService.getAllGradeList(pageNum,status);
             dataMap.put("list", allGradeList);
             dataMap.put("success", true);
         } catch (Exception e) {
@@ -49,16 +49,36 @@ public class AllGradeController {
      */
     @ResponseBody
     @RequestMapping("/removeUserAllGrade")
-    public JSONObject removeUserAllGrade(Integer userId){
+    public JSONObject removeUserAllGrade(Integer userId,Integer status){
         Map<Object, Object> dataMap = new HashMap<Object, Object>();
         try {
-            int result = userService.removeUserAllGrade(userId);
+            int result = userService.removeUserAllGrade(userId,status);
             if(result == 1){
                 dataMap.put("success", true);
             }else{
                 dataMap.put("msg", StatusUtils.EDIT_ERROR_MSG_EXCEPTION);
                 dataMap.put("success", false);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            dataMap.put("success", false);
+            dataMap.put("msg", StatusUtils.EDIT_ERROR_MSG_EXCEPTION);
+        }
+        return (JSONObject) JSONObject.toJSON(dataMap);
+    }
+
+    /**
+     * allGrade/getAllGradeCount
+     * 查询总代理总人数
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getAllGradeCount")
+    public JSONObject getAllGradeCount(){
+        Map<Object, Object> dataMap = new HashMap<Object, Object>();
+        try {
+            dataMap.put("count",userService.getAllGradeCount());
+            dataMap.put("success", true);
         } catch (Exception e) {
             e.printStackTrace();
             dataMap.put("success", false);

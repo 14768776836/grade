@@ -42,12 +42,18 @@ public interface UserService {
      * @param pageNum
      * @return
      */
-    PageInfo<User> getAllGradeList(Integer pageNum);
+    PageInfo<User> getAllGradeList(Integer pageNum,Integer status);
 
     /**
      * 取消用户总代理资格
      * @param userId
      * @return
      */
-    int removeUserAllGrade(Integer userId);
+    int removeUserAllGrade(Integer userId,Integer status);
+
+    /**
+     * 查询总代理总人数
+     * @return
+     */
+    int getAllGradeCount();
 }
