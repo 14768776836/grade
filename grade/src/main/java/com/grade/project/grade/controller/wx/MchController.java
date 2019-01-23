@@ -1,7 +1,5 @@
 package com.grade.project.grade.controller.wx;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.grade.project.grade.mapper.GradeAccountMapper;
 import com.grade.project.grade.model.GradeAccount;
 import com.grade.project.grade.model.GradeAccountExample;
@@ -94,7 +92,7 @@ public class MchController {
         try {
             BigDecimal amount = new BigDecimal("1.00");
             String desc = "商户可使用";
-            dataMap = mchService.payMchToUser(request, gradeAccount, amount, desc,gradeAccount.getUserId());
+            dataMap = mchService.payMchToUser(request, gradeAccount, amount, desc, gradeAccount.getUserId());
             boolean success = (Boolean) dataMap.get("success");
             if (success) {
                 // 这里是保证每个总代理只可以有一条正常使用的account数据（status = 1）
@@ -102,7 +100,7 @@ public class MchController {
                 // 获取该总代理之前设置的所有的商户信息
                 example.createCriteria().andUserIdEqualTo(gradeAccount.getUserId()).andStatusEqualTo(1);
                 List<GradeAccount> accounts = gradeAccountMapper.selectByExample(example);
-                if(accounts != null && accounts.size() > 0){
+                if (accounts != null && accounts.size() > 0) {
                     GradeAccount account = accounts.get(0);
                     account.setStatus(0);
                     gradeAccountMapper.updateByPrimaryKeySelective(account);
@@ -138,7 +136,7 @@ public class MchController {
         FileUtil.uploadFile(file.getBytes(), filePath, fileName);
 //        FileUtil.uploadFile(file.getBytes(), path2, fileName);
         dataMap.put("success", true);
-        dataMap.put("path",  fileName);
+        dataMap.put("path", fileName);
 
         // 返回图片的存放路径
         return dataMap;

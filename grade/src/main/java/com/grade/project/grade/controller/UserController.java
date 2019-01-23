@@ -39,6 +39,11 @@ public class UserController {
                 dataMap.put("success", false);
             } else {
                 User user = userService.selectUsers(username, pswd);
+                if(user == null){
+                    dataMap.put("success",false);
+                    dataMap.put("msg", StatusUtils.FIND_ERROR_MSG_EXCEPTION);
+                    return dataMap;
+                }
                 dataMap.put("user", user);
                 if (!StringUtils.isBlank(user.getParentCode())) {
                     dataMap.put("parentUser", userService.findUserByIdParentData(user.getId()));//当前用户所属上级信息
