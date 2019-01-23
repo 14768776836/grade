@@ -23,9 +23,7 @@ class Home extends Component {
 
 		const overdueDate = localStorage.getItem('overdueDate');
 		var user = JSON.parse(localStorage.getItem('userMsg'));
-		/*var user;
-		user = JSON.parse(JSON.stringify({"success":true,"user":{"id":15,"username":"admin","telno":null,"extensionCode":"ID15PSNDZM","parentCode":"","faction":"","truename":"","loginPswd":"e10adc3949ba59abbe56e057f20f883e","payPswd":"e10adc3949ba59abbe56e057f20f883e","noPrice":900,"isPrice":100,"gmtCreate":"2018-11-28T13:13:14.000+0000","gmtModified":"2018-12-25T06:51:49.000+0000","userType":0,"userStatus":1,"token":"6c661b6a0c717a065427c8a64d5f5ba3","isDel":0},"parentUser":""}));
-*/		user.user.headImg = '';
+		user ? user.user.headImg = '' : null;
 
 		
 		this.state = {
