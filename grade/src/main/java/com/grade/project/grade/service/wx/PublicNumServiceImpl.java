@@ -45,7 +45,7 @@ public class PublicNumServiceImpl implements PublicNumService {
         if(StringUtils.isBlank(gradeAccount.getAppSecrect())){
             //将userId定义到新的值中是因为gradeAccountMapper.selectByExample方法查询后，userId就会变成总代理的
             GradeAccountExample gradeAccountExample = new GradeAccountExample();
-            gradeAccountExample.createCriteria().andAppidEqualTo(gradeAccount.getAppId());
+            gradeAccountExample.createCriteria().andAppIdEqualTo(gradeAccount.getAppId());
             List<GradeAccount> glist = gradeAccountMapper.selectByExample(gradeAccountExample);
             if(glist.size() > 0){
                 gradeAccount = glist.get(0);

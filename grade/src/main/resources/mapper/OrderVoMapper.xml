@@ -25,7 +25,7 @@
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="USER_ID" property="userId" jdbcType="INTEGER" />
     <result column="GZ_NAME" property="gzName" jdbcType="VARCHAR" />
-    <result column="APPID" property="appid" jdbcType="VARCHAR" />
+    <result column="APP_ID" property="appId" jdbcType="VARCHAR" />
     <result column="APP_SECRECT" property="appSecrect" jdbcType="VARCHAR" />
     <result column="API_KEY" property="apiKey" jdbcType="VARCHAR" />
     <result column="MCH_ID" property="mchId" jdbcType="VARCHAR" />
@@ -70,7 +70,7 @@
   </select>
 
   <select id="getIsTrueMchUser" resultMap="GradeOrderResultMap">
-    select ga.USER_ID,ga.APPID,ga.GZ_NAME,gr.USER_ID,gr.RUN_LEVEL,gr.RUN_PERCENT,gr.EXTENSION_CODE from grade_account ga
+    select ga.USER_ID,ga.APP_ID,ga.GZ_NAME,gr.USER_ID,gr.RUN_LEVEL,gr.RUN_PERCENT,gr.EXTENSION_CODE from grade_account ga
     LEFT JOIN grade_run_percent gr ON ga.USER_ID = gr.USER_ID
     where ga.`STATUS` = 1
   </select>

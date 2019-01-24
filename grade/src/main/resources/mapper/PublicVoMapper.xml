@@ -5,22 +5,22 @@
     <result column="ID" property="id" jdbcType="INTEGER" />
     <result column="USER_ID" property="userId" jdbcType="INTEGER" />
     <result column="WX_USER_NAME" property="wxUserName" jdbcType="VARCHAR" />
-    <result column="APPID" property="appId" jdbcType="VARCHAR" />
+    <result column="APP_ID" property="appId" jdbcType="VARCHAR" />
     <result column="GZ_NAME" property="gzName" jdbcType="VARCHAR" />
     <result column="GMT_CREATE" property="bindTime" jdbcType="TIMESTAMP" />
     <result column="STATUS" property="status" jdbcType="INTEGER" />
   </resultMap>
 
   <select id="getPublicNumList" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select pn.USER_ID,pn.WX_USER_NAME,pn.APPID,pn.GMT_CREATE,ga.GZ_NAME,ga.IS_DEL,ga.STATUS from grade_wx_public_num pn
-    LEFT JOIN grade_account ga ON pn.APPID = ga.APPID
+    select pn.USER_ID,pn.WX_USER_NAME,pn.APP_ID,pn.GMT_CREATE,ga.GZ_NAME,ga.IS_DEL,ga.STATUS from grade_wx_public_num pn
+    LEFT JOIN grade_account ga ON pn.APP_ID = ga.APP_ID
     where pn.USER_ID = #{userId}
   </select>
 
   <select id="getNoBindPublicNumList" resultMap="BaseResultMap">
-    select ga.ID,ga.GZ_NAME,ga.APPID from grade_account ga
+    select ga.ID,ga.GZ_NAME,ga.APP_ID from grade_account ga
     where ga.USER_ID = #{parentUserId}
-    and ga.APPID NOT IN (SELECT gx.APPID from grade_wx_public_num gx where gx.USER_ID = #{userId})
+    and ga.APP_ID NOT IN (SELECT gx.APP_ID from grade_wx_public_num gx where gx.USER_ID = #{userId})
     ORDER BY ga.GMT_CREATE DESC;
   </select>
 </mapper>

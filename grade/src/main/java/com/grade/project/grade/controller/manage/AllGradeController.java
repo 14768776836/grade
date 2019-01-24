@@ -28,8 +28,8 @@ public class AllGradeController {
      */
     @ResponseBody
     @RequestMapping("/getAllGradeList")
-    public JSONObject getAllGradeList(Integer pageNum,Integer status){
-        Map<Object, Object> dataMap = new HashMap<Object, Object>();
+    public Map getAllGradeList(Integer pageNum,Integer status){
+        Map<String, Object> dataMap = new HashMap<>();
         try {
             PageInfo<User> allGradeList = userService.getAllGradeList(pageNum,status);
             dataMap.put("list", allGradeList);
@@ -39,7 +39,7 @@ public class AllGradeController {
             dataMap.put("success", false);
             dataMap.put("msg", "请重新登录！");
         }
-        return (JSONObject) JSONObject.toJSON(dataMap);
+        return dataMap;
     }
 
     /**
@@ -49,8 +49,8 @@ public class AllGradeController {
      */
     @ResponseBody
     @RequestMapping("/removeUserAllGrade")
-    public JSONObject removeUserAllGrade(Integer userId,Integer status){
-        Map<Object, Object> dataMap = new HashMap<Object, Object>();
+    public Map removeUserAllGrade(Integer userId,Integer status){
+        Map<String, Object> dataMap = new HashMap<>();
         try {
             int result = userService.removeUserAllGrade(userId,status);
             if(result == 1){
@@ -64,7 +64,7 @@ public class AllGradeController {
             dataMap.put("success", false);
             dataMap.put("msg", StatusUtils.EDIT_ERROR_MSG_EXCEPTION);
         }
-        return (JSONObject) JSONObject.toJSON(dataMap);
+        return dataMap;
     }
 
     /**
@@ -74,8 +74,8 @@ public class AllGradeController {
      */
     @ResponseBody
     @RequestMapping("/getAllGradeCount")
-    public JSONObject getAllGradeCount(){
-        Map<Object, Object> dataMap = new HashMap<Object, Object>();
+    public Map getAllGradeCount(){
+        Map<String, Object> dataMap = new HashMap<>();
         try {
             dataMap.put("count",userService.getAllGradeCount());
             dataMap.put("success", true);
@@ -84,7 +84,7 @@ public class AllGradeController {
             dataMap.put("success", false);
             dataMap.put("msg", StatusUtils.EDIT_ERROR_MSG_EXCEPTION);
         }
-        return (JSONObject) JSONObject.toJSON(dataMap);
+        return dataMap;
     }
 
 }

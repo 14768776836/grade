@@ -5,6 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+
 @RestController
 @RequestMapping(value = "/")
 public class MainController {
@@ -14,9 +19,14 @@ public class MainController {
      * 登录页面
      * @return
      */
-    public String index(){
-        logger.info("进入首页");
-        return "index";
+    public String index(HttpServletRequest request) throws IOException {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("user") == null){
+            return "login.html";
+        }else {
+            logger.info("进入首页");
+            return "index";
+        }
     }
 
 }

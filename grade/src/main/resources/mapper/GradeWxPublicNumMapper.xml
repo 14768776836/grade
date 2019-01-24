@@ -5,7 +5,7 @@
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="USER_ID" property="userId" jdbcType="INTEGER" />
     <result column="OPEN_ID" property="openId" jdbcType="VARCHAR" />
-    <result column="APPID" property="appId" jdbcType="VARCHAR" />
+    <result column="APP_ID" property="appId" jdbcType="VARCHAR" />
     <result column="WX_USER_NAME" property="wxUserName" jdbcType="VARCHAR" />
     <result column="GA_ID" property="gaId" jdbcType="INTEGER" />
     <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
@@ -74,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ID, USER_ID, OPEN_ID, APPID, WX_USER_NAME, GA_ID, IS_DEL, GMT_CREATE, GMT_MODIFIED
+    ID, USER_ID, OPEN_ID, APP_ID, WX_USER_NAME, GA_ID, IS_DEL, GMT_CREATE, GMT_MODIFIED
   </sql>
   <sql id="Blob_Column_List" >
     WX_HEAD_IMG
@@ -129,11 +129,11 @@
   </delete>
   <insert id="insert" parameterType="com.grade.project.grade.model.GradeWxPublicNum" >
     insert into grade_wx_public_num (ID, USER_ID, OPEN_ID, 
-      APPID, WX_USER_NAME, GA_ID, 
+      APP_ID, WX_USER_NAME, GA_ID, 
       IS_DEL, GMT_CREATE, GMT_MODIFIED, 
       WX_HEAD_IMG)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, 
-      #{appid,jdbcType=VARCHAR}, #{wxUserName,jdbcType=VARCHAR}, #{gaId,jdbcType=INTEGER}, 
+      #{appId,jdbcType=VARCHAR}, #{wxUserName,jdbcType=VARCHAR}, #{gaId,jdbcType=INTEGER},
       #{isDel,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
       #{wxHeadImg,jdbcType=LONGVARCHAR})
   </insert>
@@ -149,8 +149,8 @@
       <if test="openId != null" >
         OPEN_ID,
       </if>
-      <if test="appid != null" >
-        APPID,
+      <if test="appId != null" >
+        APP_ID,
       </if>
       <if test="wxUserName != null" >
         WX_USER_NAME,
@@ -181,8 +181,8 @@
       <if test="openId != null" >
         #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="appid != null" >
-        #{appid,jdbcType=VARCHAR},
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
       </if>
       <if test="wxUserName != null" >
         #{wxUserName,jdbcType=VARCHAR},
@@ -222,8 +222,8 @@
       <if test="record.openId != null" >
         OPEN_ID = #{record.openId,jdbcType=VARCHAR},
       </if>
-      <if test="record.appid != null" >
-        APPID = #{record.appid,jdbcType=VARCHAR},
+      <if test="record.appId != null" >
+        APP_ID = #{record.appId,jdbcType=VARCHAR},
       </if>
       <if test="record.wxUserName != null" >
         WX_USER_NAME = #{record.wxUserName,jdbcType=VARCHAR},
@@ -253,7 +253,7 @@
     set ID = #{record.id,jdbcType=INTEGER},
       USER_ID = #{record.userId,jdbcType=INTEGER},
       OPEN_ID = #{record.openId,jdbcType=VARCHAR},
-      APPID = #{record.appid,jdbcType=VARCHAR},
+      APP_ID = #{record.appId,jdbcType=VARCHAR},
       WX_USER_NAME = #{record.wxUserName,jdbcType=VARCHAR},
       GA_ID = #{record.gaId,jdbcType=INTEGER},
       IS_DEL = #{record.isDel,jdbcType=INTEGER},
@@ -269,7 +269,7 @@
     set ID = #{record.id,jdbcType=INTEGER},
       USER_ID = #{record.userId,jdbcType=INTEGER},
       OPEN_ID = #{record.openId,jdbcType=VARCHAR},
-      APPID = #{record.appid,jdbcType=VARCHAR},
+      APP_ID = #{record.appId,jdbcType=VARCHAR},
       WX_USER_NAME = #{record.wxUserName,jdbcType=VARCHAR},
       GA_ID = #{record.gaId,jdbcType=INTEGER},
       IS_DEL = #{record.isDel,jdbcType=INTEGER},
@@ -288,8 +288,8 @@
       <if test="openId != null" >
         OPEN_ID = #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="appid != null" >
-        APPID = #{appid,jdbcType=VARCHAR},
+      <if test="appId != null" >
+        APP_ID = #{appId,jdbcType=VARCHAR},
       </if>
       <if test="wxUserName != null" >
         WX_USER_NAME = #{wxUserName,jdbcType=VARCHAR},
@@ -316,7 +316,7 @@
     update grade_wx_public_num
     set USER_ID = #{userId,jdbcType=INTEGER},
       OPEN_ID = #{openId,jdbcType=VARCHAR},
-      APPID = #{appid,jdbcType=VARCHAR},
+      APP_ID = #{appId,jdbcType=VARCHAR},
       WX_USER_NAME = #{wxUserName,jdbcType=VARCHAR},
       GA_ID = #{gaId,jdbcType=INTEGER},
       IS_DEL = #{isDel,jdbcType=INTEGER},
@@ -329,7 +329,7 @@
     update grade_wx_public_num
     set USER_ID = #{userId,jdbcType=INTEGER},
       OPEN_ID = #{openId,jdbcType=VARCHAR},
-      APPID = #{appid,jdbcType=VARCHAR},
+      APP_ID = #{appId,jdbcType=VARCHAR},
       WX_USER_NAME = #{wxUserName,jdbcType=VARCHAR},
       GA_ID = #{gaId,jdbcType=INTEGER},
       IS_DEL = #{isDel,jdbcType=INTEGER},

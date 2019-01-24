@@ -1,6 +1,5 @@
 package com.grade.project.grade.config;
 
-import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,12 +21,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler()
     @ResponseBody
-    JSONObject handlerException(Exception e) {
+    Map<String, Object> handlerException(Exception e) {
         dataMap.put("success", false);
         dataMap.put("msg", "操作失败！");
         e.printStackTrace();
         logger.info("发生了异常 详细信息是：" + e.getMessage());
-        return (JSONObject) JSONObject.toJSON(dataMap);
+        return dataMap;
     }
 
 }

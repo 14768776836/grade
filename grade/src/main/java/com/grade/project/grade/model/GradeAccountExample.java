@@ -295,73 +295,73 @@ public class GradeAccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andAppidIsNull() {
-            addCriterion("APPID is null");
+        public Criteria andAppIdIsNull() {
+            addCriterion("APP_ID is null");
             return (Criteria) this;
         }
 
-        public Criteria andAppidIsNotNull() {
-            addCriterion("APPID is not null");
+        public Criteria andAppIdIsNotNull() {
+            addCriterion("APP_ID is not null");
             return (Criteria) this;
         }
 
-        public Criteria andAppidEqualTo(String value) {
-            addCriterion("APPID =", value, "appid");
+        public Criteria andAppIdEqualTo(String value) {
+            addCriterion("APP_ID =", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppidNotEqualTo(String value) {
-            addCriterion("APPID <>", value, "appid");
+        public Criteria andAppIdNotEqualTo(String value) {
+            addCriterion("APP_ID <>", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppidGreaterThan(String value) {
-            addCriterion("APPID >", value, "appid");
+        public Criteria andAppIdGreaterThan(String value) {
+            addCriterion("APP_ID >", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppidGreaterThanOrEqualTo(String value) {
-            addCriterion("APPID >=", value, "appid");
+        public Criteria andAppIdGreaterThanOrEqualTo(String value) {
+            addCriterion("APP_ID >=", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppidLessThan(String value) {
-            addCriterion("APPID <", value, "appid");
+        public Criteria andAppIdLessThan(String value) {
+            addCriterion("APP_ID <", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppidLessThanOrEqualTo(String value) {
-            addCriterion("APPID <=", value, "appid");
+        public Criteria andAppIdLessThanOrEqualTo(String value) {
+            addCriterion("APP_ID <=", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppidLike(String value) {
-            addCriterion("APPID like", value, "appid");
+        public Criteria andAppIdLike(String value) {
+            addCriterion("APP_ID like", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppidNotLike(String value) {
-            addCriterion("APPID not like", value, "appid");
+        public Criteria andAppIdNotLike(String value) {
+            addCriterion("APP_ID not like", value, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppidIn(List<String> values) {
-            addCriterion("APPID in", values, "appid");
+        public Criteria andAppIdIn(List<String> values) {
+            addCriterion("APP_ID in", values, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppidNotIn(List<String> values) {
-            addCriterion("APPID not in", values, "appid");
+        public Criteria andAppIdNotIn(List<String> values) {
+            addCriterion("APP_ID not in", values, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppidBetween(String value1, String value2) {
-            addCriterion("APPID between", value1, value2, "appid");
+        public Criteria andAppIdBetween(String value1, String value2) {
+            addCriterion("APP_ID between", value1, value2, "appId");
             return (Criteria) this;
         }
 
-        public Criteria andAppidNotBetween(String value1, String value2) {
-            addCriterion("APPID not between", value1, value2, "appid");
+        public Criteria andAppIdNotBetween(String value1, String value2) {
+            addCriterion("APP_ID not between", value1, value2, "appId");
             return (Criteria) this;
         }
 

@@ -27,9 +27,9 @@ public class Interceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
         boolean flag;
         //从缓存中获取是否存储了用户信息
-        User user=(User)request.getSession().getAttribute("user");
+        String user= (String) request.getSession().getAttribute("user");
         if(null==user){
-            response.sendRedirect("/");
+            response.sendRedirect(request.getContextPath()+"/login/login");
             flag = false;
         }else{
             flag = true;
