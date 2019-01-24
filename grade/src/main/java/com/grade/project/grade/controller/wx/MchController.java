@@ -130,11 +130,11 @@ public class MchController {
         //文件存放路径
 //        System.getProperty("user.dir") + "/src/main/resources/playback/1.txt";
         String filePath = System.getProperty("user.dir") + "/src/main/resources/";
-//        String path2 = System.getProperty("user.dir") + "/target/classes/";
+        String path2 = System.getProperty("user.dir") + "/target/classes/";
 
         //调用文件处理类FileUtil，处理文件，将文件写入指定位置
         FileUtil.uploadFile(file.getBytes(), filePath, fileName);
-//        FileUtil.uploadFile(file.getBytes(), path2, fileName);
+        FileUtil.uploadFile(file.getBytes(), path2, fileName);
         dataMap.put("success", true);
         dataMap.put("path", fileName);
 
