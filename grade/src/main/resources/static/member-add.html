@@ -212,7 +212,7 @@
         }
 
         function setAllGrade(obj,id){
-            $.post("../allGrade/removeUserAllGrade",{userId:id,status:1},function(data){
+            $.post("../allGrade/operateUserGrade",{userId:id,status:1},function(data){
                 if(data.success){
                     layer.msg('设置成功!');
                     obj.parentNode.parentNode.remove();
