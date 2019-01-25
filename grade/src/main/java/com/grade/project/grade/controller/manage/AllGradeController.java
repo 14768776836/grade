@@ -91,4 +91,29 @@ public class AllGradeController {
         return dataMap;
     }
 
+    /**
+     * allGrade/removeUserAllGrade
+     * 分页查询所有总代理列表数据
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/removeUserAllGrade")
+    public Map removeUserAllGrade(Integer userId,Integer status){
+        Map<String, Object> dataMap = new HashMap<>();
+        try {
+            int result = userService.removeUserAllGrade(userId,status);
+            if(result == 1){
+                dataMap.put("success", true);
+            }else{
+                dataMap.put("msg", StatusUtils.EDIT_ERROR_MSG_EXCEPTION);
+                dataMap.put("success", false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            dataMap.put("success", false);
+            dataMap.put("msg", StatusUtils.EDIT_ERROR_MSG_EXCEPTION);
+        }
+        return dataMap;
+    }
+
 }

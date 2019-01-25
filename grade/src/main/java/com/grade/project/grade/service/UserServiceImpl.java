@@ -115,4 +115,13 @@ public class UserServiceImpl implements UserService {
         user.createCriteria().andUserStatusEqualTo(StatusUtils.USER_STATUS_1).andIsDelEqualTo(StatusUtils.IS_DEL_0);
         return userMapper.countByExample(user);
     }
+
+    @Override
+    public int removeUserAllGrade(Integer userId,Integer status) {
+        UserWithBLOBs user = new UserWithBLOBs();
+        user.setUserStatus(status);//取消总代理资格
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andIdEqualTo(userId);
+        return userMapper.updateByExampleSelective(user,userExample);
+    }
 }

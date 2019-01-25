@@ -61,4 +61,11 @@ public interface UserService {
      * @return
      */
     int getAllGradeCount();
+
+    /**
+     * 取消用户总代理资格
+     * @param userId
+     * @return
+     */
+    int removeUserAllGrade(Integer userId,Integer status);
 }
