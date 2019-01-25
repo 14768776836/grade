@@ -150,8 +150,8 @@
           laydate = layui.laydate;//日期插件
 
           var start = {
-            min: laydate.now()
-            ,max: '2099-06-16 23:59:59'
+            // min: laydate.now(),
+            max: '2099-06-16 23:59:59'
             ,istoday: false
             ,choose: function(datas){
               end.min = datas; //开始日选好后，重置结束日的最小日期
@@ -160,8 +160,8 @@
           };
 
           var end = {
-            min: laydate.now()
-            ,max: '2099-06-16 23:59:59'
+            // min: laydate.now(),
+            max: '2099-06-16 23:59:59'
             ,istoday: false
             ,choose: function(datas){
               start.max = datas; //结束日选好后，重置开始日的最大日期
@@ -179,11 +179,11 @@
 
         });
         $('.searchBtn').click(()=>{
-          debugger
             var startTime = $('#LAY_demorange_s').val();
-            var endTime   = $('#LAY_demorange_e').val();
+            var endTime   = formatDateTime(new Date($('#LAY_demorange_e').val()).getTime()+1000*60*60*60*24,true);
             var name      = $('.username').val();
             console.log(startTime,endTime,name);
+            console.log(formatDateTime(new Date($('#LAY_demorange_e').val()).getTime()+1000*60*60*60*24,true));
             if (!startTime && !endTime && !name) {alert('请填写一个搜索的条件！'); return};
             pageList({
                 pageNum   : 1,
@@ -255,7 +255,8 @@
                 }
             });
         }
-        function formatDateTime(inputTime) {
+        function formatDateTime(inputTime,ymd) {
+          console.log('时间---',inputTime)
             var date = new Date(inputTime);
             var y = date.getFullYear();
             var m = date.getMonth() + 1;
@@ -268,7 +269,11 @@
             var second = date.getSeconds();
             minute = minute < 10 ? ('0' + minute) : minute;
             second = second < 10 ? ('0' + second) : second;
-            return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+            if (ymd) {
+                return y + '-' + m + '-' + d;
+            } else {
+                return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+            }
         };
 
 
