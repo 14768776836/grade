@@ -129,6 +129,8 @@ public class MchServiceImpl implements MchService {
             mchPayOrder.setPayPrice(amount);//收款金额
             mchPayOrder.setOrderNum(orderNum);//订单编号
             mchPayOrder.setPayMsg(msg);//收款信息
+            mchPayOrder.setGmtCreate(new Date());
+            mchPayOrder.setGmtModified(new Date());
             mchPayOrderMapper.insertSelective(mchPayOrder);
         } catch (Exception e) {
             e.printStackTrace();
