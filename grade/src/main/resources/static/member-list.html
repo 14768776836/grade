@@ -74,7 +74,7 @@
         <div class="page-content">
           <div class="content">
             <!-- 右侧内容框架，更改从这里开始 -->
-            <form class="layui-form xbs" action="" >
+            <form class="layui-form xbs" action="">
                 <div class="layui-form-pane" style="text-align: center;">
                   <div class="layui-form-item" style="display: inline-block;">
                     <label class="layui-form-label xbs768">日期范围</label>
@@ -85,7 +85,7 @@
                       <input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
                     </div>
                     <div class="layui-input-inline">
-                      <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                      <input type="text" name="username" class="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-input-inline" style="width:80px">
                         <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
@@ -144,7 +144,7 @@
     <!-- 背景切换结束 -->
     <!-- 页面动态效果 -->
     <script>
-        pageList(1);
+        pageList({status: 1});
         layui.use(['laydate'], function(){
           laydate = layui.laydate;//日期插件
 
@@ -177,9 +177,34 @@
           }
 
         });
-
-        function pageList(pageNum){
-            $.post("../allGrade/getAllGradeList",{pageNum:pageNum,status:1},function (data) {
+        $('.layui-btn').click(()=>{
+            var startTime = $('#LAY_demorange_s').val();
+            var endTime   = $('#LAY_demorange_e').val();
+            var name      = $('.username').val();
+            alert(startTime,endTime,name);
+            if (!startTime && !endTime && !name) {alert('请填写一个搜索的条件！'); return};
+            pageList({
+                pageNum   : 1,
+                status    : 1,
+                startTime : startTime,
+                endTime   : endTime,
+                name      : name
+            });
+        });
+        // @param status 状态 0：普通, 1：总代理
+        function pageList({pageNum,status,startTime,endTime,name}){
+            function dealParam (param) {
+                param = param ? param : null;
+                return param;
+            }
+            let params = {
+              pageNum   : dealParam(pageNum),
+              status    : dealParam(status),
+              startTime : dealParam(startTime),
+              endTime   : dealParam(endTime),
+              name      : dealParam(name)
+            }
+            $.post("../allGrade/getAllGradeList",params,function (data) {
                 console.log(JSON.stringify(data));
                 if(data.success){
                     document.getElementById("count").innerHTML = data.list.total;
@@ -243,6 +268,7 @@
             second = second < 10 ? ('0' + second) : second;
             return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
         };
+
 
         </script>
         <script>
