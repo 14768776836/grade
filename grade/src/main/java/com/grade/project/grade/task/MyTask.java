@@ -65,9 +65,13 @@ public class MyTask {
 
             // 取出该代理的个人分润比例，在数据库中生成一条未打款记录
             BigDecimal percent = user.getSinglePercent();
-            if(agenyPrice.compareTo(new BigDecimal(0)) != 0 && percent.compareTo(new BigDecimal(0)) != 0){
+            BigDecimal zero = new BigDecimal(0);
+            if(agenyPrice.compareTo(zero) != 0 && percent.compareTo(zero) != 0){
                 BigDecimal result = agenyPrice.multiply(percent).divide(new BigDecimal(100));
-                mchPayOrderMapper.insertSelective(generateOrder(user, null, result));
+                result = result.setScale(2,BigDecimal.ROUND_DOWN);
+                if(result.compareTo(zero) != 0){
+                    mchPayOrderMapper.insertSelective(generateOrder(user, null, result));
+                }
             }
 
             //查询总代理所有下属子级用户

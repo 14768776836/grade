@@ -76,7 +76,7 @@ public class OrderThread implements Runnable {
         order.setUserId(user.getId());       //设置用户id
         order.setParentCode(user.getParentCode());  //设置直属上级推广码
         order.setGeneralAgentCode(extensionCode);    //设置本支线总代理的推广码
-        order.setPayPrice(res.setScale(2,BigDecimal.ROUND_DOWN));    //设置打款金额
+        order.setPayPrice(res);    //设置打款金额
         order.setWxUserName(user.getUsername()); //设置用户昵称
         order.setGmtCreate(new Date());    //设置创建订单时间
         order.setGmtModified(new Date());  //设置修改订单时间
