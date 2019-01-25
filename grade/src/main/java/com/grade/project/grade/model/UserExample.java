@@ -1205,6 +1205,66 @@ public class UserExample {
             addCriterion("IS_DEL not between", value1, value2, "isDel");
             return (Criteria) this;
         }
+
+        public Criteria andSinglePercentIsNull() {
+            addCriterion("SINGLE_PERCENT is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSinglePercentIsNotNull() {
+            addCriterion("SINGLE_PERCENT is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSinglePercentEqualTo(BigDecimal value) {
+            addCriterion("SINGLE_PERCENT =", value, "singlePercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andSinglePercentNotEqualTo(BigDecimal value) {
+            addCriterion("SINGLE_PERCENT <>", value, "singlePercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andSinglePercentGreaterThan(BigDecimal value) {
+            addCriterion("SINGLE_PERCENT >", value, "singlePercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andSinglePercentGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("SINGLE_PERCENT >=", value, "singlePercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andSinglePercentLessThan(BigDecimal value) {
+            addCriterion("SINGLE_PERCENT <", value, "singlePercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andSinglePercentLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("SINGLE_PERCENT <=", value, "singlePercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andSinglePercentIn(List<BigDecimal> values) {
+            addCriterion("SINGLE_PERCENT in", values, "singlePercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andSinglePercentNotIn(List<BigDecimal> values) {
+            addCriterion("SINGLE_PERCENT not in", values, "singlePercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andSinglePercentBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("SINGLE_PERCENT between", value1, value2, "singlePercent");
+            return (Criteria) this;
+        }
+
+        public Criteria andSinglePercentNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("SINGLE_PERCENT not between", value1, value2, "singlePercent");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

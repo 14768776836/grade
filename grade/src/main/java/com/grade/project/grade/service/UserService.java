@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.grade.project.grade.model.User;
 import com.grade.project.grade.model.vo.PublicNumVo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface UserService {
@@ -39,17 +40,21 @@ public interface UserService {
 
     /**
      * 分页查询所有总代理列表数据
-     * @param pageNum
+     * @param pageNum       当前页码
+     * @param status        状态 0：普通 1：总代理
+     * @param startTime     开始时间
+     * @param endTime       截至时间
+     * @param name          用户名
      * @return
      */
-    PageInfo<User> getAllGradeList(Integer pageNum,Integer status);
+    PageInfo<User> getAllGradeList(Integer pageNum,Integer status,String startTime,String endTime,String name);
 
     /**
      * 取消用户总代理资格
      * @param userId
      * @return
      */
-    int removeUserAllGrade(Integer userId,Integer status);
+    int operateUserGrade(Integer userId, Integer status, BigDecimal percent);
 
     /**
      * 查询总代理总人数

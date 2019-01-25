@@ -1,10 +1,9 @@
 package com.grade.project.grade.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class User implements Serializable {
+public class User {
     private Integer id;
 
     private String username;
@@ -38,6 +37,8 @@ public class User implements Serializable {
     private String token;
 
     private Integer isDel;
+
+    private BigDecimal singlePercent;
 
     public Integer getId() {
         return id;
@@ -173,5 +174,13 @@ public class User implements Serializable {
 
     public void setIsDel(Integer isDel) {
         this.isDel = isDel;
+    }
+
+    public BigDecimal getSinglePercent() {
+        return singlePercent;
+    }
+
+    public void setSinglePercent(BigDecimal singlePercent) {
+        this.singlePercent = singlePercent;
     }
 }

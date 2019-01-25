@@ -10,15 +10,19 @@ import com.grade.project.grade.model.UserWithBLOBs;
 import com.grade.project.grade.model.vo.PublicNumVo;
 import com.grade.project.grade.util.StatusUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+    Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserMapper userMapper;
@@ -82,20 +86,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<User> getAllGradeList(Integer pageNum,Integer status) {
-        UserExample userExample = new UserExample();
-        userExample.createCriteria().andUserStatusEqualTo(status).andIsDelEqualTo(StatusUtils.IS_DEL_0);
-        userExample.setOrderByClause(" GMT_CREATE DESC");//时间倒序排序
+    public PageInfo<User> getAllGradeList(Integer pageNum,Integer status,String startTime,String endTime,String name) {
+//        UserExample userExample = new UserExample();
+//        userExample.createCriteria().andUserStatusEqualTo(status).andIsDelEqualTo(StatusUtils.IS_DEL_0);
+//
+//        userExample.setOrderByClause(" GMT_CREATE DESC");//时间倒序排序
         PageHelper.startPage(pageNum, StatusUtils.PAGE_SIZE);
-        List<User> userList = userMapper.selectByExample(userExample);
+//        List<User> userList = userMapper.selectByExample(userExample);
+        List<User> userList = userMapper.getAllGradeList(status,startTime,endTime,name);
+        logger.info("size :{}" ,userList.size());
         PageInfo<User> pageInfo = new PageInfo<>(userList);
         return pageInfo;
     }
 
     @Override
-    public int removeUserAllGrade(Integer userId,Integer status) {
+    public int operateUserGrade(Integer userId, Integer status, BigDecimal percent) {
         UserWithBLOBs user = new UserWithBLOBs();
         user.setUserStatus(status);//取消总代理资格
+        user.setSinglePercent(percent);
         UserExample userExample = new UserExample();
         userExample.createCriteria().andIdEqualTo(userId);
         return userMapper.updateByExampleSelective(user,userExample);

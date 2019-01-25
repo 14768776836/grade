@@ -22,7 +22,6 @@ public class MchPayOrder {
 
     private Integer payStatus;
 
-    // 订单状态 0：正常 1：删除
     private Integer isDel;
 
     private Date gmtCreate;

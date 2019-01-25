@@ -1,6 +1,5 @@
 package com.grade.project.grade.controller.manage;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.grade.project.grade.model.User;
 import com.grade.project.grade.service.UserService;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,17 +21,19 @@ public class AllGradeController {
     private static final Logger logger = LoggerFactory.getLogger(AllGradeController.class);
     @Autowired
     private UserService userService;
+
     /**
      * allGrade/getAllGradeList
      * 分页查询所有总代理列表数据
+     *
      * @return
      */
     @ResponseBody
     @RequestMapping("/getAllGradeList")
-    public Map getAllGradeList(Integer pageNum,Integer status){
+    public Map getAllGradeList(Integer pageNum, Integer status, String startTime, String endTime, String name) {
         Map<String, Object> dataMap = new HashMap<>();
         try {
-            PageInfo<User> allGradeList = userService.getAllGradeList(pageNum,status);
+            PageInfo<User> allGradeList = userService.getAllGradeList(pageNum, status, startTime, endTime, name);
             dataMap.put("list", allGradeList);
             dataMap.put("success", true);
         } catch (Exception e) {
@@ -43,19 +45,20 @@ public class AllGradeController {
     }
 
     /**
-     * allGrade/removeUserAllGrade
+     * allGrade/operateUserGrade
      * 分页查询所有总代理列表数据
+     *
      * @return
      */
     @ResponseBody
-    @RequestMapping("/removeUserAllGrade")
-    public Map removeUserAllGrade(Integer userId,Integer status){
+    @RequestMapping("/operateUserGrade")
+    public Map operateUserGrade(Integer userId, Integer status, BigDecimal percent) {
         Map<String, Object> dataMap = new HashMap<>();
         try {
-            int result = userService.removeUserAllGrade(userId,status);
-            if(result == 1){
+            int result = userService.operateUserGrade(userId, status,percent);
+            if (result == 1) {
                 dataMap.put("success", true);
-            }else{
+            } else {
                 dataMap.put("msg", StatusUtils.EDIT_ERROR_MSG_EXCEPTION);
                 dataMap.put("success", false);
             }
@@ -70,14 +73,15 @@ public class AllGradeController {
     /**
      * allGrade/getAllGradeCount
      * 查询总代理总人数
+     *
      * @return
      */
     @ResponseBody
     @RequestMapping("/getAllGradeCount")
-    public Map getAllGradeCount(){
+    public Map getAllGradeCount() {
         Map<String, Object> dataMap = new HashMap<>();
         try {
-            dataMap.put("count",userService.getAllGradeCount());
+            dataMap.put("count", userService.getAllGradeCount());
             dataMap.put("success", true);
         } catch (Exception e) {
             e.printStackTrace();

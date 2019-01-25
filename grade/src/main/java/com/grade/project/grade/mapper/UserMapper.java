@@ -34,4 +34,7 @@ public interface UserMapper {
     int updateByPrimaryKeyWithBLOBs(UserWithBLOBs record);
 
     int updateByPrimaryKey(User record);
+
+    List<User> getAllGradeList(@Param("status")Integer status,@Param("startTime") String startTime,
+                               @Param("endTime") String endTime,@Param("name") String name);
 }

@@ -19,6 +19,7 @@
     <result column="USER_STATUS" property="userStatus" jdbcType="INTEGER" />
     <result column="TOKEN" property="token" jdbcType="VARCHAR" />
     <result column="IS_DEL" property="isDel" jdbcType="INTEGER" />
+    <result column="SINGLE_PERCENT" property="singlePercent" jdbcType="DECIMAL" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.grade.project.grade.model.UserWithBLOBs" extends="BaseResultMap" >
     <result column="USERIMG" property="userimg" jdbcType="LONGVARCHAR" />
@@ -85,7 +86,7 @@
   <sql id="Base_Column_List" >
     ID, USERNAME, TELNO, EXTENSION_CODE, PARENT_CODE, FACTION, TRUENAME, LOGIN_PSWD, 
     PAY_PSWD, NO_PRICE, IS_PRICE, GMT_CREATE, GMT_MODIFIED, USER_TYPE, USER_STATUS, TOKEN, 
-    IS_DEL
+    IS_DEL, SINGLE_PERCENT
   </sql>
   <sql id="Blob_Column_List" >
     USERIMG, SECURITY_QUESTION
@@ -144,15 +145,15 @@
       TRUENAME, LOGIN_PSWD, PAY_PSWD, 
       NO_PRICE, IS_PRICE, GMT_CREATE, 
       GMT_MODIFIED, USER_TYPE, USER_STATUS, 
-      TOKEN, IS_DEL, USERIMG, 
-      SECURITY_QUESTION)
+      TOKEN, IS_DEL, SINGLE_PERCENT, 
+      USERIMG, SECURITY_QUESTION)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{telno,jdbcType=INTEGER}, 
       #{extensionCode,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, #{faction,jdbcType=VARCHAR}, 
       #{truename,jdbcType=VARCHAR}, #{loginPswd,jdbcType=VARCHAR}, #{payPswd,jdbcType=VARCHAR}, 
       #{noPrice,jdbcType=DECIMAL}, #{isPrice,jdbcType=DECIMAL}, #{gmtCreate,jdbcType=TIMESTAMP}, 
       #{gmtModified,jdbcType=TIMESTAMP}, #{userType,jdbcType=INTEGER}, #{userStatus,jdbcType=INTEGER}, 
-      #{token,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER}, #{userimg,jdbcType=LONGVARCHAR}, 
-      #{securityQuestion,jdbcType=LONGVARCHAR})
+      #{token,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER}, #{singlePercent,jdbcType=DECIMAL}, 
+      #{userimg,jdbcType=LONGVARCHAR}, #{securityQuestion,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.grade.project.grade.model.UserWithBLOBs" >
     insert into mv_user
@@ -207,6 +208,9 @@
       </if>
       <if test="isDel != null" >
         IS_DEL,
+      </if>
+      <if test="singlePercent != null" >
+        SINGLE_PERCENT,
       </if>
       <if test="userimg != null" >
         USERIMG,
@@ -267,6 +271,9 @@
       <if test="isDel != null" >
         #{isDel,jdbcType=INTEGER},
       </if>
+      <if test="singlePercent != null" >
+        #{singlePercent,jdbcType=DECIMAL},
+      </if>
       <if test="userimg != null" >
         #{userimg,jdbcType=LONGVARCHAR},
       </if>
@@ -281,6 +288,19 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+    <select id="getAllGradeList" resultMap="BaseResultMap">
+        select  * from mv_user where USER_STATUS = #{status} and IS_DEL = 0
+        <if test="startTime != null and startTime != '' ">
+            and GMT_CREATE > #{startTime}
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and GMT_CREATE <![CDATA[<]]> #{endTime}
+        </if>
+        <if test="name != null and name != '' ">
+            and USERNAME = #{name}
+        </if>
+        order  by GMT_CREATE desc
+    </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update mv_user
     <set >
@@ -335,6 +355,9 @@
       <if test="record.isDel != null" >
         IS_DEL = #{record.isDel,jdbcType=INTEGER},
       </if>
+      <if test="record.singlePercent != null" >
+        SINGLE_PERCENT = #{record.singlePercent,jdbcType=DECIMAL},
+      </if>
       <if test="record.userimg != null" >
         USERIMG = #{record.userimg,jdbcType=LONGVARCHAR},
       </if>
@@ -365,6 +388,7 @@
       USER_STATUS = #{record.userStatus,jdbcType=INTEGER},
       TOKEN = #{record.token,jdbcType=VARCHAR},
       IS_DEL = #{record.isDel,jdbcType=INTEGER},
+      SINGLE_PERCENT = #{record.singlePercent,jdbcType=DECIMAL},
       USERIMG = #{record.userimg,jdbcType=LONGVARCHAR},
       SECURITY_QUESTION = #{record.securityQuestion,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
@@ -389,7 +413,8 @@
       USER_TYPE = #{record.userType,jdbcType=INTEGER},
       USER_STATUS = #{record.userStatus,jdbcType=INTEGER},
       TOKEN = #{record.token,jdbcType=VARCHAR},
-      IS_DEL = #{record.isDel,jdbcType=INTEGER}
+      IS_DEL = #{record.isDel,jdbcType=INTEGER},
+      SINGLE_PERCENT = #{record.singlePercent,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -445,6 +470,9 @@
       <if test="isDel != null" >
         IS_DEL = #{isDel,jdbcType=INTEGER},
       </if>
+      <if test="singlePercent != null" >
+        SINGLE_PERCENT = #{singlePercent,jdbcType=DECIMAL},
+      </if>
       <if test="userimg != null" >
         USERIMG = #{userimg,jdbcType=LONGVARCHAR},
       </if>
@@ -472,6 +500,7 @@
       USER_STATUS = #{userStatus,jdbcType=INTEGER},
       TOKEN = #{token,jdbcType=VARCHAR},
       IS_DEL = #{isDel,jdbcType=INTEGER},
+      SINGLE_PERCENT = #{singlePercent,jdbcType=DECIMAL},
       USERIMG = #{userimg,jdbcType=LONGVARCHAR},
       SECURITY_QUESTION = #{securityQuestion,jdbcType=LONGVARCHAR}
     where ID = #{id,jdbcType=INTEGER}
@@ -493,7 +522,8 @@
       USER_TYPE = #{userType,jdbcType=INTEGER},
       USER_STATUS = #{userStatus,jdbcType=INTEGER},
       TOKEN = #{token,jdbcType=VARCHAR},
-      IS_DEL = #{isDel,jdbcType=INTEGER}
+      IS_DEL = #{isDel,jdbcType=INTEGER},
+      SINGLE_PERCENT = #{singlePercent,jdbcType=DECIMAL}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
