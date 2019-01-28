@@ -61,17 +61,16 @@ public class MyTask {
 
             // 获取总代理的用户数据，并查询该总代理支线下的在规定时间内的充值总额
             User user = userMapper.selectByPrimaryKey(gradeOrderVo.getUserId());
-            BigDecimal agenyPrice = shopHistoryMapper.sumLevelShop(user.getExtensionCode(),startTime,endTime);
+            BigDecimal agentPrice = shopHistoryMapper.sumLevelShop(user.getExtensionCode(),startTime,endTime);
 
-            // 取出该代理的个人分润比例，在数据库中生成一条未打款记录
-            BigDecimal percent = user.getSinglePercent();
             BigDecimal zero = new BigDecimal(0);
-            if(agenyPrice.compareTo(zero) != 0 && percent.compareTo(zero) != 0){
-                BigDecimal result = agenyPrice.multiply(percent).divide(new BigDecimal(100));
-                result = result.setScale(2,BigDecimal.ROUND_DOWN);
-                if(result.compareTo(zero) != 0){
-                    mchPayOrderMapper.insertSelective(generateOrder(user, null, result));
-                }
+            if(agentPrice.compareTo(zero) == 0) continue;   //该支线的充值数额为0，不计算
+
+            // user.getSinglePercent()：设置为总代理时设定的总代理分润比例
+            BigDecimal result = agentPrice.multiply(user.getSinglePercent()).divide(new BigDecimal(100));
+            result = result.setScale(2,BigDecimal.ROUND_DOWN);
+            if(result.compareTo(zero) != 0){
+                mchPayOrderMapper.insertSelective(generateOrder(user, null, result));
             }
 
             //查询总代理所有下属子级用户

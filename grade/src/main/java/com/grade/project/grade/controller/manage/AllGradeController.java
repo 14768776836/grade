@@ -46,7 +46,7 @@ public class AllGradeController {
 
     /**
      * allGrade/operateUserGrade
-     * 分页查询所有总代理列表数据
+     * 设置总代理
      *
      * @return
      */
@@ -93,7 +93,7 @@ public class AllGradeController {
 
     /**
      * allGrade/removeUserAllGrade
-     * 分页查询所有总代理列表数据
+     * 取消总代理资格
      * @return
      */
     @ResponseBody
