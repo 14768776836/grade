@@ -90,7 +90,7 @@
                       <input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
                     </div>
                     <div class="layui-input-inline">
-                      <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                      <input type="text" class="username" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-input-inline" style="width:80px">
                         <!-- <button class="layui-btn searchBtn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button> -->
@@ -236,7 +236,7 @@
                 console.log(JSON.stringify(data));
                 if(data.success){
                     document.getElementById("count").innerHTML = data.list.total;
-                    if(data.list.list.length > 0){
+                    // if(data.list.list.length > 0){
                         var html = "";
                         $.each(data.list.list,function(i,item){
                             if(item.telno == null){
@@ -260,7 +260,7 @@
                             pageHtml += '<span class="x-left" onclick="pageList(\''+ptem+'\')" style="line-height:40px;font-weight: bold">[ '+ptem+' ]</span>&nbsp;&nbsp;';
                         });
                         document.getElementById("pageList").innerHTML = pageHtml;
-                    }
+                    // }
                 }
             });
         }
@@ -269,7 +269,7 @@
 
         
         function setAllGrade(obj,id){
-            $('.box').show();
+            $('.box').attr('display','flex');
             masterTr = obj.parentNode.parentNode.remove();
             uerId = id;
         }
