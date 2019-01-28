@@ -13,7 +13,8 @@
     <script src="../lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/xadmin.js"></script>
     <style type="text/css">
-      .setMasterPercent{position: fixed;left: 0;right: 0;top: 0;bottom: 0;width: 200px;display: none;text-align: center;z-index: 100;}
+      .setMasterPercent{position: fixed;left: 33%;right: 33%;top: 33%;bottom: 33%;width: 33%;display: none;text-align: center;background: rgba(0,0,0,.7);border-radius: 5px;z-index: 100;}
+      .setMasterPercent .inputBox{display: flex;width: 80%;margin: 20% auto 0;}
       .setMasterPercent input{height: 25px;}
     </style>
 </head>
@@ -147,9 +148,9 @@
     <!-- 页面动态效果 -->
     <!-- 填写总代理比例弹窗开始 -->
     <div class='setMasterPercent'>
-        <span>
+        <span class="inputBox">
             <input class="masterPercentInput layui-input" placeholder="填写比例" />
-            <span>%</span>
+            <span>&nbsp;&nbsp;%</span>
         </span>
         <br />
         <br />
@@ -157,7 +158,7 @@
     </div>
     <!-- 填写总代理比例弹窗结束 -->
     <script>
-      let masterTr = null,
+      let objNode,
           uerId = null;
         pageList(1);
         layui.use(['laydate'], function(){
@@ -242,8 +243,7 @@
             $.post("../allGrade/operateUserGrade",{userId:uerId,status:1,percent: val},function(data){
                 if(data.success){
                     layer.msg('设置成功!');
-                    // obj.parentNode.parentNode.remove();
-                    masterTr.remove();
+                    objNode.parentNode.parentNode.remove();
                     document.getElementById("count").innerHTML = parseInt(document.getElementById("count").innerHTML)-1;
                 }else{
                     layer.msg(data.msg,function(){});
