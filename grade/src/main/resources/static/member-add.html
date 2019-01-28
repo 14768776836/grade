@@ -13,8 +13,8 @@
     <script src="../lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/xadmin.js"></script>
     <style type="text/css">
-      .box{position: fixed;left: 0; bottom: 0;display: flex;justify-content: center;align-items: center;width: 100%;height: 100%;z-index: 100;}
-      .box .setMasterPercent{width: 33%;display: none;padding: 10px 0;text-align: center;background: rgba(0,0,0,.7);border-radius: 5px;z-index: 101;}
+      .box{position: fixed;left: 0; bottom: 0;display: none;justify-content: center;align-items: center;width: 100%;height: 100%;z-index: 100;}
+      .box .setMasterPercent{width: 33%;padding: 10px 0;text-align: center;background: rgba(0,0,0,.7);border-radius: 5px;z-index: 101;}
       .box .setMasterPercent .inputBox{display: flex;width: 80%;margin: 0 auto;}
       .box .setMasterPercent input{height: 25px;}
     </style>
@@ -220,13 +220,14 @@
             });
         });
         function pageList({pageNum,status,startTime,endTime,name}){
+          debugger
             function dealParam (param) {
                 param = param ? param : null;
                 return param;
             }
             let params = {
               pageNum   : dealParam(pageNum),
-              status    : dealParam(status),
+              status    : status,
               startTime : dealParam(startTime),
               endTime   : dealParam(endTime),
               name      : dealParam(name)
@@ -268,7 +269,7 @@
 
         
         function setAllGrade(obj,id){
-            $('.setMasterPercent').show();
+            $('.box').show();
             masterTr = obj.parentNode.parentNode.remove();
             uerId = id;
         }
