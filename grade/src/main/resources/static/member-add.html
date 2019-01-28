@@ -164,7 +164,10 @@
     <!-- 填写总代理比例弹窗结束 -->
     <script>
       let objNode = [],
-          uerId = null;
+          uerId = null,
+          startTime1 ,
+          endTime1,
+          name1;
         pageList({status: 0,pageNum: 1});
         layui.use(['laydate'], function(){
           laydate = layui.laydate;//日期插件
@@ -208,6 +211,9 @@
             var startTime = $('#LAY_demorange_s').val();
             var endTime   = formatDateTime(new Date($('#LAY_demorange_e').val()).getTime()+1000*60*60*24,true);
             var name      = $('.username').val();
+            startTime1 = startTime;
+            endTime1 = endTime;
+            name1 = name;
             console.log(startTime,endTime,name);
             console.log(formatDateTime(new Date($('#LAY_demorange_e').val()).getTime()+1000*60*60*24,true));
             if (!startTime && !endTime && !name) {alert('请填写一个搜索的条件！'); return};
@@ -272,6 +278,7 @@
             objNode.push(obj.parentNode.parentNode);
             uerId = id;
         }
+        console.log(objNode)
         $('.setMasterBtn').click(()=>{
             const val = Number($('.masterPercentInput').val());
             const reg = /^\d\.([1-9]{1,2}|[0-9][1-9])$|^[1-9]\d{0,1}(\.\d{1,2}){0,1}$|^99(\.0{1,2}){0,1}$/;
@@ -280,17 +287,25 @@
                 $('.masterPercentInput').val('');
                 return
             }
+            console.log(objNode)
             $.post("../allGrade/operateUserGrade",{userId:uerId,status:1,percent: val},function(data){
                 if(data.success){
                     layer.msg('设置成功!');
-                    objNode[0].parentNode.parentNode.remove();
+                    // objNode[0].remove();
                     document.getElementById("count").innerHTML = parseInt(document.getElementById("count").innerHTML)-1;
+                    pageList({
+                        pageNum   : 1,
+                        status    : 0,
+                        startTime : startTime1,
+                        endTime   : endTime1,
+                        name      : name1
+                    });
                 }else{
                     layer.msg(data.msg,function(){});
                 }
+                // objNode = [];
+                $('.box').css({'display': 'none'});
             });
-            objNode = [];
-            $('.box').css({'display': 'none'});
         })
         function formatDateTime(inputTime,ymd) {
             var date = new Date(inputTime);
