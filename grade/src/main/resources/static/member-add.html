@@ -13,7 +13,7 @@
     <script src="../lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/xadmin.js"></script>
     <style type="text/css">
-      .setMasterPercent{display: none;text-align: center;}
+      .setMasterPercent{position: fixed;left: 0;right: 0;top: 0;bottom: 0;width: 200px;display: none;text-align: center;z-index: 100;}
       .setMasterPercent input{height: 25px;}
     </style>
 </head>
@@ -157,7 +157,8 @@
     </div>
     <!-- 填写总代理比例弹窗结束 -->
     <script>
-      let masterTr = null;
+      let masterTr = null,
+          uerId = null;
         pageList(1);
         layui.use(['laydate'], function(){
           laydate = layui.laydate;//日期插件
@@ -228,15 +229,17 @@
         function setAllGrade(obj,id){
             $('.setMasterPercent').show();
             masterTr = obj.parentNode.parentNode.remove();
+            uerId = id;
         }
         $('.setMasterBtn').click(()=>{
             const val = Number($('.masterPercentInput').val());
             const reg = /^\d\.([1-9]{1,2}|[0-9][1-9])$|^[1-9]\d{0,1}(\.\d{1,2}){0,1}$|^99(\.0{1,2}){0,1}$/;
             if (!reg.test(val)) {
-                alert('请填写1-99的数字,小数点保留2位！');
+                layer.msg('请填写1-99的数字,小数点保留2位！');
+                $('.masterPercentInput').val('');
                 return
             }
-            $.post("../allGrade/operateUserGrade",{userId:id,status:1,percent: val},function(data){
+            $.post("../allGrade/operateUserGrade",{userId:uerId,status:1,percent: val},function(data){
                 if(data.success){
                     layer.msg('设置成功!');
                     // obj.parentNode.parentNode.remove();
