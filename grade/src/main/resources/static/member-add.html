@@ -13,9 +13,10 @@
     <script src="../lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/xadmin.js"></script>
     <style type="text/css">
-      .setMasterPercent{position: fixed;left: 33%;right: 33%;top: 33%;bottom: 33%;width: 33%;display: none;text-align: center;background: rgba(0,0,0,.7);border-radius: 5px;z-index: 100;}
-      .setMasterPercent .inputBox{display: flex;width: 80%;margin: 20% auto 0;}
-      .setMasterPercent input{height: 25px;}
+      .box{position: fixed;left: 33%;right: 33%;top: 33%;bottom: 40%;width: 100%;height: 100%;z-index: 100;pointer-events: none;}
+      .box .setMasterPercent{width: 33%;display: none;text-align: center;background: rgba(0,0,0,.7);border-radius: 5px;z-index: 101;}
+      .box .setMasterPercent .inputBox{display: flex;width: 80%;margin: 20% auto 0;}
+      .box .setMasterPercent input{height: 25px;}
     </style>
 </head>
 <body>
@@ -147,26 +148,29 @@
     <!-- 背景切换结束 -->
     <!-- 页面动态效果 -->
     <!-- 填写总代理比例弹窗开始 -->
-    <div class='setMasterPercent'>
-        <span class="inputBox">
-            <input class="masterPercentInput layui-input" placeholder="填写比例" />
-            <span>&nbsp;&nbsp;%</span>
-        </span>
-        <br />
-        <br />
-        <button class="setMasterBtn layui-btn layui-btn-normal layui-btn-mini">设置总代理</button>
+    <div class="box">
+        <div class='setMasterPercent'>
+            <span class="inputBox">
+                <input class="masterPercentInput layui-input" placeholder="填写比例" />
+                <span>&nbsp;&nbsp;%</span>
+            </span>
+            <br />
+            <br />
+            <button class="layui-btn layui-btn-normal layui-btn-mini">取消</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="setMasterBtn layui-btn layui-btn-normal layui-btn-mini">设置总代理</button>
+        </div>
     </div>
     <!-- 填写总代理比例弹窗结束 -->
     <script>
       let objNode,
           uerId = null;
-        pageList(1);
+        pageList({status: 1,pageNum: 1});
         layui.use(['laydate'], function(){
           laydate = layui.laydate;//日期插件
 
           var start = {
-            min: laydate.now()
-            ,max: '2099-06-16 23:59:59'
+            // min: laydate.now(),
+            max: '2099-06-16 23:59:59'
             ,istoday: false
             ,choose: function(datas){
               end.min = datas; //开始日选好后，重置结束日的最小日期
@@ -175,8 +179,8 @@
           };
 
           var end = {
-            min: laydate.now()
-            ,max: '2099-06-16 23:59:59'
+            // min: laydate.now(),
+            max: '2099-06-16 23:59:59'
             ,istoday: false
             ,choose: function(datas){
               start.max = datas; //结束日选好后，重置开始日的最大日期
@@ -193,9 +197,19 @@
           }
 
         });
-
-        function pageList(pageNum){
-            $.post("../allGrade/getAllGradeList",{pageNum:pageNum,status:0},function (data) {
+        function pageList({pageNum,status,startTime,endTime,name}){
+            function dealParam (param) {
+                param = param ? param : null;
+                return param;
+            }
+            let params = {
+              pageNum   : dealParam(pageNum),
+              status    : dealParam(status),
+              startTime : dealParam(startTime),
+              endTime   : dealParam(endTime),
+              name      : dealParam(name)
+            }
+            $.post("../allGrade/getAllGradeList",param,function (data) {
                 console.log(JSON.stringify(data));
                 if(data.success){
                     document.getElementById("count").innerHTML = data.list.total;
@@ -227,6 +241,10 @@
                 }
             });
         }
+
+
+
+        
         function setAllGrade(obj,id){
             $('.setMasterPercent').show();
             masterTr = obj.parentNode.parentNode.remove();
@@ -265,7 +283,11 @@
             var second = date.getSeconds();
             minute = minute < 10 ? ('0' + minute) : minute;
             second = second < 10 ? ('0' + second) : second;
-            return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+            if (ymd) {
+                return y + '-' + m + '-' + d;
+            } else {
+                return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+            }
         };
 
         </script>
