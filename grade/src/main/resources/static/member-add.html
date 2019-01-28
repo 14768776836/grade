@@ -12,7 +12,10 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
     <script src="../lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/xadmin.js"></script>
-
+    <style type="text/css">
+      .setMasterPercent{display: none;text-align: center;}
+      .setMasterPercent input{height: 25px;}
+    </style>
 </head>
 <body>
     <!-- 顶部开始 -->
@@ -142,7 +145,19 @@
     </div>
     <!-- 背景切换结束 -->
     <!-- 页面动态效果 -->
+    <!-- 填写总代理比例弹窗开始 -->
+    <div class='setMasterPercent'>
+        <span>
+            <input class="masterPercentInput layui-input" placeholder="填写比例" />
+            <span>%</span>
+        </span>
+        <br />
+        <br />
+        <button class="setMasterBtn layui-btn layui-btn-normal layui-btn-mini">设置总代理</button>
+    </div>
+    <!-- 填写总代理比例弹窗结束 -->
     <script>
+      let masterTr = null;
         pageList(1);
         layui.use(['laydate'], function(){
           laydate = layui.laydate;//日期插件
@@ -210,18 +225,30 @@
                 }
             });
         }
-
         function setAllGrade(obj,id){
-            $.post("../allGrade/operateUserGrade",{userId:id,status:1},function(data){
+            $('.setMasterPercent').show();
+            masterTr = obj.parentNode.parentNode.remove();
+        }
+        $('.setMasterBtn').click(()=>{
+            const val = Number($('.masterPercentInput').val());
+            const reg = /^\d\.([1-9]{1,2}|[0-9][1-9])$|^[1-9]\d{0,1}(\.\d{1,2}){0,1}$|^99(\.0{1,2}){0,1}$/;
+            if (!reg.test(val)) {
+                alert('请填写1-99的数字,小数点保留2位！');
+                return
+            }
+            $.post("../allGrade/operateUserGrade",{userId:id,status:1,percent: val},function(data){
                 if(data.success){
                     layer.msg('设置成功!');
-                    obj.parentNode.parentNode.remove();
+                    // obj.parentNode.parentNode.remove();
+                    masterTr.remove();
                     document.getElementById("count").innerHTML = parseInt(document.getElementById("count").innerHTML)-1;
                 }else{
                     layer.msg(data.msg,function(){});
                 }
             });
-        }
+            masterTr = null;
+
+        })
         function formatDateTime(inputTime) {
             var date = new Date(inputTime);
             var y = date.getFullYear();
