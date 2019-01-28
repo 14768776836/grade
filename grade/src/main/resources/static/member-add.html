@@ -214,8 +214,6 @@
             startTime1 = startTime;
             endTime1 = endTime;
             name1 = name;
-            console.log(startTime,endTime,name);
-            console.log(formatDateTime(new Date($('#LAY_demorange_e').val()).getTime()+1000*60*60*24,true));
             if (!startTime && !endTime && !name) {alert('请填写一个搜索的条件！'); return};
             pageList({
                 pageNum   : 1,
@@ -287,7 +285,6 @@
                 $('.masterPercentInput').val('');
                 return
             }
-            console.log(objNode)
             $.post("../allGrade/operateUserGrade",{userId:uerId,status:1,percent: val},function(data){
                 if(data.success){
                     layer.msg('设置成功!');
@@ -316,8 +313,6 @@
                 startTime: startTime1,
                 endTime: endTime1
             })
-            console.log(e.target)
-            console.log(num)
         });
         function formatDateTime(inputTime,ymd) {
             var date = new Date(inputTime);
