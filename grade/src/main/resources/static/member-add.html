@@ -268,7 +268,7 @@
 
         
         function setAllGrade(obj,id){
-            $('.box').attr('display','flex');
+            $('.box').css({'display','flex'});
             objNode = obj.parentNode.parentNode;
             uerId = id;
         }
@@ -290,7 +290,7 @@
                 }
             });
             objNode = null;
-            $('.box').hide();
+            $('.box').css({'display','none'});
         })
         function formatDateTime(inputTime,ymd) {
             var date = new Date(inputTime);
