@@ -163,7 +163,7 @@
     </div>
     <!-- 填写总代理比例弹窗结束 -->
     <script>
-      let objNode,
+      let objNode = [],
           uerId = null;
         pageList({status: 0,pageNum: 1});
         layui.use(['laydate'], function(){
@@ -202,7 +202,7 @@
             e.stopPropagation();
         });
         $('.cancelBtn').click(()=>{
-            $('.box').attr('display',none);
+            $('.box').css({'display':'none'});
         });
         $('.searchBtn').click(()=>{
             var startTime = $('#LAY_demorange_s').val();
@@ -269,7 +269,7 @@
         
         function setAllGrade(obj,id){
             $('.box').css({'display':'flex'});
-            objNode = obj.parentNode.parentNode;
+            objNode.push(obj.parentNode.parentNode);
             uerId = id;
         }
         $('.setMasterBtn').click(()=>{
@@ -283,13 +283,13 @@
             $.post("../allGrade/operateUserGrade",{userId:uerId,status:1,percent: val},function(data){
                 if(data.success){
                     layer.msg('设置成功!');
-                    objNode.parentNode.parentNode.remove();
+                    objNode[0].parentNode.parentNode.remove();
                     document.getElementById("count").innerHTML = parseInt(document.getElementById("count").innerHTML)-1;
                 }else{
                     layer.msg(data.msg,function(){});
                 }
             });
-            objNode = null;
+            objNode = [];
             $('.box').css({'display': 'none'});
         })
         function formatDateTime(inputTime,ymd) {
