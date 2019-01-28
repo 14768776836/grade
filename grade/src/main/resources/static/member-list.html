@@ -258,15 +258,12 @@
             let num = e.target.getAttribute('id');
             pageList({
                 pageNum: num,
-                status : 0,
+                status : 1,
                 startTime: startTime1,
                 endTime: endTime1
             })
-            console.log(e.target)
-            console.log(num)
         });
         function formatDateTime(inputTime,ymd) {
-          console.log('时间---',inputTime)
             var date = new Date(inputTime);
             var y = date.getFullYear();
             var m = date.getMonth() + 1;
