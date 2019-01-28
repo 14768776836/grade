@@ -262,7 +262,7 @@
                         var pageHtml = "";
                         //便利页数
                         $.each(data.list.navigatepageNums,function(p,ptem){
-                            pageHtml += '<span class="x-left" onclick="pageList(\''+ptem+'\')" style="line-height:40px;font-weight: bold">[ '+ptem+' ]</span>&nbsp;&nbsp;';
+                            pageHtml += '<span class="x-left" id="'+ ptem +'" style="line-height:40px;font-weight: bold">[ '+ptem+' ]</span>&nbsp;&nbsp;';
                         });
                         document.getElementById("pageList").innerHTML = pageHtml;
                     // }
@@ -278,7 +278,7 @@
             objNode.push(obj.parentNode.parentNode);
             uerId = id;
         }
-        console.log(objNode)
+       
         $('.setMasterBtn').click(()=>{
             const val = Number($('.masterPercentInput').val());
             const reg = /^\d\.([1-9]{1,2}|[0-9][1-9])$|^[1-9]\d{0,1}(\.\d{1,2}){0,1}$|^99(\.0{1,2}){0,1}$/;
@@ -307,6 +307,18 @@
                 $('.box').css({'display': 'none'});
             });
         })
+        let pageListNum = document.querySelector('#pageList');
+        pageListNum.addEventListener('click',(e)=>{
+            let num = e.target.getAttribute('id');
+            pageList({
+                pageNum: num,
+                status : 0,
+                startTime: startTime1,
+                endTime: endTime1
+            })
+            console.log(e.target)
+            console.log(num)
+        });
         function formatDateTime(inputTime,ymd) {
             var date = new Date(inputTime);
             var y = date.getFullYear();

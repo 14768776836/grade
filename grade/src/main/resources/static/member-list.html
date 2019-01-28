@@ -234,7 +234,7 @@
                         var pageHtml = "";
                         //便利页数
                         $.each(data.list.navigatepageNums,function(p,ptem){
-                            pageHtml += '<span class="x-left" onclick="pageList(\''+ptem+'\')" style="line-height:40px;font-weight: bold">[ '+ptem+' ]</span>&nbsp;&nbsp;';
+                            pageHtml += '<span class="x-left" id="'+ ptem +'" style="line-height:40px;font-weight: bold">[ '+ptem+' ]</span>&nbsp;&nbsp;';
                         });
                         document.getElementById("pageList").innerHTML = pageHtml;
                     }
@@ -253,6 +253,18 @@
                 }
             });
         }
+        let pageListNum = document.querySelector('#pageList');
+        pageListNum.addEventListener('click',(e)=>{
+            let num = e.target.getAttribute('id');
+            pageList({
+                pageNum: num,
+                status : 0,
+                startTime: startTime1,
+                endTime: endTime1
+            })
+            console.log(e.target)
+            console.log(num)
+        });
         function formatDateTime(inputTime,ymd) {
           console.log('时间---',inputTime)
             var date = new Date(inputTime);
