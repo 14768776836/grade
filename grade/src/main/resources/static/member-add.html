@@ -209,7 +209,7 @@
               endTime   : dealParam(endTime),
               name      : dealParam(name)
             }
-            $.post("../allGrade/getAllGradeList",param,function (data) {
+            $.post("../allGrade/getAllGradeList",params,function (data) {
                 console.log(JSON.stringify(data));
                 if(data.success){
                     document.getElementById("count").innerHTML = data.list.total;
