@@ -4,8 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.grade.project.grade.model.User;
 import com.grade.project.grade.service.UserService;
 import com.grade.project.grade.util.StatusUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +16,6 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/allGrade")
 public class AllGradeController {
-    private static final Logger logger = LoggerFactory.getLogger(AllGradeController.class);
     @Autowired
     private UserService userService;
 
@@ -55,7 +52,7 @@ public class AllGradeController {
     public Map operateUserGrade(Integer userId, Integer status, BigDecimal percent) {
         Map<String, Object> dataMap = new HashMap<>();
         try {
-            int result = userService.operateUserGrade(userId, status,percent);
+            int result = userService.operateUserGrade(userId, status, percent);
             if (result == 1) {
                 dataMap.put("success", true);
             } else {
@@ -94,17 +91,18 @@ public class AllGradeController {
     /**
      * allGrade/removeUserAllGrade
      * 取消总代理资格
+     *
      * @return
      */
     @ResponseBody
     @RequestMapping("/removeUserAllGrade")
-    public Map removeUserAllGrade(Integer userId,Integer status){
+    public Map removeUserAllGrade(Integer userId, Integer status) {
         Map<String, Object> dataMap = new HashMap<>();
         try {
-            int result = userService.removeUserAllGrade(userId,status);
-            if(result == 1){
+            int result = userService.removeUserAllGrade(userId, status);
+            if (result == 1) {
                 dataMap.put("success", true);
-            }else{
+            } else {
                 dataMap.put("msg", StatusUtils.EDIT_ERROR_MSG_EXCEPTION);
                 dataMap.put("success", false);
             }

@@ -297,7 +297,7 @@
             and GMT_CREATE <![CDATA[<]]> #{endTime}
         </if>
         <if test="name != null and name != '' ">
-            and USERNAME = #{name}
+            and USERNAME like "%"#{name}"%"
         </if>
         order  by GMT_CREATE desc
     </select>

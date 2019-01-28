@@ -10,8 +10,6 @@ import com.grade.project.grade.model.UserWithBLOBs;
 import com.grade.project.grade.model.vo.PublicNumVo;
 import com.grade.project.grade.util.StatusUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -22,7 +20,6 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserMapper userMapper;
@@ -69,7 +66,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<PublicNumVo> findNotBindPublicNum(Integer userId) {
         User userParent = findUserByIdParentData(userId);//获取当前用户的直属上级用户
-        if(userParent.getId() == null) return new ArrayList<>();
+        if (userParent.getId() == null) return new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             int status = userParent.getUserStatus();
             //上级用户状态总代理 && 上级用户的上级邀请码为null
@@ -86,15 +83,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<User> getAllGradeList(Integer pageNum,Integer status,String startTime,String endTime,String name) {
-//        UserExample userExample = new UserExample();
-//        userExample.createCriteria().andUserStatusEqualTo(status).andIsDelEqualTo(StatusUtils.IS_DEL_0);
-//
-//        userExample.setOrderByClause(" GMT_CREATE DESC");//时间倒序排序
+    public PageInfo<User> getAllGradeList(Integer pageNum, Integer status, String startTime, String endTime, String name) {
+
         PageHelper.startPage(pageNum, StatusUtils.PAGE_SIZE);
-//        List<User> userList = userMapper.selectByExample(userExample);
-        List<User> userList = userMapper.getAllGradeList(status,startTime,endTime,name);
-        logger.info("size :{}" ,userList.size());
+        List<User> userList = userMapper.getAllGradeList(status, startTime, endTime, name);
         PageInfo<User> pageInfo = new PageInfo<>(userList);
         return pageInfo;
     }
@@ -106,7 +98,7 @@ public class UserServiceImpl implements UserService {
         user.setSinglePercent(percent);
         UserExample userExample = new UserExample();
         userExample.createCriteria().andIdEqualTo(userId);
-        return userMapper.updateByExampleSelective(user,userExample);
+        return userMapper.updateByExampleSelective(user, userExample);
     }
 
     @Override
@@ -117,11 +109,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int removeUserAllGrade(Integer userId,Integer status) {
+    public int removeUserAllGrade(Integer userId, Integer status) {
         UserWithBLOBs user = new UserWithBLOBs();
         user.setUserStatus(status);//取消总代理资格
         UserExample userExample = new UserExample();
         userExample.createCriteria().andIdEqualTo(userId);
-        return userMapper.updateByExampleSelective(user,userExample);
+        return userMapper.updateByExampleSelective(user, userExample);
     }
 }
