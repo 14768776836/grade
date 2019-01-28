@@ -180,10 +180,8 @@
         });
         $('.searchBtn').click(()=>{
             var startTime = $('#LAY_demorange_s').val();
-            var endTime   = formatDateTime(new Date($('#LAY_demorange_e').val()).getTime()+1000*60*60*60*24,true);
+            var endTime   = formatDateTime(new Date($('#LAY_demorange_e').val()).getTime()+1000*60*60*24,true);
             var name      = $('.username').val();
-            console.log(startTime,endTime,name);
-            console.log(formatDateTime(new Date($('#LAY_demorange_e').val()).getTime()+1000*60*60*60*24,true));
             if (!startTime && !endTime && !name) {alert('请填写一个搜索的条件！'); return};
             pageList({
                 pageNum   : 1,
