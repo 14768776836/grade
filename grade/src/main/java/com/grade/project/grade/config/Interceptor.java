@@ -1,7 +1,6 @@
 package com.grade.project.grade.config;
 
 
-import com.grade.project.grade.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -26,7 +25,7 @@ public class Interceptor implements HandlerInterceptor {
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
         boolean flag;
-        //从缓存中获取是否存储了用户信息
+//        从缓存中获取是否存储了用户信息
         String user= (String) request.getSession().getAttribute("user");
         if(null==user){
             response.sendRedirect(request.getContextPath()+"/login/login");

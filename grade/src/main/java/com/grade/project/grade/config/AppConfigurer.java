@@ -1,11 +1,7 @@
 package com.grade.project.grade.config;
 
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.filter.HttpPutFormContentFilter;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -41,8 +37,8 @@ public class AppConfigurer extends WebMvcConfigurerAdapter {
                         "/js/**",
                         "/lib/**",
                         "/wxPublicNum/**",
-                        "/order/**"
-
+                        "/order/**",
+                        "/indexH5.html"
                 );
         super.addInterceptors(registry);
     }
