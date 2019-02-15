@@ -209,7 +209,7 @@
                 console.log(JSON.stringify(data));
                 if(data.success){
                     document.getElementById("count").innerHTML = data.list.total;
-                    if(data.list.list.length > 0){
+                    // if(data.list.list.length > 0){
                         var html = "";
                         $.each(data.list.list,function(i,item){
                             if(item.telno == null){
@@ -239,7 +239,7 @@
                             pageHtml += '<span class="x-left" id="'+ ptem +'" style="line-height:40px;font-weight: bold">[ '+ptem+' ]</span>&nbsp;&nbsp;';
                         });
                         document.getElementById("pageList").innerHTML = pageHtml;
-                    }
+                    // }
                 }
             });
         }
