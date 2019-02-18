@@ -28,7 +28,7 @@ public class Interceptor implements HandlerInterceptor {
 //        从缓存中获取是否存储了用户信息
         String user= (String) request.getSession().getAttribute("user");
         if(null==user){
-            response.sendRedirect(request.getContextPath()+"/login/login");
+            response.sendRedirect(request.getContextPath()+"/indexH5.html");
             flag = false;
         }else{
             flag = true;
